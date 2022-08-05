@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/404.html</loc>
+    <loc>/404.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/LICENSE-text.html</loc>
+    <loc>/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/LICENSE.html</loc>
+    <loc>/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/articles/GISSB_vignette.html</loc>
+    <loc>/articles/GISSB_vignette.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/articles/index.html</loc>
+    <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/authors.html</loc>
+    <loc>/authors.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/index.html</loc>
+    <loc>/index.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/reference/adresse_api_koord.html</loc>
+    <loc>/reference/adresse_api_koord.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/reference/beregne_avstand.html</loc>
+    <loc>/reference/beregne_avstand.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/reference/beregne_avstand_cpp.html</loc>
+    <loc>/reference/beregne_avstand_cpp.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/reference/index.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/reference/koords_to_google.html</loc>
+    <loc>/reference/koords_to_google.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/reference/node_koord.html</loc>
+    <loc>/reference/node_koord.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/reference/path_leaflet.html</loc>
+    <loc>/reference/path_leaflet.html</loc>
   </url>
   <url>
-    <loc>https://statisticsnorway.github.io/GISSB/reference/vegnett_to_R.html</loc>
+    <loc>/reference/vegnett_to_R.html</loc>
   </url>
 </urlset>
