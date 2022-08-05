@@ -1,5 +1,5 @@
 
-#' Visualisere kjørerute med Leaflet
+#' Visualiser kjørerute med Leaflet
 #'
 #' Funksjonen path_leaflet visualiserer den korteste kjøreruten (i minutter eller meter) som har blitt beregnet med funksjonen beregne_avstand (der path = TRUE).
 #' For å få lastet inn bakgrunnskart fra Leaflet kreves nettilgang.

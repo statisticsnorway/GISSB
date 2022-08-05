@@ -22,7 +22,7 @@ usethis::use_package("reshape2", type = "imports")
 usethis::use_package("purrr", type = "imports")
 usethis::use_package("tibble", type = "imports")
 usethis::use_package("leaflet", type = "imports")
-
+usethis::use_package("RCurl", type = "imports")
 
 
 
@@ -66,3 +66,9 @@ install()
 devtools::build()
 
 # devtools::install_github
+
+# Lager vignette
+library(pkgdown)
+usethis::use_pkgdown()
+pkgdown::build_site()
+# usethis::use_vignette("GISSB_vignette")
