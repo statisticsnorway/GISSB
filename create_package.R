@@ -68,6 +68,7 @@ devtools::build()
 # devtools::install_github
 
 # Lager vignette
+
 # library(pkgdown)
 # usethis::use_pkgdown()
 pkgdown::build_site()
