@@ -68,12 +68,9 @@ devtools::build()
 # devtools::install_github
 
 # Lager vignette
-
-# library(pkgdown)
-# usethis::use_pkgdown()
+usethis::use_pkgdown()
 pkgdown::build_site()
-# # usethis::use_vignette("GISSB_vignette")
 
-
-pkgdown::build_site_github_pages()
-usethis::use_pkgdown_github_pages()
+# usethis::use_vignette("GISSB_vignette")
+# pkgdown::build_site_github_pages()
+# usethis::use_pkgdown_github_pages()

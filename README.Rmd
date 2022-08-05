@@ -18,17 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-GISSB er en pakke som inneholder GIS-funksjoner i R. I denne vignetten demonstreres det hvordan GISSB kan brukes til å gjennomføre nettverksanalyser i R.
+GISSB er en pakke som inneholder GIS-funksjoner i R for bruk i SSB. 
 
-Pakken inneholder følgende funksjoner:
-
-+ adresse_api_koord
-+ koords_to_google
-+ vegnett_to_R
-+ node_koord
-+ beregne_avstand
-+ path_leaflet
-+ beregne_avstand_cpp
+Se vignetten for en introduksjon for hvordan funksjonene kan brukes til å gjennomføre nettverksanalyser i R: https://statisticsnorway.github.io/GISSB/articles/GISSB_vignette.html
 
 ## Installation
 
