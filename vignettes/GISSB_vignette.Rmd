@@ -1,85 +1,19 @@
 ---
-title: "GISSB - Nettverksanalyse i R"
-author: "Sindre Mikael Haugen"
-date: "`r Sys.Date()`"
+title: "GISSB_vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GISSB - Nettverksanalyse i R}
+  %\VignetteIndexEntry{GISSB_vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.width = 5, fig.height = 5
+  comment = "#>"
 )
 ```
 
-GISSB er en pakke som inneholder GIS-funksjoner i R. I denne vignetten demonstreres det hvordan GISSB kan brukes til å gjennomføre nettverksanalyser i R.
-
-Pakken inneholder følgende funksjoner:
-
-+ adresse_api_koord
-+ koords_to_google
-+ vegnett_to_R
-+ node_koord
-+ beregne_avstand
-+ path_leaflet
-+ beregne_avstand_cpp
-
-Se [Avstand til fødested](https://github.com/statisticsnorway/geostat-wp2/blob/master/analysis/Avstand%20til%20f%C3%B8dested.ipynb) for et eksempel der denne pakken har blitt brukt i et produksjonsløp.
-
-## Adresse til koordinater (adresse_api_koord)
-
-Funksjonen **adresse_api_koord** bruker [Kartverkets adresse-API](https://ws.geonorge.no/adresser/v1/#/) for å finne koordinater til adresser. Denne API-en krever nettilgang og baserer seg på matrikkelen (som er Norges offisielle eiendomsregister og inneholder alle offisielle adresser og tilhørende koordinater). Ved å skrive inn et postnummer med tilhørende adresse (med adressenummer hvis tilgjengelig) returneres et [sf-objekt](https://r-spatial.github.io/sf/articles/sf1.html) med koordinatene til denne adressen.
-
-Standardverdi for projeksjonen av koordinatene er satt til [CRS 25833](https://epsg.io/25833). Dette er det offisielle koordinatsystemet i Norge og brukes i de fleste norske kartfiler. 
-
-```{r, eval=TRUE}
-fra <- GISSB::adresse_api_koord(postnummer = "0177",
-                         adresse = "Akersveien 26")
-
-fra
-
-til <- GISSB::adresse_api_koord(postnummer = "2211",
-                         adresse = "Otervegen 23")
-
-til
+```{r setup}
+library(GISSB)
 ```
-
-Det er også mulig å benytte [CRS 4326](https://epsg.io/4326) for å plassere koordinatene på kart med åpen kildekode (som f.eks. [Leaflet](https://rstudio.github.io/leaflet/)) eller enklere søke opp koordinater i Google Maps. Koordinatsystemet CRS 4326 er derimot ikke metrisk og man kan derfor ikke måle avstander i meter når man bruker dette. Derfor anbefales det kun å bruke CRS 4326 i forbindelse med visualisering.
-
-For å få koordinatene med CRS 4326 må dette spesifiseres i funksjonen. Det er også mulig å angi en vektor med flere postnummere og adresser for å få koordinatene til flere adresser:
-
-```{r, eval=TRUE}
-postnummere = c("0177", "2211")
-adresser = c("Akersveien 26", "Otervegen 23")
-
-fra_4326 <- GISSB::adresse_api_koord(postnummer = postnummere,
-                         adresse = adresser,
-                         crs = 4326)
-fra_4326
-```
-
-Man kan dermed plassere koordinatene på kartet, her med pakken Leaflet:
-
-```{r, eval=TRUE}
-leaflet::leaflet() %>%
-  leaflet::addTiles() %>%
-  leaflet::addMarkers(data = fra_4326$geometry)
-```
-
-## Koordinater til å søke opp i Google Maps (koords_to_google)
-
-Når man skal kombinere ulike datakilder er det viktig at alle filene er angitt med samme koordinatsystem. Om man ønsker å beholde sf-objektet med CRS 25833, men ønsker å legge til en kolonne med koordinatene i CRS 4326 (som er enklere å klippe og lime inn i Google Maps) kan man bruke funksjonen **koords_to_google**. Da legges det til en kolonne som heter coords_google.
-
-```{r, eval=TRUE}
-fra <- GISSB::koords_to_google(fra)
-fra$coords_google
-
-til <- GISSB::koords_to_google(til)
-til$coords_google
-```
-
