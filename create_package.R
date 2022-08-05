@@ -68,7 +68,15 @@ devtools::build()
 # devtools::install_github
 
 # Lager vignette
-library(pkgdown)
-usethis::use_pkgdown()
+# library(pkgdown)
+# usethis::use_pkgdown()
 pkgdown::build_site()
-# usethis::use_vignette("GISSB_vignette")
+# # usethis::use_vignette("GISSB_vignette")
+
+usethis::use_pkgdown_github_pages()
+pkgdown::build_site_github_pages()
+
+
+# install.packages("gitcreds")
+library(gitcreds)
+gitcreds_set()
