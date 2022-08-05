@@ -17,5 +17,5 @@ Se vignetten for en introduksjon for hvordan funksjonene kan brukes til
 You can install the development version of GISSB like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+devtools::install_github("statisticsnorway/GISSB")
 ```
