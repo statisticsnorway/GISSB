@@ -76,7 +76,3 @@ pkgdown::build_site()
 usethis::use_pkgdown_github_pages()
 pkgdown::build_site_github_pages()
 
-
-# install.packages("gitcreds")
-library(gitcreds)
-gitcreds_set()

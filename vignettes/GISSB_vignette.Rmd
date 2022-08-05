@@ -4,7 +4,7 @@ author: "Sindre Mikael Haugen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GIS i SSB (GISSB)}
+  %\VignetteIndexEntry{GISSB - Nettverksanalyse i R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -37,268 +37,268 @@ Funksjonen **adresse_api_koord** bruker [Kartverkets adresse-API](https://ws.geo
 
 Standardverdi for projeksjonen av koordinatene er satt til [CRS 25833](https://epsg.io/25833). Dette er det offisielle koordinatsystemet i Norge og brukes i de fleste norske kartfiler. 
 
-```{r, include=FALSE}
+<!-- ```{r, include=FALSE} -->
 
-library(tidyverse)
-library(GISSB)
+<!-- library(tidyverse) -->
+<!-- library(GISSB) -->
 
-# source("C:/Users/rdn/Documents/Kart/GiSSB/adresse_api_koord.R", encoding = "UTF-8")
-# source("C:/Users/rdn/Documents/Kart/GiSSB/koords_to_google.R", encoding = "UTF-8")
-# source("C:/Users/rdn/Documents/Kart/GiSSB/vegnett_to_R.R", encoding = "UTF-8")
-# source("C:/Users/rdn/Documents/Kart/GiSSB/node_koord.R", encoding = "UTF-8")
-# source("C:/Users/rdn/Documents/Kart/GiSSB/beregne_avstand.R", encoding = "UTF-8")
-# source("C:/Users/rdn/Documents/Kart/GiSSB/path_leaflet.R", encoding = "UTF-8")
-# source("C:/Users/rdn/Documents/Kart/GiSSB/beregne_avstand_cpp.R", encoding = "UTF-8")
+<!-- # source("C:/Users/rdn/Documents/Kart/GiSSB/adresse_api_koord.R", encoding = "UTF-8") -->
+<!-- # source("C:/Users/rdn/Documents/Kart/GiSSB/koords_to_google.R", encoding = "UTF-8") -->
+<!-- # source("C:/Users/rdn/Documents/Kart/GiSSB/vegnett_to_R.R", encoding = "UTF-8") -->
+<!-- # source("C:/Users/rdn/Documents/Kart/GiSSB/node_koord.R", encoding = "UTF-8") -->
+<!-- # source("C:/Users/rdn/Documents/Kart/GiSSB/beregne_avstand.R", encoding = "UTF-8") -->
+<!-- # source("C:/Users/rdn/Documents/Kart/GiSSB/path_leaflet.R", encoding = "UTF-8") -->
+<!-- # source("C:/Users/rdn/Documents/Kart/GiSSB/beregne_avstand_cpp.R", encoding = "UTF-8") -->
 
 
-# Laster inn vegnett
-ds <- arrow::open_dataset("C:/Users/rdn/Documents/Kart/vegnett2021.parquet")
+<!-- # Laster inn vegnett -->
+<!-- ds <- arrow::open_dataset("C:/Users/rdn/Documents/Kart/vegnett2021.parquet") -->
 
-vegnett <- ds %>%
-  dplyr::filter(FYLKE_ID %in% c("3", "2", "4")) %>%
-  sfarrow::read_sf_dataset() # %>%
-  # sf::st_zm(drop = T) %>%
-  # dplyr::rename_all(toupper) %>%
-  # dplyr::rename(LENGTH = SHAPE_LENGTH) %>%
-  # sf::st_cast("LINESTRING")
+<!-- vegnett <- ds %>% -->
+<!--   dplyr::filter(FYLKE_ID %in% c("3", "2", "4")) %>% -->
+<!--   sfarrow::read_sf_dataset() # %>% -->
+<!--   # sf::st_zm(drop = T) %>% -->
+<!--   # dplyr::rename_all(toupper) %>% -->
+<!--   # dplyr::rename(LENGTH = SHAPE_LENGTH) %>% -->
+<!--   # sf::st_cast("LINESTRING") -->
 
-# # Endrer navn på geometrikolonnen til "geometry" #
-# rename_geometry <- function(g, name){
-#   current = attr(g, "sf_column")
-#   names(g)[names(g)==current] = name
-#   sf::st_geometry(g)=name
-#   g
-# }
+<!-- # # Endrer navn på geometrikolonnen til "geometry" # -->
+<!-- # rename_geometry <- function(g, name){ -->
+<!-- #   current = attr(g, "sf_column") -->
+<!-- #   names(g)[names(g)==current] = name -->
+<!-- #   sf::st_geometry(g)=name -->
+<!-- #   g -->
+<!-- # } -->
 
-# vegnett <- rename_geometry(vegnett, "geometry")
-```
+<!-- # vegnett <- rename_geometry(vegnett, "geometry") -->
+<!-- ``` -->
 
-```{r, eval=TRUE}
-fra <- GISSB::adresse_api_koord(postnummer = "0177",
-                         adresse = "Akersveien 26")
+<!-- ```{r, eval=TRUE} -->
+<!-- fra <- GISSB::adresse_api_koord(postnummer = "0177", -->
+<!--                          adresse = "Akersveien 26") -->
 
-fra
+<!-- fra -->
 
-til <- GISSB::adresse_api_koord(postnummer = "2211",
-                         adresse = "Otervegen 23")
+<!-- til <- GISSB::adresse_api_koord(postnummer = "2211", -->
+<!--                          adresse = "Otervegen 23") -->
 
-til
-```
+<!-- til -->
+<!-- ``` -->
 
-Det er også mulig å benytte [CRS 4326](https://epsg.io/4326) for å plassere koordinatene på kart med åpen kildekode (som f.eks. [Leaflet](https://rstudio.github.io/leaflet/)) eller enklere søke opp koordinater i Google Maps. Koordinatsystemet CRS 4326 er derimot ikke metrisk og man kan derfor ikke måle avstander i meter når man bruker dette. Derfor anbefales det kun å bruke CRS 4326 i forbindelse med visualisering.  
+<!-- Det er også mulig å benytte [CRS 4326](https://epsg.io/4326) for å plassere koordinatene på kart med åpen kildekode (som f.eks. [Leaflet](https://rstudio.github.io/leaflet/)) eller enklere søke opp koordinater i Google Maps. Koordinatsystemet CRS 4326 er derimot ikke metrisk og man kan derfor ikke måle avstander i meter når man bruker dette. Derfor anbefales det kun å bruke CRS 4326 i forbindelse med visualisering.   -->
 
-For å få koordinatene med CRS 4326 må dette spesifiseres i funksjonen. Det er også mulig å angi en vektor med flere postnummere og adresser for å få koordinatene til flere adresser:
+<!-- For å få koordinatene med CRS 4326 må dette spesifiseres i funksjonen. Det er også mulig å angi en vektor med flere postnummere og adresser for å få koordinatene til flere adresser: -->
 
-```{r, eval=TRUE}
-postnummere = c("0177", "2211")
-adresser = c("Akersveien 26", "Otervegen 23")
+<!-- ```{r, eval=TRUE} -->
+<!-- postnummere = c("0177", "2211") -->
+<!-- adresser = c("Akersveien 26", "Otervegen 23") -->
 
-fra_4326 <- GISSB::adresse_api_koord(postnummer = postnummere,
-                         adresse = adresser,
-                         crs = 4326)
-fra_4326
-```
+<!-- fra_4326 <- GISSB::adresse_api_koord(postnummer = postnummere, -->
+<!--                          adresse = adresser, -->
+<!--                          crs = 4326) -->
+<!-- fra_4326 -->
+<!-- ``` -->
 
-Man kan dermed plassere koordinatene på kartet, her med pakken Leaflet:
+<!-- Man kan dermed plassere koordinatene på kartet, her med pakken Leaflet: -->
 
-```{r, eval=TRUE}
-leaflet::leaflet() %>%
-  leaflet::addTiles() %>%
-  leaflet::addMarkers(data = fra_4326$geometry)
-```
+<!-- ```{r, eval=TRUE} -->
+<!-- leaflet::leaflet() %>% -->
+<!--   leaflet::addTiles() %>% -->
+<!--   leaflet::addMarkers(data = fra_4326$geometry) -->
+<!-- ``` -->
 
-## Koordinater til å søke opp i Google Maps (koords_to_google)
+<!-- ## Koordinater til å søke opp i Google Maps (koords_to_google) -->
 
-Når man skal kombinere ulike datakilder er det viktig at alle filene er angitt med samme koordinatsystem. Om man ønsker å beholde sf-objektet med CRS 25833, men ønsker å legge til en kolonne med koordinatene i CRS 4326 (som er enklere å klippe og lime inn i Google Maps) kan man bruke funksjonen **koords_to_google**. Da legges det til en kolonne som heter coords_google.
+<!-- Når man skal kombinere ulike datakilder er det viktig at alle filene er angitt med samme koordinatsystem. Om man ønsker å beholde sf-objektet med CRS 25833, men ønsker å legge til en kolonne med koordinatene i CRS 4326 (som er enklere å klippe og lime inn i Google Maps) kan man bruke funksjonen **koords_to_google**. Da legges det til en kolonne som heter coords_google. -->
 
-```{r, eval=TRUE}
-fra <- GISSB::koords_to_google(fra)
-fra$coords_google
+<!-- ```{r, eval=TRUE} -->
+<!-- fra <- GISSB::koords_to_google(fra) -->
+<!-- fra$coords_google -->
 
-til <- GISSB::koords_to_google(til)
-til$coords_google
-```
+<!-- til <- GISSB::koords_to_google(til) -->
+<!-- til$coords_google -->
+<!-- ``` -->
 
-## Databehandling av vegnettet (vegnett_to_R)
+<!-- ## Databehandling av vegnettet (vegnett_to_R) -->
 
-For å beregne kjøreavstand mellom ulike koordinater benyttes vegnettet fra [Nasjonal vegdatabank (NVDB)](https://www.vegvesen.no/fag/teknologi/nasjonal-vegdatabank/). Dette har blitt gjort tilgjenglig på  Q- og X-disken av GIS-ressurssenter. Når man laster inn vegnettverksfilen som et sf-objekt ser den slik ut (her begrenset til å kun gjelde for Oslo, Akershus og Hedmark):
+<!-- For å beregne kjøreavstand mellom ulike koordinater benyttes vegnettet fra [Nasjonal vegdatabank (NVDB)](https://www.vegvesen.no/fag/teknologi/nasjonal-vegdatabank/). Dette har blitt gjort tilgjenglig på  Q- og X-disken av GIS-ressurssenter. Når man laster inn vegnettverksfilen som et sf-objekt ser den slik ut (her begrenset til å kun gjelde for Oslo, Akershus og Hedmark): -->
 
-```{r, eval=TRUE}
-ggplot() + 
-  ggplot2::geom_sf(data = vegnett)
-```
+<!-- ```{r, eval=TRUE} -->
+<!-- ggplot() +  -->
+<!--   ggplot2::geom_sf(data = vegnett) -->
+<!-- ``` -->
 
 
-For at vegnettet skal kunne brukes til nettverksanalyser i R må formatet omgjøres (med pakkene [igraph](https://igraph.org/r/) og [cppRouting](https://github.com/vlarmet/cppRouting/blob/master/README.md)). Funksjonen **vegnett_to_R** kan brukes til dette formålet. Resultatet er en liste med følgende objekter:
+<!-- For at vegnettet skal kunne brukes til nettverksanalyser i R må formatet omgjøres (med pakkene [igraph](https://igraph.org/r/) og [cppRouting](https://github.com/vlarmet/cppRouting/blob/master/README.md)). Funksjonen **vegnett_to_R** kan brukes til dette formålet. Resultatet er en liste med følgende objekter: -->
 
-+ [1] graph (tbl_graph)
-+ [2] nodes (sf)
-+ [3] edges (data.frame)
-+ [4] graph_cppRouting_FT_MINUTES (cppRouting)
-+ [5] graph_cppRouting_LENGTH (cppRouting)
+<!-- + [1] graph (tbl_graph) -->
+<!-- + [2] nodes (sf) -->
+<!-- + [3] edges (data.frame) -->
+<!-- + [4] graph_cppRouting_FT_MINUTES (cppRouting) -->
+<!-- + [5] graph_cppRouting_LENGTH (cppRouting) -->
 
-**nodes** og **edges** benyttes for å plassere koordinatene til sitt nærmeste punkt i vegnettet med funksjonen **node_koord**.
+<!-- **nodes** og **edges** benyttes for å plassere koordinatene til sitt nærmeste punkt i vegnettet med funksjonen **node_koord**. -->
 
-**graph** benyttes for å beregne korteste kjøretid/-vei i meter eller minutter med funksjonen **beregne avstand**. Denne benyttes også for å vise hvilke noder i hvilken rekkefølge som utgjør den korteste kjøreavstanden.
+<!-- **graph** benyttes for å beregne korteste kjøretid/-vei i meter eller minutter med funksjonen **beregne avstand**. Denne benyttes også for å vise hvilke noder i hvilken rekkefølge som utgjør den korteste kjøreavstanden. -->
 
-**graph_cppRouting_FT_MINUTES** benyttes for å beregne korteste kjøretid i minutter med funksjonen **beregne_avstand_cpp**. **graph_cppRouting_LENGTH** benyttes for å beregne korteste kjøreavstand i meter.
+<!-- **graph_cppRouting_FT_MINUTES** benyttes for å beregne korteste kjøretid i minutter med funksjonen **beregne_avstand_cpp**. **graph_cppRouting_LENGTH** benyttes for å beregne korteste kjøreavstand i meter. -->
 
-```{r, eval=TRUE}
-vegnett_list <- GISSB::vegnett_to_R(vegnett = vegnett)
+<!-- ```{r, eval=TRUE} -->
+<!-- vegnett_list <- GISSB::vegnett_to_R(vegnett = vegnett) -->
 
-graph <- vegnett_list[[1]]
-nodes <- vegnett_list[[2]]
-edges <- vegnett_list[[3]]
-graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
-graph_cppRouting_LENGTH <- vegnett_list[[5]]
-```
+<!-- graph <- vegnett_list[[1]] -->
+<!-- nodes <- vegnett_list[[2]] -->
+<!-- edges <- vegnett_list[[3]] -->
+<!-- graph_cppRouting_FT_MINUTES <- vegnett_list[[4]] -->
+<!-- graph_cppRouting_LENGTH <- vegnett_list[[5]] -->
+<!-- ``` -->
 
-Vegnettet består av punkter som er plassert ca. 50 meter fra hverandre. Disse punktene kalles for noder. Lenkene som forbinder punktene sammen heter edges. For en mer detaljert gjennomgang av struktren til vegnettet og hvordan dette blir behandlet, se [her](https://github.com/statisticsnorway/geostat-wp2/blob/3272bbb87bad79b3f976a83923da39b023973e36/analysis/Demo_databehandling.ipynb).
+<!-- Vegnettet består av punkter som er plassert ca. 50 meter fra hverandre. Disse punktene kalles for noder. Lenkene som forbinder punktene sammen heter edges. For en mer detaljert gjennomgang av struktren til vegnettet og hvordan dette blir behandlet, se [her](https://github.com/statisticsnorway/geostat-wp2/blob/3272bbb87bad79b3f976a83923da39b023973e36/analysis/Demo_databehandling.ipynb). -->
 
-## Knytter koordinater til vegnettet (node_koord)
+<!-- ## Knytter koordinater til vegnettet (node_koord) -->
 
-For å kunne beregne kjøretid-/vei fra et valgt start- og stoppunkt (uten å vite hvilken node-ID disse har) må man knytte adressene til deres nærmeste punkt i vegnettet. Dette gjøres ved å finne hvilken node som er den nærmeste et gitt koordinatpunkt (X og Y). Ved å bruke funksjonen knn fra pakken [nabor](https://rdrr.io/cran/nabor/man/knn.html) finner man det nærmeste punktet i meter (målt i luftlinje). knn = 1 betyr at man kun er interessert i det nærmeste punktet og dette er satt som default. Dersom denne settes til et annet tall (gjøres ved å legge til argumentet knn = X i funksjonen) får man det nærmeste, nest nærmeste, tredje nærmeste punktet osv. Dette kan være nyttig dersom det nærmeste punktet i vegnettet ikke finner en gyldig rute pga. enveiskjørte veier eller andre brudd i vegnettet.
+<!-- For å kunne beregne kjøretid-/vei fra et valgt start- og stoppunkt (uten å vite hvilken node-ID disse har) må man knytte adressene til deres nærmeste punkt i vegnettet. Dette gjøres ved å finne hvilken node som er den nærmeste et gitt koordinatpunkt (X og Y). Ved å bruke funksjonen knn fra pakken [nabor](https://rdrr.io/cran/nabor/man/knn.html) finner man det nærmeste punktet i meter (målt i luftlinje). knn = 1 betyr at man kun er interessert i det nærmeste punktet og dette er satt som default. Dersom denne settes til et annet tall (gjøres ved å legge til argumentet knn = X i funksjonen) får man det nærmeste, nest nærmeste, tredje nærmeste punktet osv. Dette kan være nyttig dersom det nærmeste punktet i vegnettet ikke finner en gyldig rute pga. enveiskjørte veier eller andre brudd i vegnettet. -->
 
-I funksjonen **node_koord** legger man inn et sf-objekt med koordinatene til ett eller flere punkter. Resultatet er et objekt (data.frame) der node-ID-en til den nærmeste noden til koordinatene målt i luftlinje har blitt lagt til (from_node/to_node). I tillegg viser kolonnen avstand_koord_node_from/avstand_koord_node_to hvor mange meter det er i luftlinje mellom koordinatene og det nærmeste punktet i vegnettverket. Dette kan være nyttig for å avgjøre om det er enkelte punkter/koordinater som har tildelt noder som er for langt fra hverandre. 
+<!-- I funksjonen **node_koord** legger man inn et sf-objekt med koordinatene til ett eller flere punkter. Resultatet er et objekt (data.frame) der node-ID-en til den nærmeste noden til koordinatene målt i luftlinje har blitt lagt til (from_node/to_node). I tillegg viser kolonnen avstand_koord_node_from/avstand_koord_node_to hvor mange meter det er i luftlinje mellom koordinatene og det nærmeste punktet i vegnettverket. Dette kan være nyttig for å avgjøre om det er enkelte punkter/koordinater som har tildelt noder som er for langt fra hverandre.  -->
 
-For å kjøre koden må objektene nodes og edges (som lages med funksjonen **vegnett_to_R**) være lastet inn.
+<!-- For å kjøre koden må objektene nodes og edges (som lages med funksjonen **vegnett_to_R**) være lastet inn. -->
 
-```{r, eval=TRUE}
-from_node <- GISSB::node_koord(koords = fra, fra_til = "fra")
-from_node
+<!-- ```{r, eval=TRUE} -->
+<!-- from_node <- GISSB::node_koord(koords = fra, fra_til = "fra") -->
+<!-- from_node -->
 
-to_node <- GISSB::node_koord(koords = til, fra_til = "til")
-to_node
-```
+<!-- to_node <- GISSB::node_koord(koords = til, fra_til = "til") -->
+<!-- to_node -->
+<!-- ``` -->
 
-Vegnettet består av flere mindre vegnett der flere ikke har noen tilknytning til hverandre. Dersom man har et startpunkt som tilhører en annen del av vegnettet enn stoppunktet vil det ikke være mulig å finne en gyldig rute mellom disse. Se mer om dette under "Ett eller flere separate vegnett?" [her](https://github.com/statisticsnorway/geostat-wp2/blob/master/analysis/Demo_databehandling.ipynb). Man legger til argumentet membership = TRUE for å begrense listen over hvilke noder man leter etter til å kun gjelde noder som er tilknyttet samme vegnett som enten start- eller stoppnoden. Dette kan bare gjøres for enten "fra" eller "til" og koden som har membership = FALSE må kjøres før koden som har membership = TRUE: 
+<!-- Vegnettet består av flere mindre vegnett der flere ikke har noen tilknytning til hverandre. Dersom man har et startpunkt som tilhører en annen del av vegnettet enn stoppunktet vil det ikke være mulig å finne en gyldig rute mellom disse. Se mer om dette under "Ett eller flere separate vegnett?" [her](https://github.com/statisticsnorway/geostat-wp2/blob/master/analysis/Demo_databehandling.ipynb). Man legger til argumentet membership = TRUE for å begrense listen over hvilke noder man leter etter til å kun gjelde noder som er tilknyttet samme vegnett som enten start- eller stoppnoden. Dette kan bare gjøres for enten "fra" eller "til" og koden som har membership = FALSE må kjøres før koden som har membership = TRUE:  -->
 
-```{r, eval=TRUE}
-from_node <- GISSB::node_koord(koords = fra, fra_til = "fra", membership = F)
-from_node
+<!-- ```{r, eval=TRUE} -->
+<!-- from_node <- GISSB::node_koord(koords = fra, fra_til = "fra", membership = F) -->
+<!-- from_node -->
 
-to_node <- GISSB::node_koord(koords = til, fra_til = "til", membership = T)
-to_node
-```
+<!-- to_node <- GISSB::node_koord(koords = til, fra_til = "til", membership = T) -->
+<!-- to_node -->
+<!-- ``` -->
 
-## Beregner kjøreavstand med tidygraph (beregne_avstand)
+<!-- ## Beregner kjøreavstand med tidygraph (beregne_avstand) -->
 
-Når man har en node-ID for både start- og stoppunkt kan man benytte funksjonen **beregne_avstand** for å beregne den korteste kjøreavstanden mellom disse. For å beregne korteste kjøreavstand i minutter setter man enhet = "FT_MINUTES" (default), mens enhet = "LENGTH" beregner korteste kjøreavstand i meter.
+<!-- Når man har en node-ID for både start- og stoppunkt kan man benytte funksjonen **beregne_avstand** for å beregne den korteste kjøreavstanden mellom disse. For å beregne korteste kjøreavstand i minutter setter man enhet = "FT_MINUTES" (default), mens enhet = "LENGTH" beregner korteste kjøreavstand i meter. -->
 
-For å kjøre koden må objektet graph (som lages med funksjonen **vegnett_to_R**) være lastet inn.
+<!-- For å kjøre koden må objektet graph (som lages med funksjonen **vegnett_to_R**) være lastet inn. -->
 
-OBS: **beregne_avstand** fungerer ikke med vektorer, dvs. liste over flere fra- eller tilnoder. Det er kun mulig å beregne avstander én til én. For å beregne avstand med flere fra- og/eller tilnoder, se **beregne_avstand_cpp**.
+<!-- OBS: **beregne_avstand** fungerer ikke med vektorer, dvs. liste over flere fra- eller tilnoder. Det er kun mulig å beregne avstander én til én. For å beregne avstand med flere fra- og/eller tilnoder, se **beregne_avstand_cpp**. -->
 
-```{r, eval=TRUE}
-avstand_min <- GISSB::beregne_avstand(from_node = from_node$from_node, 
-                           to_node = to_node$to_node, 
-                           enhet = "FT_MINUTES", 
-                           path = F)
+<!-- ```{r, eval=TRUE} -->
+<!-- avstand_min <- GISSB::beregne_avstand(from_node = from_node$from_node,  -->
+<!--                            to_node = to_node$to_node,  -->
+<!--                            enhet = "FT_MINUTES",  -->
+<!--                            path = F) -->
 
-paste0(round(avstand_min$length, digits = 1), " minutter / ",
-       substr(avstand_min$length/60, 1, 1),
-       " timer og ",
-       round(avstand_min$length, digits = 0)-as.numeric(substr(avstand_min$length/60, 1, 1))*60, " minutter")
+<!-- paste0(round(avstand_min$length, digits = 1), " minutter / ", -->
+<!--        substr(avstand_min$length/60, 1, 1), -->
+<!--        " timer og ", -->
+<!--        round(avstand_min$length, digits = 0)-as.numeric(substr(avstand_min$length/60, 1, 1))*60, " minutter") -->
 
-avstand_meter <- GISSB::beregne_avstand(from_node = from_node$from_node, 
-                                 to_node = to_node$to_node, 
-                                 enhet = "LENGTH", 
-                                 path = F)
+<!-- avstand_meter <- GISSB::beregne_avstand(from_node = from_node$from_node,  -->
+<!--                                  to_node = to_node$to_node,  -->
+<!--                                  enhet = "LENGTH",  -->
+<!--                                  path = F) -->
 
-paste0(round(avstand_meter$length, digits = 1), " meter / ",
-       round(avstand_meter$length/1000, digits = 1), " km." 
-       )
+<!-- paste0(round(avstand_meter$length, digits = 1), " meter / ", -->
+<!--        round(avstand_meter$length/1000, digits = 1), " km."  -->
+<!--        ) -->
 
-```
+<!-- ``` -->
 
-Dersom man ønsker å få oppgitt hvilke noder i hvilken rekkefølge som utgjør den korteste ruten mellom start- og stoppunktet setter man argumentet path = TRUE.
+<!-- Dersom man ønsker å få oppgitt hvilke noder i hvilken rekkefølge som utgjør den korteste ruten mellom start- og stoppunktet setter man argumentet path = TRUE. -->
 
-```{r, eval=TRUE}
-path <- GISSB::beregne_avstand(from_node = from_node$from_node, 
-                           to_node = to_node$to_node, 
-                           enhet = "FT_MINUTES", 
-                           path = T)
+<!-- ```{r, eval=TRUE} -->
+<!-- path <- GISSB::beregne_avstand(from_node = from_node$from_node,  -->
+<!--                            to_node = to_node$to_node,  -->
+<!--                            enhet = "FT_MINUTES",  -->
+<!--                            path = T) -->
 
-path$epath
-```
+<!-- path$epath -->
+<!-- ``` -->
 
-Det er mulig å visualisere denne ruten (path) ved å bruke funksjonen **path_leaflet**:
+<!-- Det er mulig å visualisere denne ruten (path) ved å bruke funksjonen **path_leaflet**: -->
 
-```{r, eval=TRUE}
-GISSB::path_leaflet(path)
-```
+<!-- ```{r, eval=TRUE} -->
+<!-- GISSB::path_leaflet(path) -->
+<!-- ``` -->
 
-## Beregner kjøreavstand med cppRouting (beregne_avstand_cpp)
+<!-- ## Beregner kjøreavstand med cppRouting (beregne_avstand_cpp) -->
 
-Det er mulig å bruke funksjonen **beregne_avstand** til å beregne kjøretid/-vei, men dette kan ta veldig lang tid dersom man skal beregne kjøreavstanden mellom mange koordinater. Derfor er det best å heller bruke funksjonen **beregne_avstand_cpp**. Denne funksjonen bruker pakken [cppRouting](https://github.com/vlarmet/cppRouting/blob/master/README.md) som benytter et annet format på dataene som krever mindre minne og benytter parallellprosessering, noe som gjør at kjøringer går mye raskere. I tillegg lagres ikke informasjonen om selve ruten, kun avstanden i minutter eller meter. Dette er en fordel mtp. på tiden det tar å kjøre koden, men ulempen er at man ikke får sjekket hvilke veglenker hver rute består av. Dette kan derfor funksjonen **beregne_avstand** (med path = TRUE) brukes til.
+<!-- Det er mulig å bruke funksjonen **beregne_avstand** til å beregne kjøretid/-vei, men dette kan ta veldig lang tid dersom man skal beregne kjøreavstanden mellom mange koordinater. Derfor er det best å heller bruke funksjonen **beregne_avstand_cpp**. Denne funksjonen bruker pakken [cppRouting](https://github.com/vlarmet/cppRouting/blob/master/README.md) som benytter et annet format på dataene som krever mindre minne og benytter parallellprosessering, noe som gjør at kjøringer går mye raskere. I tillegg lagres ikke informasjonen om selve ruten, kun avstanden i minutter eller meter. Dette er en fordel mtp. på tiden det tar å kjøre koden, men ulempen er at man ikke får sjekket hvilke veglenker hver rute består av. Dette kan derfor funksjonen **beregne_avstand** (med path = TRUE) brukes til. -->
 
-I funksjonen **beregne_avstand_cpp** kan man legge inn vektorer med flere noder i både argumentene "from_node" og "to_node." Det betyr at dersom man legger inn 2 noder i "from_node" og 4 noder i "to_node" beregnes den korteste kjøreavstanden fra begge startnodene til alle de fire stoppnodene. Resultatet blir et objekt med 8 rader. Om man kun er interessert i den korteste kjøreavstanden fra hver av startnodene til én av stoppnodene legger man inn arumentet dist = "min i funksjonen. Om man derimot vil ha hvilken av stoppnodene som har lengst kjøreavstand per startnode settes dist = "max".  
+<!-- I funksjonen **beregne_avstand_cpp** kan man legge inn vektorer med flere noder i både argumentene "from_node" og "to_node." Det betyr at dersom man legger inn 2 noder i "from_node" og 4 noder i "to_node" beregnes den korteste kjøreavstanden fra begge startnodene til alle de fire stoppnodene. Resultatet blir et objekt med 8 rader. Om man kun er interessert i den korteste kjøreavstanden fra hver av startnodene til én av stoppnodene legger man inn arumentet dist = "min i funksjonen. Om man derimot vil ha hvilken av stoppnodene som har lengst kjøreavstand per startnode settes dist = "max".   -->
 
-For å beregne korteste kjøretid i minutter med **beregne_avstand_cpp** settes graph_cppRouting = graph_cppRouting_FT_MINUTES, mens graph_cppRouting = graph_cppRouting_LENGTH beregner korteste kjøreavstand i meter. Objektet/objektene graph_cppRouting_FT_MINUTES/graph_cppRouting_LENGTH må være lastet inn (gjøres med funksjonen **vegnett_to_R**) før **beregne_avstand_cpp** kan kjøres.
+<!-- For å beregne korteste kjøretid i minutter med **beregne_avstand_cpp** settes graph_cppRouting = graph_cppRouting_FT_MINUTES, mens graph_cppRouting = graph_cppRouting_LENGTH beregner korteste kjøreavstand i meter. Objektet/objektene graph_cppRouting_FT_MINUTES/graph_cppRouting_LENGTH må være lastet inn (gjøres med funksjonen **vegnett_to_R**) før **beregne_avstand_cpp** kan kjøres. -->
 
-```{r, eval=TRUE}
-avstand_cpp_min <- GISSB::beregne_avstand_cpp(from_node$from_node, 
-                                       to_node$to_node, 
-                                       enhet = "FT_MINUTES")
+<!-- ```{r, eval=TRUE} -->
+<!-- avstand_cpp_min <- GISSB::beregne_avstand_cpp(from_node$from_node,  -->
+<!--                                        to_node$to_node,  -->
+<!--                                        enhet = "FT_MINUTES") -->
 
-avstand_cpp_min
+<!-- avstand_cpp_min -->
 
-avstand_cpp_meter <- GISSB::beregne_avstand_cpp(from_node$from_node, 
-                                       to_node$to_node, 
-                                       enhet = "LENGTH")
+<!-- avstand_cpp_meter <- GISSB::beregne_avstand_cpp(from_node$from_node,  -->
+<!--                                        to_node$to_node,  -->
+<!--                                        enhet = "LENGTH") -->
 
-avstand_cpp_meter
-```
+<!-- avstand_cpp_meter -->
+<!-- ``` -->
 
-## Eksempel
+<!-- ## Eksempel -->
 
-I dette eksempelet...
+<!-- I dette eksempelet... -->
 
-```{r, eval=TRUE}
+<!-- ```{r, eval=TRUE} -->
 
-adresser <- c("Sykehusveien 25",
-              "Sognsvannsveien 20", 
-              "Kirkeveien 166", 
-              "Parkvegen 35", 
-              "Kirkevegen 31", 
-              "Sjukehusveien 9", 
-              "Sogneprest Munthe-Kaas vei 100")
+<!-- adresser <- c("Sykehusveien 25", -->
+<!--               "Sognsvannsveien 20",  -->
+<!--               "Kirkeveien 166",  -->
+<!--               "Parkvegen 35",  -->
+<!--               "Kirkevegen 31",  -->
+<!--               "Sjukehusveien 9",  -->
+<!--               "Sogneprest Munthe-Kaas vei 100") -->
 
-postnummere <- c("1474",
-              "0372", 
-              "0450", 
-              "2212", 
-              "2413", 
-              "2500", 
-              "1346")
+<!-- postnummere <- c("1474", -->
+<!--               "0372",  -->
+<!--               "0450",  -->
+<!--               "2212",  -->
+<!--               "2413",  -->
+<!--               "2500",  -->
+<!--               "1346") -->
 
-til <- GISSB::adresse_api_koord(postnummer = postnummere,
-                         adresse = adresser) %>% 
-  GISSB::koords_to_google()
-to_node <- GISSB::node_koord(koords = til, fra_til = "til", membership = F)
+<!-- til <- GISSB::adresse_api_koord(postnummer = postnummere, -->
+<!--                          adresse = adresser) %>%  -->
+<!--   GISSB::koords_to_google() -->
+<!-- to_node <- GISSB::node_koord(koords = til, fra_til = "til", membership = F) -->
 
-fra <- GISSB::adresse_api_koord(postnummer = c("0177", "2211"),
-                         adresse = c("Akersveien 26", "Otervegen 23")) %>%
-  GISSB::koords_to_google()
-from_node <- GISSB::node_koord(koords = fra, fra_til = "fra", membership = T)
+<!-- fra <- GISSB::adresse_api_koord(postnummer = c("0177", "2211"), -->
+<!--                          adresse = c("Akersveien 26", "Otervegen 23")) %>% -->
+<!--   GISSB::koords_to_google() -->
+<!-- from_node <- GISSB::node_koord(koords = fra, fra_til = "fra", membership = T) -->
 
-avstand_cpp <- GISSB::beregne_avstand_cpp(unique(from_node$from_node), 
-                                       unique(to_node$to_node), 
-                                       enhet = "FT_MINUTES")
-avstand_cpp
+<!-- avstand_cpp <- GISSB::beregne_avstand_cpp(unique(from_node$from_node),  -->
+<!--                                        unique(to_node$to_node),  -->
+<!--                                        enhet = "FT_MINUTES") -->
+<!-- avstand_cpp -->
 
-avstand_cpp_min <- GISSB::beregne_avstand_cpp(unique(from_node$from_node), 
-                                       unique(to_node$to_node), 
-                                       enhet = "FT_MINUTES", 
-                                       dist = "min")
-avstand_cpp_min
+<!-- avstand_cpp_min <- GISSB::beregne_avstand_cpp(unique(from_node$from_node),  -->
+<!--                                        unique(to_node$to_node),  -->
+<!--                                        enhet = "FT_MINUTES",  -->
+<!--                                        dist = "min") -->
+<!-- avstand_cpp_min -->
 
-avstand_cpp_max <- GISSB::beregne_avstand_cpp(unique(from_node$from_node), 
-                                       unique(to_node$to_node), 
-                                       enhet = "FT_MINUTES", 
-                                       dist = "max")
-avstand_cpp_max
+<!-- avstand_cpp_max <- GISSB::beregne_avstand_cpp(unique(from_node$from_node),  -->
+<!--                                        unique(to_node$to_node),  -->
+<!--                                        enhet = "FT_MINUTES",  -->
+<!--                                        dist = "max") -->
+<!-- avstand_cpp_max -->
 
 
 
-```
+<!-- ``` -->
