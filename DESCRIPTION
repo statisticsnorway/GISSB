@@ -28,3 +28,5 @@ Imports:
     tibble,
     tidygraph
 VignetteBuilder: knitr
+URL: https://statisticsnorway.github.io/GISSB/,
+    https://shiny-train-492d94f8.pages.github.io/
