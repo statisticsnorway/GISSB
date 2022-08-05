@@ -73,6 +73,6 @@ devtools::build()
 pkgdown::build_site()
 # # usethis::use_vignette("GISSB_vignette")
 
-usethis::use_pkgdown_github_pages()
-pkgdown::build_site_github_pages()
 
+pkgdown::build_site_github_pages()
+usethis::use_pkgdown_github_pages()
