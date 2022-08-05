@@ -80,3 +80,5 @@ pkgdown::build_site()
 # OBS: commit/push!
 
 # GISSB_vignette: ,knit til .md før buil_site?
+
+
