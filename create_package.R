@@ -72,5 +72,5 @@ devtools::build()
 # usethis::use_pkgdown() # OBS: docs legges i .gitignore (må fjernes)
 # pkgdown::build_site()
 
-usethis::use_pkgdown_github_pages()
+usethis::use_pkgdown_github_pages() # OBS: docs legges i .gitignore (må fjernes)
 pkgdown::build_site_github_pages()
