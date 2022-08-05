@@ -1,18 +1,18 @@
 
-#' Konverter vegnett til R
+#' Konverte vegnettet til nettverksgrafer i R
 #'
-#' Funksjon for å omgjøre vegnettet fra Nasjonal vegdatabank (NVDB) til formater tilpasset nettverksanalyse i R (tbl_graph og cppRouting)
+#' Funksjon for å omgjøre vegnettet fra Nasjonal vegdatabank (NVDB) til formater tilpasset nettverksanalyse i R (tbl_graph og cppRouting).
 #'
-#' @param vegnett Vegnett som et sf-objekt.
-#' @param crs_out Numerisk vektor for ønsket koordinatsystem.
+#' @param vegnett Vegnettet som et sf-objekt.
+#' @param crs_out Numerisk vektor for ønsket koordinatsystem (CRS).
 #'
 #' @returns Liste med følgende objekter:
 #'
-#' [1] graph: vegnettet strukturert som "tidy graph" (tbl_graph-objekt),
+#' [1] graph: vegnettet strukturert som "tidy graph" (tbl_graph-objekt)
 #'
-#' [2] nodes: nodene til vegnettet (sf-objekt),
+#' [2] nodes: nodene til vegnettet (sf-objekt)
 #'
-#' [3] edges: veglenkene som vegnettet består av (data.frame),
+#' [3] edges: veglenkene som vegnettet består av (data.frame)
 #'
 #' [4] graph_cppRouting_FT_MINUTES: vegnettet strukturert som "cppRouting graph" med kostnaden per veglenke i minutter (cppRouting-objekt)
 #'

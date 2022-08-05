@@ -3,23 +3,23 @@
 \encoding{UTF-8}
 \name{vegnett_to_R}
 \alias{vegnett_to_R}
-\title{Konverter vegnett til R}
+\title{Konverte vegnettet til nettverksgrafer i R}
 \usage{
 vegnett_to_R(vegnett, crs_out = 25833)
 }
 \arguments{
-\item{vegnett}{Vegnett som et sf-objekt.}
+\item{vegnett}{Vegnettet som et sf-objekt.}
 
-\item{crs_out}{Numerisk vektor for ønsket koordinatsystem.}
+\item{crs_out}{Numerisk vektor for ønsket koordinatsystem (CRS).}
 }
 \value{
 Liste med følgende objekter:
 
-[1] graph: vegnettet strukturert som "tidy graph" (tbl_graph-objekt),
+[1] graph: vegnettet strukturert som "tidy graph" (tbl_graph-objekt)
 
-[2] nodes: nodene til vegnettet (sf-objekt),
+[2] nodes: nodene til vegnettet (sf-objekt)
 
-[3] edges: veglenkene som vegnettet består av (data.frame),
+[3] edges: veglenkene som vegnettet består av (data.frame)
 
 [4] graph_cppRouting_FT_MINUTES: vegnettet strukturert som "cppRouting graph" med kostnaden per veglenke i minutter (cppRouting-objekt)
 

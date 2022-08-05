@@ -14,7 +14,7 @@ beregne_avstand(from_node, to_node, enhet = "FT_MINUTES", path = F)
 
 \item{enhet}{Karaktervektor med "FT_MINUTES" for å få korteste kjørerute målt i minutter eller "LENGTH" for korteste kjørerute målt i meter.}
 
-\item{path}{Boolsk.}
+\item{path}{Boolsk. Dersom path = TRUE returneres nodelenken som den korteste kjøreruten består av.}
 }
 \value{
 Vektor med korteste kjørerute i minutter eller meter. Dersom path = T returneres nodelenken som den korteste kjøreruten består av.

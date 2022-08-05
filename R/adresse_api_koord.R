@@ -3,9 +3,9 @@
 #'
 #' Funksjon for å finne koordinater fra matrikkelen (adresse-API fra Kartverket).
 #'
-#' @param postnummer Karaktervektor med postnummer
-#' @param adresse Karaktervektor med gateadresse (med gatenummer hvis tilgjengelig)
-#' @param format Format på datasettet som returneres. Default er satt til "sf" (sf-objekt), men det er også mulig å sette format = "tibble" eller "data.frame"
+#' @param postnummer Karaktervektor med postnummer.
+#' @param adresse Karaktervektor med gateadresse (og gatenummer hvis tilgjengelig).
+#' @param format Format på datasettet som returneres. Default er satt til "sf" (sf-objekt), men det er også mulig å sette format = "tibble" eller "data.frame".
 #' @param crs Numerisk vektor med ønsket koordinatsystem for koordinatene. Default er satt til CRS 25833.
 #'
 #' @returns Objekt med koordinatene til adressene.

@@ -8,11 +8,11 @@
 adresse_api_koord(postnummer, adresse, format = "sf", crs = 25833)
 }
 \arguments{
-\item{postnummer}{Karaktervektor med postnummer}
+\item{postnummer}{Karaktervektor med postnummer.}
 
-\item{adresse}{Karaktervektor med gateadresse (med gatenummer hvis tilgjengelig)}
+\item{adresse}{Karaktervektor med gateadresse (og gatenummer hvis tilgjengelig).}
 
-\item{format}{Format på datasettet som returneres. Default er satt til "sf" (sf-objekt), men det er også mulig å sette format = "tibble" eller "data.frame"}
+\item{format}{Format på datasettet som returneres. Default er satt til "sf" (sf-objekt), men det er også mulig å sette format = "tibble" eller "data.frame".}
 
 \item{crs}{Numerisk vektor med ønsket koordinatsystem for koordinatene. Default er satt til CRS 25833.}
 }

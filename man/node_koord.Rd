@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{node_koord}
 \alias{node_koord}
-\title{Knytte koordinater til noder}
+\title{Knytte koordinater til noder i vegnettet}
 \usage{
 node_koord(
   koords,
@@ -31,7 +31,7 @@ node_koord(
 Objekt (data.frame) med kolonnene from_node/to_node, membership, coords_google_from_node/coords_google_to_node, nabor og ID
 }
 \description{
-Funksjon for å finne nærmeste punkt i vegnettet (node) til angitte koordinater.
+Funksjon for å finne nærmeste punkter (noder) i vegnettet til angitte koordinater.
 }
 \examples{
 fra <- adresse_api_koord(postnummer = "0177",

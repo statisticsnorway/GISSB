@@ -11,7 +11,7 @@ LazyData: true
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Imports: 
     cppRouting,
     dplyr,

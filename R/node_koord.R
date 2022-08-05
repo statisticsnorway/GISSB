@@ -1,7 +1,7 @@
 
-#' Knytte koordinater til noder
+#' Knytte koordinater til noder i vegnettet
 #'
-#' Funksjon for å finne nærmeste punkt i vegnettet (node) til angitte koordinater.
+#' Funksjon for å finne nærmeste punkter (noder) i vegnettet til angitte koordinater.
 #'
 #' @param koords sf-objekt med koordinatene man ønsker å plassere på vegnettet.
 #' @param fra_til Karaktervektor med "fra" dersom noden skal være et startpunkt eller "til" dersom noden skal være et stoppunkt.
