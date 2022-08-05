@@ -68,9 +68,9 @@ devtools::build()
 # devtools::install_github
 
 # Lager vignette
-usethis::use_pkgdown() # OBS: docs legges i .gitignore (må fjernes)
-pkgdown::build_site()
-
 # usethis::use_vignette("GISSB_vignette")
-# pkgdown::build_site_github_pages()
-# usethis::use_pkgdown_github_pages()
+# usethis::use_pkgdown() # OBS: docs legges i .gitignore (må fjernes)
+# pkgdown::build_site()
+
+usethis::use_pkgdown_github_pages()
+pkgdown::build_site_github_pages()
