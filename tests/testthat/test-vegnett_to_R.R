@@ -1,11 +1,12 @@
 
+# OBS:
 
 # Laster inn vegnett
 vegnett <- arrow::open_dataset("X:/330/Helse-Individ-gruppe/2020-PA8-S-E-GEOS -WP2/GIS i R/Data/Vegnettverk/vegnett2021.parquet") %>%
   dplyr::filter(FYLKE_ID %in% c("3", "2", "4")) %>%
   sfarrow::read_sf_dataset()
 
-testthat::test_that("Tester vegnett_to_R", {
+testthat::test_that("Testing vegnett_to_R", {
 
   vegnett_list <- vegnett_to_R(vegnett = vegnett)
 

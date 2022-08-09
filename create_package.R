@@ -24,35 +24,34 @@ usethis::use_package("tibble", type = "imports")
 usethis::use_package("leaflet", type = "imports")
 usethis::use_package("RCurl", type = "imports")
 
-
+usethis::use_pipe()
 
 # Legger til automatiske tester for funksjonene #
 
 devtools::load_all()
 
-usethis::use_r("adresse_api_koord")
-usethis::use_test("adresse_api_koord")
+# Kjør bare en gang #
 
-usethis::use_r("koords_to_google")
-usethis::use_test("koords_to_google")
-
-usethis::use_r("vegnett_to_R")
-usethis::use_test("vegnett_to_R")
-
-usethis::use_r("node_koord")
-usethis::use_test("node_koord")
-
-usethis::use_r("beregne_avstand")
-usethis::use_test("beregne_avstand")
-
-usethis::use_r("beregne_avstand_cpp")
-usethis::use_test("beregne_avstand_cpp")
-
-usethis::use_r("path_leaflet")
-usethis::use_test("path_leaflet")
-
-# beregne_avstand
-
+# usethis::use_r("address_to_coord")
+# usethis::use_test("address_to_coord")
+#
+# usethis::use_r("coords_to_google")
+# usethis::use_test("coords_to_google")
+#
+# usethis::use_r("vegnett_to_R")
+# usethis::use_test("vegnett_to_R")
+#
+# usethis::use_r("coords_to_node")
+# usethis::use_test("coords_to_node")
+#
+# usethis::use_r("shortest_path_igraph")
+# usethis::use_test("shortest_path_igraph")
+#
+# usethis::use_r("shortest_path_cppRouting")
+# usethis::use_test("shortest_path_cppRouting")
+#
+# usethis::use_r("path_leaflet")
+# usethis::use_test("path_leaflet")
 
 # rm(list = c("beregne_avstand_cpp"))
 devtools::document()

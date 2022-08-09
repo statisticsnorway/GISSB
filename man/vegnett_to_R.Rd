@@ -3,30 +3,30 @@
 \encoding{UTF-8}
 \name{vegnett_to_R}
 \alias{vegnett_to_R}
-\title{Konverte vegnettet til nettverksgrafer i R}
+\title{Convert the Norwegian road network into network graphs in R}
 \usage{
 vegnett_to_R(vegnett, crs_out = 25833)
 }
 \arguments{
-\item{vegnett}{Vegnettet som et sf-objekt.}
+\item{vegnett}{The road network as an sf object.}
 
-\item{crs_out}{Numerisk vektor for ønsket koordinatsystem (CRS).}
+\item{crs_out}{Numeric vector with the chosen coordinate reference system (CRS).}
 }
 \value{
-Liste med følgende objekter:
+List containing the following elements:
 
-[1] graph: vegnettet strukturert som "tidy graph" (tbl_graph-objekt)
+[1] graph: the road network structured as a tidy graph (tbl_graph object)
 
-[2] nodes: nodene til vegnettet (sf-objekt)
+[2] nodes: the road network's nodes (sf object)
 
-[3] edges: veglenkene som vegnettet består av (data.frame)
+[3] edges: road network's node links (data.frame)
 
-[4] graph_cppRouting_FT_MINUTES: vegnettet strukturert som "cppRouting graph" med kostnaden per veglenke i minutter (cppRouting-objekt)
+[4] graph_cppRouting_FT_MINUTES: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 
-[5] graph_cppRouting_LENGTH: vegnettet strukturert som "cppRouting graph" med kostnaden per veglenke i meter (cppRouting-objekt)
+[5] graph_cppRouting_LENGTH: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 }
 \description{
-Funksjon for å omgjøre vegnettet fra Nasjonal vegdatabank (NVDB) til formater tilpasset nettverksanalyse i R (tbl_graph og cppRouting)
+Function to convert the Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), to formats that allows for network analysis in R (tbl_graph and cppRouting).
 }
 \examples{
 vegnett_list <- vegnett_to_R(vegnett = vegnett)

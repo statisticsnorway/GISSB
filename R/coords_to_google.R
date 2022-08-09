@@ -1,29 +1,29 @@
 
 
-#' Koordinater til Google Maps
+#' Convert coordinates to Google Maps
 #'
-#' Funksjon for å omgjøre koordinater til et format som er enkelt å klippe og lime inn i Google Maps.
+#' Function to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
 #'
-#' @param koords sf-objekt med en geometrikolonne som skal omgjøres til CRS 4326
-#' @param crs_out Ønsket koordinatsystem (CRS) for geometrikolonnen til sf-objektet som returneres
+#' @param coords An sf object with a geometry column that will be converted to CRS 4326.
+#' @param crs_out Chosen coordinate reference system (CRS) for the geometry column of the returned sf object.
 
-#' @returns sf-objekt med en ny kolonne lagt til (coords_google)
+#' @returns An sf object with a new column added (coords_google).
 #' @export
 #'
 #' @examples
-#' fra <- adresse_api_koord(postnummer = "0177",
-#'                          adresse = "Akersveien 26") %>%
-#'   koords_to_google()
+#' from <- address_to_coord(zip_code = "0177",
+#'                          address = "Akersveien 26") %>%
+#'   coords_to_google()
 #'
 #' @encoding UTF-8
 #'
 #'
 
-koords_to_google <- function(koords,
+coords_to_google <- function(coords,
                              crs_out = 25833) {
 
   # Forenkler koordinatene for å klippe og lime inn i Google Maps #
-  koords_4326 <- sf::st_transform(koords, crs = 4326) %>%
+  coords_4326 <- sf::st_transform(coords, crs = 4326) %>%
     dplyr::mutate(coords_google_1 = gsub("^(.*?),.*", "\\1", as.character(geometry)),
                   coords_google_2 = gsub(".*,", "\\1", as.character(geometry))) %>%
     dplyr::mutate(coords_google_1 = gsub("^c\\(|\\)$", "", as.character(coords_google_1)),
@@ -32,9 +32,9 @@ koords_to_google <- function(koords,
                   coords_google_2 = as.numeric(str_trim(coords_google_2))) %>%
     dplyr::mutate(coords_google = paste0(coords_google_2, ", ", coords_google_1)) %>%
     dplyr::select(-coords_google_1, -coords_google_2) %>%
-    sf::st_transform(koords, crs = crs_out)
+    sf::st_transform(coords, crs = crs_out)
   # data.frame()
 
-  return(koords_4326)
+  return(coords_4326)
 
 }

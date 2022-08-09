@@ -1,22 +1,22 @@
 
-#' Konverte vegnettet til nettverksgrafer i R
+#' Convert the Norwegian road network into network graphs in R
 #'
-#' Funksjon for å omgjøre vegnettet fra Nasjonal vegdatabank (NVDB) til formater tilpasset nettverksanalyse i R (tbl_graph og cppRouting).
+#' Function to convert the Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), to formats that allows for network analysis in R (tbl_graph and cppRouting).
 #'
-#' @param vegnett Vegnettet som et sf-objekt.
-#' @param crs_out Numerisk vektor for ønsket koordinatsystem (CRS).
+#' @param vegnett The road network as an sf object.
+#' @param crs_out Numeric vector with the chosen coordinate reference system (CRS).
 #'
-#' @returns Liste med følgende objekter:
+#' @returns List containing the following elements:
 #'
-#' [1] graph: vegnettet strukturert som "tidy graph" (tbl_graph-objekt)
+#' [1] graph: the road network structured as a tidy graph (tbl_graph object)
 #'
-#' [2] nodes: nodene til vegnettet (sf-objekt)
+#' [2] nodes: the road network's nodes (sf object)
 #'
-#' [3] edges: veglenkene som vegnettet består av (data.frame)
+#' [3] edges: road network's node links (data.frame)
 #'
-#' [4] graph_cppRouting_FT_MINUTES: vegnettet strukturert som "cppRouting graph" med kostnaden per veglenke i minutter (cppRouting-objekt)
+#' [4] graph_cppRouting_FT_MINUTES: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 #'
-#' [5] graph_cppRouting_LENGTH: vegnettet strukturert som "cppRouting graph" med kostnaden per veglenke i meter (cppRouting-objekt)
+#' [5] graph_cppRouting_LENGTH: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 #' @export
 #'
 #' @examples
@@ -53,12 +53,12 @@ vegnett_to_R <- function(vegnett,
 
   sf::st_geometry(vegnett) <- "geometry"
 
-  #####################
-  ## Databehandling ###
-  #####################
+  ######################
+  ## Data processing ###
+  ######################
 
-  # Legger til en ekstra rad der veien går begge veier #
-  # Lager subset med veier som går begge veier (B) og angir retning fra-til (FT) og til-fra (TF) #
+  # Adding an extra row where the road goes both ways #
+  # Creating a subset with values where the road goes both ways (B) and specifies direction from-to (FT) and to-from (TF) #
   B_FT <- vegnett %>%
     dplyr::filter(ONEWAY == "B") %>%
     dplyr::mutate(direction = "B_FT")
@@ -67,23 +67,23 @@ vegnett_to_R <- function(vegnett,
     dplyr::filter(ONEWAY == "B") %>%
     dplyr::mutate(direction = "B_TF")
 
-  # Subset med kun FT #
+  # Subset with only FT #
   FT <- vegnett %>%
     dplyr::filter(ONEWAY == "FT") %>%
     dplyr::mutate(direction = "FT")
 
-  # Subset med kun TF #
+  # Subset with only TF #
   TF <- vegnett %>%
     dplyr::filter(ONEWAY == "TF") %>%
     dplyr::mutate(direction = "TF")
 
-  # Binder sammen alle veglenkene #
+  # Binding together all the edges #
   edges <- rbind(B_FT, FT, B_TF, TF) %>%
-    dplyr::mutate(edgeID = c(1:n())) %>% # legger til ny edgeID
-    dplyr::mutate(FT_MINUTES = case_when( # Setter riktig FT_MINUTES for linjer som går TF
+    dplyr::mutate(edgeID = c(1:n())) %>% # adding new edge ID
+    dplyr::mutate(FT_MINUTES = case_when( # specify correct FT_MINUTES for edges that go TF
       direction %in% c("B_TF", "TF") ~ TF_MINUTES, TRUE ~ FT_MINUTES))
 
-  # Henter ut nodene til veglenkene og angir start- og end #
+  # Extracting the nodes from the edges and specifies start and end #
   nodes <- edges %>%
     sf::st_coordinates() %>%
     dplyr::as_tibble() %>%
@@ -97,43 +97,42 @@ vegnett_to_R <- function(vegnett,
     dplyr::mutate(start_end = case_when(
       direction %in% c("B_TF", "TF") & start_end == "start" ~ "end",
       direction %in% c("B_TF", "TF") & start_end == "end" ~ "start", TRUE ~ start_end)) %>%
-    dplyr::mutate(xy = paste(.$X, .$Y)) %>% # Legger til nodeID
+    dplyr::mutate(xy = paste(.$X, .$Y)) %>% # adding node ID
     dplyr::mutate(xy = factor(xy, levels = unique(xy))) %>%
     dplyr::group_by(xy) %>%
     dplyr::mutate(nodeID = cur_group_id()) %>%
     dplyr::ungroup() %>%
     dplyr::select(-xy, -geometry) #
-  # dplyr::select(-xy, -!!as.name(geometry)) # OBS:  Erstatt heller med funksjon tidligere som renamer geometrikolonnen
 
-  # Startnoder #
+  # Start nodes #
   source_nodes <- nodes %>%
     dplyr::filter(start_end == 'start') %>%
     dplyr::pull(nodeID)
 
-  # Endnoder #
+  # End nodes #
   target_nodes <- nodes %>%
     dplyr::filter(start_end == 'end') %>%
     dplyr::pull(nodeID)
 
-  # Lager edges fra source_nodes og target_nodes #
+  # Creating edges from source_nodes and target_nodes #
   edges <- edges %>%
     dplyr::mutate(from = source_nodes, to = target_nodes)
 
-  # Henter ut distinkte noder med punktkoordinater #
+  # Extracting distinct nodes with coordinates #
   nodes <- nodes %>%
     dplyr::distinct(nodeID, .keep_all = TRUE) %>%
     dplyr::select(-c(edgeID, start_end)) %>%
     sf::st_as_sf(coords = c('X', 'Y')) %>%
     sf::st_set_crs(sf::st_crs(edges))
 
-  # Lager tbl_graph-objekt av vegnettet #
+  # Creating tbl_graph object of the road network #
   graph <- tidygraph::tbl_graph(nodes = nodes, edges = as_tibble(edges), directed = T)
 
-  # Fjerner loops i graph #
+  # Removing loops in the graph #
   graph <- igraph::simplify(graph, remove.loops = T, remove.multiple = F)
   graph <- tidygraph::as_tbl_graph(graph)
 
-  # Henter ut nye edges (der loops er fjernet) #
+  # Extracting new edges (where loops are removed) #
   edges <- graph %>%
     tidygraph::activate(edges) %>%
     data.frame()
@@ -147,9 +146,9 @@ vegnett_to_R <- function(vegnett,
     sf::st_set_crs(crs_out)
 
 
-  #############################
-  ## Lager cppRouting graph ###
-  #############################
+  ################################
+  ## Creating cppRouting graph ###
+  ################################
 
   # FT_MINUTES #
   edges_FT_MINUTES <- edges %>%
@@ -173,7 +172,7 @@ vegnett_to_R <- function(vegnett,
     data.frame() %>%
     dplyr::select(nodeID, X, Y)
 
-  ### Lager cppRouting graph ###
+  ### Creating cppRouting graph ###
   graph_cppRouting_FT_MINUTES <- cppRouting::makegraph(edges_FT_MINUTES, directed = T, coords = node_list_coord)
   graph_cppRouting_LENGTH <- cppRouting::makegraph(edges_LENGTH, directed = T, coords = node_list_coord)
 

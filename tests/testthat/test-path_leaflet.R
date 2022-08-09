@@ -1,4 +1,4 @@
-test_that("Tester path_leaflet", {
+test_that("Testing path_leaflet", {
 
   map <- path_leaflet(path)
 

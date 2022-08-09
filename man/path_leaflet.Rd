@@ -3,19 +3,19 @@
 \encoding{UTF-8}
 \name{path_leaflet}
 \alias{path_leaflet}
-\title{Visualisere kjørerute med Leaflet}
+\title{Visualize the shortest path with Leaflet}
 \usage{
 path_leaflet(path)
 }
 \arguments{
-\item{path}{Objekt (list) som har blitt laget med funksjonen beregne_avstand (der path = TRUE).}
+\item{path}{Object (list) that has been created with the function `shortest_path_igraph` (where path = TRUE).}
 }
 \value{
-Interaktivt kart Leaflet som viser kjøreruten mellom et valgt fra- og tilpunkt på vegnettet.
+Interactive Leaflet map that shows the shortest path (in minutes or meters) between a chosen from and to node in the road network.
 }
 \description{
-Funksjonen path_leaflet visualiserer den korteste kjøreruten (i minutter eller meter) som har blitt beregnet med funksjonen beregne_avstand (der path = TRUE).
-For å få lastet inn bakgrunnskart fra Leaflet kreves nettilgang.
+The function path_leaflet visualizes the shortest path (in minutes or meters) that has been calculated with the function `shortest_path_igraph` (where path = TRUE).
+Internet connection is required to load map tiles.
 }
 \examples{
 path_leaflet(path)

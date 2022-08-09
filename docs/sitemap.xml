@@ -22,6 +22,9 @@
     <loc>/LICENSE.html</loc>
   </url>
   <url>
+    <loc>/reference/address_to_coord.html</loc>
+  </url>
+  <url>
     <loc>/reference/adresse_api_koord.html</loc>
   </url>
   <url>
@@ -29,6 +32,12 @@
   </url>
   <url>
     <loc>/reference/beregne_avstand_cpp.html</loc>
+  </url>
+  <url>
+    <loc>/reference/coords_to_google.html</loc>
+  </url>
+  <url>
+    <loc>/reference/coords_to_node.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
@@ -41,6 +50,15 @@
   </url>
   <url>
     <loc>/reference/path_leaflet.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/shortest_path_cppRouting.html</loc>
+  </url>
+  <url>
+    <loc>/reference/shortest_path_igraph.html</loc>
   </url>
   <url>
     <loc>/reference/vegnett_to_R.html</loc>
