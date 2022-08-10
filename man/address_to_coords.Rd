@@ -20,7 +20,7 @@ address_to_coords(zip_code, address, format = "sf", crs_out = 25833)
 Object with coordinates to the supplied addresses.
 }
 \description{
-Function to find coordinates to supplied Norwegian addresses. The function utilizes [the Norwegian Mapping Authority’s address API] (https://ws.geonorge.no/adresser/v1/).
+Function to find coordinates to supplied Norwegian addresses. The function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
 }
 \examples{
 \dontrun{

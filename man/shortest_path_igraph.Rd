@@ -8,9 +8,9 @@
 shortest_path_igraph(from_node_ID, to_node_ID, unit = "FT_MINUTES", path = F)
 }
 \arguments{
-\item{from_node_ID}{Numeric value with the from node ID (if multiple node ID’s are to be used, see the function `shortest_path_cppRouting`).}
+\item{from_node_ID}{Numeric value with the from node ID (if multiple node ID’s are to be used, see the function \code{shortest_path_cppRouting}).}
 
-\item{to_node_ID}{Numeric value with the to node ID (if multiple node ID’s are to be used, see the function `shortest_path_cppRouting`).}
+\item{to_node_ID}{Numeric value with the to node ID (if multiple node ID’s are to be used, see the function \code{shortest_path_cppRouting}).}
 
 \item{unit}{Character vector with "FT_MINUTES" to calculate the shortest path in minutes or "LENGTH" for the shortest path in meters.}
 
@@ -23,7 +23,7 @@ Vector with the shortest path in minutes or meters. If path = TRUE the node link
 Function to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.
 }
 \details{
-Before the function can be used, the road network must be converted to a tbl_graph object that is called “graph”. This can be done with the function `vegnett_to_R `.
+Before the function can be used, the road network must be converted to a tbl_graph object that is called “graph”. This can be done with the function \code{vegnett_to_R }.
 }
 \examples{
 \dontrun{

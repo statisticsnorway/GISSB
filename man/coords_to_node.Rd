@@ -34,7 +34,7 @@ An object (data.frame) with the following columns; from_nodeID/to_nodeID, member
 Function to find the nearest nodes in the Norwegian road network for chosen coordinates.
 }
 \details{
-Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function `vegnett_to_R`.
+Before the function can be used, the nodes of the road network must be converted to an sf object that is called \code{nodes}. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.
 }
 \examples{
 \dontrun{

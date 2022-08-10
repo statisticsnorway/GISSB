@@ -3,7 +3,7 @@
 #'
 #' Function to find the nearest nodes in the Norwegian road network for chosen coordinates.
 #'
-#' Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function `vegnett_to_R`.
+#' Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function [GISSB::vegnett_to_R()].
 #'
 #' @param coords An sf object with the coordinates that should be connected to the road network.
 #' @param direction Character vector with “from” if the points should be from nodes or “to” if the points should be to nodes.
