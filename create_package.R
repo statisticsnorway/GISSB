@@ -11,18 +11,18 @@ build_readme() # Kjøres etter .rmd-filen er ferdig utfylt
 
 
 # Legger til hvilke pakker funksjonene er avhengige av #
-usethis::use_package("dplyr", type = "imports")
-usethis::use_package("httr", type = "imports")
-usethis::use_package("sf", type = "imports")
-usethis::use_package("igraph", type = "imports")
-usethis::use_package("tidygraph", type = "imports")
-usethis::use_package("cppRouting", type = "imports")
-usethis::use_package("nabor", type = "imports")
-usethis::use_package("reshape2", type = "imports")
-usethis::use_package("purrr", type = "imports")
-usethis::use_package("tibble", type = "imports")
-usethis::use_package("leaflet", type = "imports")
-usethis::use_package("RCurl", type = "imports")
+# usethis::use_package("dplyr", type = "imports")
+# usethis::use_package("httr", type = "imports")
+# usethis::use_package("sf", type = "imports")
+# usethis::use_package("igraph", type = "imports")
+# usethis::use_package("tidygraph", type = "imports")
+# usethis::use_package("cppRouting", type = "imports")
+# usethis::use_package("nabor", type = "imports")
+# usethis::use_package("reshape2", type = "imports")
+# usethis::use_package("purrr", type = "imports")
+# usethis::use_package("tibble", type = "imports")
+# usethis::use_package("leaflet", type = "imports")
+# usethis::use_package("RCurl", type = "imports")
 
 usethis::use_pipe()
 
@@ -61,7 +61,7 @@ devtools::check()
 # Installerer pakken lokalt #
 install()
 
-# Lag pakke
+# Lag pakke (?)
 devtools::build()
 
 # devtools::install_github
@@ -76,8 +76,8 @@ pkgdown::build_site()
 #
 # ?pkgdown::build_site_github_pages
 
-# OBS: commit/push!
 
-# GISSB_vignette: ,knit til .md før buil_site?
+# OBS: commit/push!
+# GISSB_vignette: ,knit til .md før build_site?
 
 

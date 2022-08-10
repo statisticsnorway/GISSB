@@ -3,12 +3,12 @@
 \encoding{UTF-8}
 \name{vegnett_to_R}
 \alias{vegnett_to_R}
-\title{Convert the Norwegian road network into network graphs in R}
+\title{Convert the road network from NVDB into network graphs in R}
 \usage{
 vegnett_to_R(vegnett, crs_out = 25833)
 }
 \arguments{
-\item{vegnett}{The road network as an sf object.}
+\item{vegnett}{The Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), as an sf object.}
 
 \item{crs_out}{Numeric vector with the chosen coordinate reference system (CRS).}
 }
@@ -19,7 +19,7 @@ List containing the following elements:
 
 [2] nodes: the road network's nodes (sf object)
 
-[3] edges: road network's node links (data.frame)
+[3] edges: road network's edges/node links (data.frame)
 
 [4] graph_cppRouting_FT_MINUTES: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 
@@ -29,6 +29,7 @@ List containing the following elements:
 Function to convert the Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), to formats that allows for network analysis in R (tbl_graph and cppRouting).
 }
 \examples{
+\dontrun{
 vegnett_list <- vegnett_to_R(vegnett = vegnett)
 
 graph <- vegnett_list[[1]]
@@ -36,4 +37,5 @@ nodes <- vegnett_list[[2]]
 edges <- vegnett_list[[3]]
 graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
 graph_cppRouting_LENGTH <- vegnett_list[[5]]
+}
 }

@@ -25,23 +25,25 @@ coords_to_node(
 
 \item{knn}{Numeric vector with the chosen number of nodes that should be returned for each of the coordinates. If knn = 1 only the nearest nodes to the chosen coordinates will be returned. If knn = 2 the two nearest nodes will be returned etc.}
 
-\item{membership}{Logical. If TRUE the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to FALSE for the search for to nodes and membership = TRUE for the from nodes (in that order).}
+\item{membership}{Logical. If TRUE the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to FALSE in the search for to nodes and membership = TRUE for the from nodes (in that order).}
 }
 \value{
-An object (data.frame) with the following columns; from_node/to_node, membership, coords_google_from_node/coords_google_to_node, knn, and ID.
+An object (data.frame) with the following columns; from_nodeID/to_nodeID, membership_from_node/membership_to_node, coords_google_from_node/coords_google_to_node, knn_from_node/knn_to_node, and ID.
 }
 \description{
-Function to find the nearest points (nodes) in the road network for chosen coordinates.
+Function to find the nearest nodes in the Norwegian road network for chosen coordinates.
 }
 \details{
-Before the function can be used, the nodes of the road network must be converted to an sf object that is called "nodes”. This can be done with the function `vegnett_to_R`.
+Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function `vegnett_to_R`.
 }
 \examples{
-from <- address_to_coord(zip_code = "0177",
+\dontrun{
+from <- address_to_coords(zip_code = "0177",
                          address = "Akersveien 26")
 from_node <- coords_to_node(coords = from, direction = "from")
 
-to <- address_to_coord(zip_code = "2211",
+to <- address_to_coords(zip_code = "2211",
                          address = "Otervegen 23")
 to_node <- coords_to_node(coords = to, direction = "to")
+}
 }

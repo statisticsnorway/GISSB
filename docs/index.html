@@ -57,18 +57,26 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="gissb---nettverksanalyse-i-r">GISSB - Nettverksanalyse i R<a class="anchor" aria-label="anchor" href="#gissb---nettverksanalyse-i-r"></a>
+<div class="page-header"><h1 id="gissb---network-analysis-in-r">GISSB - Network analysis in R<a class="anchor" aria-label="anchor" href="#gissb---network-analysis-in-r"></a>
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>GISSB er en pakke som inneholder GIS-funksjoner i R for bruk i SSB.</p>
-<p>Se vignetten for en introduksjon for hvordan funksjonene kan brukes til å gjennomføre nettverksanalyser i R: <a href="https://statisticsnorway.github.io/GISSB/articles/GISSB_vignette.html" class="external-link uri">https://statisticsnorway.github.io/GISSB/articles/GISSB_vignette.html</a></p>
+<p><code>GISSB</code> is a package that contains GIS functions in R for use in Statistics Norway.</p>
+<p>See the vignette for an introduction of how the functions can be used for network analysis in R: <a href="https://statisticsnorway.github.io/GISSB/articles/GISSB_vignette.html" class="external-link uri">https://statisticsnorway.github.io/GISSB/articles/GISSB_vignette.html</a></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of GISSB like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"statisticsnorway/GISSB"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="requirements">Requirements<a class="anchor" aria-label="anchor" href="#requirements"></a>
+</h2>
+<p>Most of the functions in the GISSB package require that the Norwegian road network <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313" class="external-link">NVDB Ruteplan nettverksdatasett</a> has been downloaded locally. The format of the file should be “FGDB 10.0”.</p>
+<p>After the file has been downloaded it has to be read into R using the sf package:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">vegnett</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="st">"vegnettRuteplan_FGDB_20210528.gdb"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">

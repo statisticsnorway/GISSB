@@ -1,29 +1,31 @@
 
 #' Connect coordinates to the nearest nodes in the road network
 #'
-#' Function to find the nearest points (nodes) in the road network for chosen coordinates.
+#' Function to find the nearest nodes in the Norwegian road network for chosen coordinates.
 #'
-#' Before the function can be used, the nodes of the road network must be converted to an sf object that is called "nodes”. This can be done with the function `vegnett_to_R`.
+#' Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function `vegnett_to_R`.
 #'
 #' @param coords An sf object with the coordinates that should be connected to the road network.
 #' @param direction Character vector with “from” if the points should be from nodes or “to” if the points should be to nodes.
 #' @param ID_col Character vector with the name of the ID column. Default value is set to “ID”.
 #' @param crs_out Numeric vector for the chosen coordinate reference system (CRS).
 #' @param knn Numeric vector with the chosen number of nodes that should be returned for each of the coordinates. If knn = 1 only the nearest nodes to the chosen coordinates will be returned. If knn = 2 the two nearest nodes will be returned etc.
-#' @param membership Logical. If TRUE the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to FALSE for the search for to nodes and membership = TRUE for the from nodes (in that order).
+#' @param membership Logical. If TRUE the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to FALSE in the search for to nodes and membership = TRUE for the from nodes (in that order).
 #'
 #'
-#' @returns An object (data.frame) with the following columns; from_node/to_node, membership, coords_google_from_node/coords_google_to_node, knn, and ID.
+#' @returns An object (data.frame) with the following columns; from_nodeID/to_nodeID, membership_from_node/membership_to_node, coords_google_from_node/coords_google_to_node, knn_from_node/knn_to_node, and ID.
 #' @export
 #'
 #' @examples
-#' from <- address_to_coord(zip_code = "0177",
+#' \dontrun{
+#' from <- address_to_coords(zip_code = "0177",
 #'                          address = "Akersveien 26")
 #' from_node <- coords_to_node(coords = from, direction = "from")
 #'
-#' to <- address_to_coord(zip_code = "2211",
+#' to <- address_to_coords(zip_code = "2211",
 #'                          address = "Otervegen 23")
 #' to_node <- coords_to_node(coords = to, direction = "to")
+#' }
 #' @encoding UTF-8
 #'
 #'
@@ -61,12 +63,13 @@ coords_to_node <- function(coords,
     nodes_start <- sf::st_transform(nodes_start, crs = 4326) %>%
       coords_to_google() %>%
       data.frame() %>%
-      dplyr::rename(from_node = nodeID,
-                    coords_google_from_node = coords_google) %>%
+      dplyr::rename(from_nodeID = nodeID,
+                    coords_google_from_node = coords_google,
+                    membership_from_node = membership) %>%
       dplyr::select(-geometry)
 
     start_node <- nodes_start[node_index_o$nn.idx, ]
-    start_node$knn <- rep(1:knn, each=nrow(coords))
+    start_node$knn_from_node <- rep(1:knn, each=nrow(coords))
 
     # ID <- coords$ID
     ID <- coords %>%
@@ -75,8 +78,6 @@ coords_to_node <- function(coords,
       select(-geometry)
 
     dists <-  data.frame(ID, node_index_o$nn.dists)
-
-    # return(dists)
 
     dists <- reshape2::melt(dists, id.vars = ID_col,
                             variable.name = "variabel",
@@ -114,7 +115,7 @@ coords_to_node <- function(coords,
     nodes_end <- sf::st_transform(nodes_end, crs = 4326) %>%
       coords_to_google() %>%
       data.frame() %>%
-      dplyr::rename(to_node = nodeID,
+      dplyr::rename(to_nodeID = nodeID,
                     coords_google_to_node = coords_google) %>%
       dplyr::select(-geometry)
 

@@ -1,9 +1,9 @@
 
-#' Convert the Norwegian road network into network graphs in R
+#' Convert the road network from NVDB into network graphs in R
 #'
 #' Function to convert the Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), to formats that allows for network analysis in R (tbl_graph and cppRouting).
 #'
-#' @param vegnett The road network as an sf object.
+#' @param vegnett The Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), as an sf object.
 #' @param crs_out Numeric vector with the chosen coordinate reference system (CRS).
 #'
 #' @returns List containing the following elements:
@@ -12,7 +12,7 @@
 #'
 #' [2] nodes: the road network's nodes (sf object)
 #'
-#' [3] edges: road network's node links (data.frame)
+#' [3] edges: road network's edges/node links (data.frame)
 #'
 #' [4] graph_cppRouting_FT_MINUTES: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 #'
@@ -20,6 +20,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' vegnett_list <- vegnett_to_R(vegnett = vegnett)
 #'
 #' graph <- vegnett_list[[1]]
@@ -27,6 +28,7 @@
 #' edges <- vegnett_list[[3]]
 #' graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
 #' graph_cppRouting_LENGTH <- vegnett_list[[5]]
+#' }
 #' @encoding UTF-8
 #'
 #'

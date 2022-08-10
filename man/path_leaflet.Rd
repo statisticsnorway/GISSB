@@ -8,15 +8,17 @@
 path_leaflet(path)
 }
 \arguments{
-\item{path}{Object (list) that has been created with the function `shortest_path_igraph` (where path = TRUE).}
+\item{path}{Object (list) that has been created with the function [GISSB::shortest_path_igraph()] (where path = TRUE).}
 }
 \value{
 Interactive Leaflet map that shows the shortest path (in minutes or meters) between a chosen from and to node in the road network.
 }
 \description{
 The function path_leaflet visualizes the shortest path (in minutes or meters) that has been calculated with the function `shortest_path_igraph` (where path = TRUE).
-Internet connection is required to load map tiles.
+Internet connection is required to load the background tiles.
 }
 \examples{
+\dontrun{
 path_leaflet(path)
+}
 }

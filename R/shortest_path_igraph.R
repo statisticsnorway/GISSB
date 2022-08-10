@@ -15,6 +15,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' distance_min <- shortest_path_igraph(from_node_ID = 26956,
 #'                                to_node_ID = 210373,
 #'                                unit = "FT_MINUTES")
@@ -27,6 +28,7 @@
 #'                         to_node_ID = 210373,
 #'                         unit = "FT_MINUTES",
 #'                         path = T)
+#'                         }
 #' @encoding UTF-8
 #'
 #'

@@ -29,6 +29,7 @@ Function to calculate the shortest path (either in minutes or meters) between tw
 Before the function can be used, the road network must be converted to a cppRouting object that is called “graph_cppRouting_FT_MINUTES” or “graph_cppRouting_LENGTH”. This can be done with the function `vegnett_to_R `.
 }
 \examples{
+\dontrun{
 avstand_cpp_min <- shortest_path_cppRouting(26956,
                                        210373,
                                        unit = "FT_MINUTES")
@@ -36,4 +37,5 @@ avstand_cpp_min <- shortest_path_cppRouting(26956,
 avstand_cpp_meter <- shortest_path_cppRouting(26956,
                                          210373,
                                          unit = "LENGTH")
+                                         }
 }

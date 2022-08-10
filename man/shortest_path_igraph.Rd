@@ -26,6 +26,7 @@ Function to calculate the shortest path (either in minutes or meters) between no
 Before the function can be used, the road network must be converted to a tbl_graph object that is called “graph”. This can be done with the function `vegnett_to_R `.
 }
 \examples{
+\dontrun{
 distance_min <- shortest_path_igraph(from_node_ID = 26956,
                                to_node_ID = 210373,
                                unit = "FT_MINUTES")
@@ -38,4 +39,5 @@ path <- shortest_path_igraph(from_node_ID = 26956,
                         to_node_ID = 210373,
                         unit = "FT_MINUTES",
                         path = T)
+                        }
 }

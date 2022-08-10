@@ -7,13 +7,15 @@
 #' @param coords An sf object with a geometry column that will be converted to CRS 4326.
 #' @param crs_out Chosen coordinate reference system (CRS) for the geometry column of the returned sf object.
 
-#' @returns An sf object with a new column added (coords_google).
+#' @returns An sf object with a new column added (coords_google), and an addtional sf geometry column with the chosen CRS.
 #' @export
 #'
 #' @examples
-#' from <- address_to_coord(zip_code = "0177",
+#' \dontrun{
+#' from <- address_to_coords(zip_code = "0177",
 #'                          address = "Akersveien 26") %>%
 #'   coords_to_google()
+#'   }
 #'
 #' @encoding UTF-8
 #'

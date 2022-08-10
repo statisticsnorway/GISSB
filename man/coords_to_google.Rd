@@ -13,14 +13,16 @@ coords_to_google(coords, crs_out = 25833)
 \item{crs_out}{Chosen coordinate reference system (CRS) for the geometry column of the returned sf object.}
 }
 \value{
-An sf object with a new column added (coords_google).
+An sf object with a new column added (coords_google), and an addtional sf geometry column with the chosen CRS.
 }
 \description{
 Function to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
 }
 \examples{
-from <- address_to_coord(zip_code = "0177",
+\dontrun{
+from <- address_to_coords(zip_code = "0177",
                          address = "Akersveien 26") \%>\%
   coords_to_google()
+  }
 
 }

@@ -13,13 +13,15 @@
 #' @export
 #'
 #' @examples
-#' avstand_cpp_min <- shortest_path_cppRouting(26956,
+#' \dontrun{
+#' distance_min <- shortest_path_cppRouting(26956,
 #'                                        210373,
 #'                                        unit = "FT_MINUTES")
 #'
-#' avstand_cpp_meter <- shortest_path_cppRouting(26956,
+#' distance_meter <- shortest_path_cppRouting(26956,
 #'                                          210373,
 #'                                          unit = "LENGTH")
+#'                                          }
 #' @encoding UTF-8
 #'
 #'
