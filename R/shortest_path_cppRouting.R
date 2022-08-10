@@ -2,7 +2,7 @@
 #' Shortest path (cppRouting)
 #'
 #' Function to calculate the shortest path (either in minutes or meters) between two or more nodes in the Norwegian road network. The function also works with vectors with multiple from and to node ID’s.
-#' Before the function can be used, the road network must be converted to a cppRouting object that is called “graph_cppRouting_FT_MINUTES” or “graph_cppRouting_LENGTH”. This can be done with the function `vegnett_to_R `.
+#' Before the function can be used, the road network must be converted to a cppRouting object that is called `graph_cppRouting_FT_MINUTES` or `graph_cppRouting_LENGTH`. This can be done with the function [GISSB::vegnett_to_R()].
 #'
 #' @param from_node_ID Numeric vector with one more from node ID’s.
 #' @param to_node_ID Numeric vector with one more to node ID’s.
@@ -46,26 +46,26 @@ shortest_path_cppRouting <- function(from_node_ID,
                                            algorithm = "phast")
   dists2 <- data.frame(dists)
 
-  dists2 <- tibble::rownames_to_column(dists2, "from_node")
-  dists2_long <- reshape2::melt(dists2, id.vars = "from_node",
-                                variable.name = "to_node",
+  dists2 <- tibble::rownames_to_column(dists2, "from_nodeID")
+  dists2_long <- reshape2::melt(dists2, id.vars = "from_nodeID",
+                                variable.name = "to_nodeID",
                                 value.name = "length")
-  dists2_long$to_node <- gsub("X", "", dists2_long$to_node)
+  dists2_long$to_nodeID <- gsub("X", "", dists2_long$to_nodeID)
 
   if (dist == "min") {
     dists2_long <- dists2_long %>%
-      dplyr::group_by(from_node) %>%
+      dplyr::group_by(from_nodeID) %>%
       dplyr::slice(which.min(length))
   }
 
   if (dist == "max") {
     dists2_long <- dists2_long %>%
-      dplyr::group_by(from_node) %>%
+      dplyr::group_by(from_nodeID) %>%
       dplyr::slice(which.max(length))
   }
 
-  dists2_long$from_node <- as.integer(dists2_long$from_node)
-  dists2_long$to_node <- as.integer(dists2_long$to_node)
+  dists2_long$from_nodeID <- as.integer(dists2_long$from_nodeID)
+  dists2_long$to_nodeID <- as.integer(dists2_long$to_nodeID)
 
   return(dists2_long)
 

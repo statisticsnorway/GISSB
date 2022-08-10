@@ -8,15 +8,15 @@
 #'
 #' @returns List containing the following elements:
 #'
-#' [1] graph: the road network structured as a tidy graph (tbl_graph object)
+#' [1] `graph`: the road network structured as a tidy graph (tbl_graph object)
 #'
-#' [2] nodes: the road network's nodes (sf object)
+#' [2] `nodes`: the road network's nodes (sf object)
 #'
-#' [3] edges: road network's edges/node links (data.frame)
+#' [3] `edges`: road network's edges/node links (data.frame)
 #'
-#' [4] graph_cppRouting_FT_MINUTES: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
+#' [4] `graph_cppRouting_FT_MINUTES`: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 #'
-#' [5] graph_cppRouting_LENGTH: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
+#' [5] `graph_cppRouting_LENGTH`: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 #' @export
 #'
 #' @examples

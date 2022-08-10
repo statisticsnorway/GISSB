@@ -4,10 +4,10 @@
 #'
 #' Function to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.
 #'
-#' Before the function can be used, the road network must be converted to a tbl_graph object that is called “graph”. This can be done with the function `vegnett_to_R `.
+#' Before the function can be used, the road network must be converted to a tbl_graph object that is called “graph”. This can be done with the function [GISSB::vegnett_to_R()]).
 #'
-#' @param from_node_ID Numeric value with the from node ID (if multiple node ID’s are to be used, see the function `shortest_path_cppRouting`).
-#' @param to_node_ID Numeric value with the to node ID (if multiple node ID’s are to be used, see the function `shortest_path_cppRouting`).
+#' @param from_node_ID Numeric value with the from node ID (if multiple node ID’s are to be used, see the function [GISSB::shortest_path_cppRouting()]).
+#' @param to_node_ID Numeric value with the to node ID (if multiple node ID’s are to be used, see the function [GISSB::shortest_path_cppRouting()]).
 #' @param unit Character vector with "FT_MINUTES" to calculate the shortest path in minutes or "LENGTH" for the shortest path in meters.
 #' @param path Logical. If TRUE the node link with the shortest path is returned.
 #'
