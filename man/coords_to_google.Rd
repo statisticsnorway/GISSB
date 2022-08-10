@@ -19,10 +19,6 @@ An sf object with a new column added (coords_google), and an addtional sf geomet
 Function to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
 }
 \examples{
-\dontrun{
-from <- address_to_coords(zip_code = "0177",
-                         address = "Akersveien 26") \%>\%
+address_to_coords(zip_code = "0177", address = "Akersveien 26") \%>\%
   coords_to_google()
-  }
-
 }
