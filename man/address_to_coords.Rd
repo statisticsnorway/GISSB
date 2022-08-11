@@ -23,8 +23,6 @@ Object with coordinates to the supplied addresses.
 Function to find coordinates to supplied Norwegian addresses. The function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
 }
 \examples{
-\dontrun{
-from <- address_to_coords(zip_code = "0177",
-                        address = "Akersveien 26")
-                        }
+address_to_coords(zip_code = "0177", address = "Akersveien 26")
+
 }

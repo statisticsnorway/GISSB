@@ -26,7 +26,7 @@ Object (data.frame) with how many minutes or meters the shortest path is between
 }
 \description{
 Function to calculate the shortest path (either in minutes or meters) between two or more nodes in the Norwegian road network. The function also works with vectors with multiple from and to node ID’s.
-Before the function can be used, the road network must be converted to a cppRouting object that is called “graph_cppRouting_FT_MINUTES” or “graph_cppRouting_LENGTH”. This can be done with the function \code{vegnett_to_R }.
+Before the function can be used, the road network must be converted to a cppRouting object that is called \code{graph_cppRouting_FT_MINUTES} or \code{graph_cppRouting_LENGTH}. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.
 }
 \examples{
 \dontrun{

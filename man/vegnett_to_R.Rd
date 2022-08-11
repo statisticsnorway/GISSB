@@ -15,15 +15,15 @@ vegnett_to_R(vegnett, crs_out = 25833)
 \value{
 List containing the following elements:
 
-\link{1} graph: the road network structured as a tidy graph (tbl_graph object)
+\link{1} \code{graph}: the road network structured as a tidy graph (tbl_graph object)
 
-\link{2} nodes: the road network's nodes (sf object)
+\link{2} \code{nodes}: the road network's nodes (sf object)
 
-\link{3} edges: road network's edges/node links (data.frame)
+\link{3} \code{edges}: road network's edges/node links (data.frame)
 
-\link{4} graph_cppRouting_FT_MINUTES: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
+\link{4} \code{graph_cppRouting_FT_MINUTES}: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 
-\link{5} graph_cppRouting_LENGTH: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
+\link{5} \code{graph_cppRouting_LENGTH}: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 }
 \description{
 Function to convert the Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), to formats that allows for network analysis in R (tbl_graph and cppRouting).
