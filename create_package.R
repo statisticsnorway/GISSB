@@ -23,6 +23,8 @@ build_readme() # Kjøres etter .rmd-filen er ferdig utfylt
 # usethis::use_package("tibble", type = "imports")
 # usethis::use_package("leaflet", type = "imports")
 # usethis::use_package("RCurl", type = "imports")
+usethis::use_package("stringr", type = "imports")
+
 
 usethis::use_pipe()
 

@@ -2,12 +2,12 @@
 
 #' Convert coordinates to Google Maps
 #'
-#' Function to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
+#' `coords_to_google` is a function to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
 #'
 #' @param coords An sf object with a geometry column that will be converted to CRS 4326.
 #' @param crs_out Chosen coordinate reference system (CRS) for the geometry column of the returned sf object.
 
-#' @returns An sf object with a new column added (coords_google), and an addtional sf geometry column with the chosen CRS.
+#' @returns An sf object with a new column added (`coords_google`), and an addtional sf geometry column with the chosen CRS.
 #' @export
 #'
 #' @examples
@@ -26,8 +26,8 @@ coords_to_google <- function(coords,
                   coords_google_2 = gsub(".*,", "\\1", as.character(geometry))) %>%
     dplyr::mutate(coords_google_1 = gsub("^c\\(|\\)$", "", as.character(coords_google_1)),
                   coords_google_2 = gsub(").*", "", coords_google_2)) %>%
-    dplyr::mutate(coords_google_1 = as.numeric(str_trim(coords_google_1)),
-                  coords_google_2 = as.numeric(str_trim(coords_google_2))) %>%
+    dplyr::mutate(coords_google_1 = as.numeric(stringr::str_trim(coords_google_1)),
+                  coords_google_2 = as.numeric(stringr::str_trim(coords_google_2))) %>%
     dplyr::mutate(coords_google = paste0(coords_google_2, ", ", coords_google_1)) %>%
     dplyr::select(-coords_google_1, -coords_google_2) %>%
     sf::st_transform(coords, crs = crs_out)
