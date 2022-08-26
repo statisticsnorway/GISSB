@@ -11,6 +11,7 @@ build_readme() # Kjøres etter .rmd-filen er ferdig utfylt
 
 
 # Legger til hvilke pakker funksjonene er avhengige av #
+# usethis::use_pipe()
 # usethis::use_package("dplyr", type = "imports")
 # usethis::use_package("httr", type = "imports")
 # usethis::use_package("sf", type = "imports")
@@ -23,8 +24,7 @@ build_readme() # Kjøres etter .rmd-filen er ferdig utfylt
 # usethis::use_package("tibble", type = "imports")
 # usethis::use_package("leaflet", type = "imports")
 # usethis::use_package("RCurl", type = "imports")
-
-usethis::use_pipe()
+# usethis::use_package("stringr", type = "imports")
 
 # Legger til automatiske tester for funksjonene #
 

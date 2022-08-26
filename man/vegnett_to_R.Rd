@@ -26,7 +26,7 @@ List containing the following elements:
 \link{5} \code{graph_cppRouting_LENGTH}: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 }
 \description{
-Function to convert the Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), to formats that allows for network analysis in R (tbl_graph and cppRouting).
+Function to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
 }
 \examples{
 \dontrun{

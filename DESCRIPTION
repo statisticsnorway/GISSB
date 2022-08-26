@@ -27,6 +27,7 @@ Imports:
     RCurl,
     reshape2,
     sf,
+    stringr,
     tibble,
     tidygraph
 VignetteBuilder: knitr

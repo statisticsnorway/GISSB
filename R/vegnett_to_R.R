@@ -1,9 +1,9 @@
 
 #' Convert the road network from NVDB into network graphs in R
 #'
-#' Function to convert the Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), to formats that allows for network analysis in R (tbl_graph and cppRouting).
+#' Function to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
 #'
-#' @param vegnett The Norwegian road network, downloaded from Nasjonal vegdatabank (NVDB), as an sf object.
+#' @param vegnett The Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, as an sf object.
 #' @param crs_out Numeric vector with the chosen coordinate reference system (CRS).
 #'
 #' @returns List containing the following elements:
