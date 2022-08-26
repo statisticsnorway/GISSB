@@ -23,12 +23,15 @@ devtools::install_github("statisticsnorway/GISSB")
 
 ## Requirements
 
-Most of the functions in the GISSB package require that the Norwegian road network [NVDB Ruteplan nettverksdatasett](https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313) has been downloaded locally. The format of the file should be "FGDB 10.0". 
+Most of the functions in the GISSB package require that the Norwegian
+road network [NVDB Ruteplan
+nettverksdatasett](https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313)
+has been downloaded locally. The format of the file should be “FGDB
+10.0”.
 
-After the file has been downloaded it has to be read into R using the sf package:
+After the file has been downloaded it has to be read into R using the sf
+package:
 
 ``` r
 vegnett <- sf::read_sf("vegnettRuteplan_FGDB_20210528.gdb")
 ```
-
-

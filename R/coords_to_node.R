@@ -116,11 +116,12 @@ coords_to_node <- function(coords,
       coords_to_google() %>%
       data.frame() %>%
       dplyr::rename(to_nodeID = nodeID,
-                    coords_google_to_node = coords_google) %>%
+                    coords_google_to_node = coords_google, 
+                   membership_to_node = membership) %>%
       dplyr::select(-geometry)
 
     end_node <- nodes_end[node_index_d$nn.idx, ]
-    end_node$knn <- rep(1:knn, each=nrow(coords))
+    end_node$knn_to_node <- rep(1:knn, each=nrow(coords))
 
     # ID <- coords$ID
     ID <- coords %>%
