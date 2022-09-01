@@ -1,22 +1,22 @@
 
-#' Convert the road network from NVDB into network graphs in R
+#' Convert the Norwegian road network (NVDB Ruteplan nettverksdatasett) into network graphs in R
 #'
-#' Function to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
+#' `vegnett_to_R` is a function to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
 #'
 #' @param vegnett The Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, as an sf object.
 #' @param crs_out Numeric vector with the chosen coordinate reference system (CRS).
 #'
 #' @returns List containing the following elements:
 #'
-#' [1] `graph`: the road network structured as a tidy graph (tbl_graph object)
+#' `[1] graph`: the road network structured as a tidy graph (tbl_graph object)
 #'
-#' [2] `nodes`: the road network's nodes (sf object)
+#' `[2] nodes`: the road network's nodes (sf object)
 #'
-#' [3] `edges`: road network's edges/node links (data.frame)
+#' `[3] edges`: road network's edges/node links (data.frame)
 #'
-#' [4] `graph_cppRouting_FT_MINUTES`: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
+#' `[4] graph_cppRouting_FT_MINUTES`: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 #'
-#' [5] `graph_cppRouting_LENGTH`: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
+#' `[5] graph_cppRouting_LENGTH`: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 #' @export
 #'
 #' @examples

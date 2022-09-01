@@ -1,7 +1,7 @@
 
 #' Connect coordinates to the nearest nodes in the road network
 #'
-#' Function to find the nearest nodes in the Norwegian road network for chosen coordinates.
+#' `coords_to_node` is a function to find the nearest nodes in the Norwegian road network for chosen coordinates.
 #'
 #' Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function [GISSB::vegnett_to_R()].
 #'
@@ -116,7 +116,7 @@ coords_to_node <- function(coords,
       coords_to_google() %>%
       data.frame() %>%
       dplyr::rename(to_nodeID = nodeID,
-                    coords_google_to_node = coords_google, 
+                    coords_google_to_node = coords_google,
                    membership_to_node = membership) %>%
       dplyr::select(-geometry)
 

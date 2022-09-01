@@ -20,7 +20,7 @@ shortest_path_igraph(from_node_ID, to_node_ID, unit = "FT_MINUTES", path = F)
 Vector with the shortest path in minutes or meters. If path = TRUE the node link that the shortest path consists of is returned.
 }
 \description{
-Function to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.
+\code{shortest_path_igraph} is a function to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.
 }
 \details{
 Before the function can be used, the road network must be converted to a tbl_graph object that is called “graph”. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}).

@@ -1,7 +1,7 @@
 
 #' Shortest path (cppRouting)
 #'
-#' Function to calculate the shortest path (either in minutes or meters) between two or more nodes in the Norwegian road network. The function also works with vectors with multiple from and to node ID’s.
+#' `shortest_path_cppRouting` is a function to calculate the shortest path (either in minutes or meters) between two or more nodes in the Norwegian road network. The function also works with vectors with multiple from and to node ID’s.
 #' Before the function can be used, the road network must be converted to a cppRouting object that is called `graph_cppRouting_FT_MINUTES` or `graph_cppRouting_LENGTH`. This can be done with the function [GISSB::vegnett_to_R()].
 #'
 #' @param from_node_ID Numeric vector with one more from node ID’s.

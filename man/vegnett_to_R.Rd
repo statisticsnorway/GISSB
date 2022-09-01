@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{vegnett_to_R}
 \alias{vegnett_to_R}
-\title{Convert the road network from NVDB into network graphs in R}
+\title{Convert the Norwegian road network (NVDB Ruteplan nettverksdatasett) into network graphs in R}
 \usage{
 vegnett_to_R(vegnett, crs_out = 25833)
 }
@@ -15,18 +15,18 @@ vegnett_to_R(vegnett, crs_out = 25833)
 \value{
 List containing the following elements:
 
-\link{1} \code{graph}: the road network structured as a tidy graph (tbl_graph object)
+\verb{[1] graph}: the road network structured as a tidy graph (tbl_graph object)
 
-\link{2} \code{nodes}: the road network's nodes (sf object)
+\verb{[2] nodes}: the road network's nodes (sf object)
 
-\link{3} \code{edges}: road network's edges/node links (data.frame)
+\verb{[3] edges}: road network's edges/node links (data.frame)
 
-\link{4} \code{graph_cppRouting_FT_MINUTES}: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
+\verb{[4] graph_cppRouting_FT_MINUTES}: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 
-\link{5} \code{graph_cppRouting_LENGTH}: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
+\verb{[5] graph_cppRouting_LENGTH}: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 }
 \description{
-Function to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
+\code{vegnett_to_R} is a function to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
 }
 \examples{
 \dontrun{

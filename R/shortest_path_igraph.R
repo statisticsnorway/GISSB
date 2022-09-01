@@ -2,7 +2,7 @@
 
 #' Shortest path (igraph)
 #'
-#' Function to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.
+#' `shortest_path_igraph` is a function to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.
 #'
 #' Before the function can be used, the road network must be converted to a tbl_graph object that is called “graph”. This can be done with the function [GISSB::vegnett_to_R()]).
 #'

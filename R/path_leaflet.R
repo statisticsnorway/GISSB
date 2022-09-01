@@ -1,7 +1,7 @@
 
 #' Visualize the shortest path with Leaflet
 #'
-#' The function path_leaflet visualizes the shortest path (in minutes or meters) that has been calculated with the function [GISSB::shortest_path_igraph()] (where path = TRUE).
+#' The function `path_leaflet` visualizes the shortest path (in minutes or meters) that has been calculated with the function [GISSB::shortest_path_igraph()] (where path = TRUE).
 #' Internet connection is required to load the background tiles.
 #'
 #' @param path Object (list) that has been created with the function [GISSB::shortest_path_igraph()] (where path = TRUE).

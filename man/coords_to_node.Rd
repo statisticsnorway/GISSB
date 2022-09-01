@@ -31,7 +31,7 @@ coords_to_node(
 An object (data.frame) with the following columns; \code{from_nodeID}/\code{to_nodeID}, \code{membership_from_node}/\code{membership_to_node}, \code{coords_google_from_node}/\code{coords_google_to_node}, \code{knn_from_node}/\code{knn_to_node}, and \code{ID}.
 }
 \description{
-Function to find the nearest nodes in the Norwegian road network for chosen coordinates.
+\code{coords_to_node} is a function to find the nearest nodes in the Norwegian road network for chosen coordinates.
 }
 \details{
 Before the function can be used, the nodes of the road network must be converted to an sf object that is called \code{nodes}. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.
