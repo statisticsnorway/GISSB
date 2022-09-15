@@ -43,7 +43,7 @@ shortest_path_igraph <- function(from_node_ID,
     from = from_node_ID,
     to = to_node_ID,
     output = 'both',
-    weights = graph %>% tidygraph::activate(edges) %>% pull(!!as.name(unit))
+    weights = graph %>% tidygraph::activate(edges) %>% dplyr::pull(!!as.name(unit))
 
   )
 

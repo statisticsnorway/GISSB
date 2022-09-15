@@ -75,7 +75,7 @@ coords_to_node <- function(coords,
     ID <- coords %>%
       dplyr::select(!!as.name(ID_col)) %>%
       data.frame() %>%
-      select(-geometry)
+      dplyr::select(-geometry)
 
     dists <-  data.frame(ID, node_index_o$nn.dists)
 
@@ -127,7 +127,7 @@ coords_to_node <- function(coords,
     ID <- coords %>%
       dplyr::select(!!as.name(ID_col)) %>%
       data.frame() %>%
-      select(-geometry)
+      dplyr::select(-geometry)
 
     dists <-  data.frame(ID, node_index_d$nn.dists)
 

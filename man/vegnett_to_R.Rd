@@ -29,13 +29,26 @@ List containing the following elements:
 \code{vegnett_to_R} is a function to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
 }
 \examples{
-\dontrun{
-vegnett_list <- vegnett_to_R(vegnett = vegnett)
+vegnett_sampledata
+vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata)
 
 graph <- vegnett_list[[1]]
 nodes <- vegnett_list[[2]]
 edges <- vegnett_list[[3]]
 graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
 graph_cppRouting_LENGTH <- vegnett_list[[5]]
-}
+
+graph
+nodes
+head(edges)
+head(graph_cppRouting_FT_MINUTES$data)
+head(graph_cppRouting_FT_MINUTES$coords)
+head(graph_cppRouting_FT_MINUTES$dict)
+graph_cppRouting_FT_MINUTES$nbnode
+
+head(graph_cppRouting_LENGTH$data)
+head(graph_cppRouting_LENGTH$coords)
+head(graph_cppRouting_LENGTH$dict)
+graph_cppRouting_LENGTH$nbnode
+
 }

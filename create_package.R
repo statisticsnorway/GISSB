@@ -64,6 +64,9 @@ install()
 # Lag pakke (?)
 devtools::build()
 
+# install.packages("C:/Users/rdn/Documents/Github/GISSB_1.0.tar.gz", repos = NULL, type="source")
+
+
 # devtools::install_github
 
 # Lager vignette

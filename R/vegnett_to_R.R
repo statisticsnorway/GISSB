@@ -20,15 +20,28 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' vegnett_list <- vegnett_to_R(vegnett = vegnett)
+#' vegnett_sampledata
+#' vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata)
 #'
 #' graph <- vegnett_list[[1]]
 #' nodes <- vegnett_list[[2]]
 #' edges <- vegnett_list[[3]]
 #' graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
 #' graph_cppRouting_LENGTH <- vegnett_list[[5]]
-#' }
+#'
+#' graph
+#' nodes
+#' head(edges)
+#' head(graph_cppRouting_FT_MINUTES$data)
+#' head(graph_cppRouting_FT_MINUTES$coords)
+#' head(graph_cppRouting_FT_MINUTES$dict)
+#' graph_cppRouting_FT_MINUTES$nbnode
+#'
+#' head(graph_cppRouting_LENGTH$data)
+#' head(graph_cppRouting_LENGTH$coords)
+#' head(graph_cppRouting_LENGTH$dict)
+#' graph_cppRouting_LENGTH$nbnode
+#'
 #' @encoding UTF-8
 #'
 #'
@@ -81,8 +94,8 @@ vegnett_to_R <- function(vegnett,
 
   # Binding together all the edges #
   edges <- rbind(B_FT, FT, B_TF, TF) %>%
-    dplyr::mutate(edgeID = c(1:n())) %>% # adding new edge ID
-    dplyr::mutate(FT_MINUTES = case_when( # specify correct FT_MINUTES for edges that go TF
+    dplyr::mutate(edgeID = c(1:dplyr::n())) %>% # adding new edge ID
+    dplyr::mutate(FT_MINUTES = dplyr::case_when( # specify correct FT_MINUTES for edges that go TF
       direction %in% c("B_TF", "TF") ~ TF_MINUTES, TRUE ~ FT_MINUTES))
 
   # Extracting the nodes from the edges and specifies start and end #
@@ -91,18 +104,18 @@ vegnett_to_R <- function(vegnett,
     dplyr::as_tibble() %>%
     dplyr::rename(edgeID = L1) %>%
     dplyr::group_by(edgeID) %>%
-    dplyr::slice(c(1, n())) %>%
+    dplyr::slice(c(1, dplyr::n())) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(start_end = rep(c('start', 'end'), times = n()/2))
+    dplyr::mutate(start_end = rep(c('start', 'end'), times = dplyr::n()/2))
 
   nodes  <- dplyr::left_join(nodes, edges, by = c("edgeID")) %>%
-    dplyr::mutate(start_end = case_when(
+    dplyr::mutate(start_end = dplyr::case_when(
       direction %in% c("B_TF", "TF") & start_end == "start" ~ "end",
       direction %in% c("B_TF", "TF") & start_end == "end" ~ "start", TRUE ~ start_end)) %>%
     dplyr::mutate(xy = paste(.$X, .$Y)) %>% # adding node ID
     dplyr::mutate(xy = factor(xy, levels = unique(xy))) %>%
     dplyr::group_by(xy) %>%
-    dplyr::mutate(nodeID = cur_group_id()) %>%
+    dplyr::mutate(nodeID = dplyr::cur_group_id()) %>%
     dplyr::ungroup() %>%
     dplyr::select(-xy, -geometry) #
 
@@ -128,7 +141,7 @@ vegnett_to_R <- function(vegnett,
     sf::st_set_crs(sf::st_crs(edges))
 
   # Creating tbl_graph object of the road network #
-  graph <- tidygraph::tbl_graph(nodes = nodes, edges = as_tibble(edges), directed = T)
+  graph <- tidygraph::tbl_graph(nodes = nodes, edges = dplyr::as_tibble(edges), directed = T)
 
   # Removing loops in the graph #
   graph <- igraph::simplify(graph, remove.loops = T, remove.multiple = F)
