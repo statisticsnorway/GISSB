@@ -20,7 +20,7 @@ address_to_coords(zip_code, address, format = "sf", crs_out = 25833)
 Object with coordinates to the supplied addresses.
 }
 \description{
-\code{address_to_coords} is a function to find coordinates to supplied Norwegian addresses. Internet access is required as the function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
+The function \code{address_to_coords} can be used to find coordinates to supplied Norwegian addresses. Internet access is required as the function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
 }
 \examples{
 address_to_coords(zip_code = "0177", address = "Akersveien 26")

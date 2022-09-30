@@ -16,7 +16,7 @@ coords_to_google(coords, crs_out = 25833)
 An sf object with a new column added (\code{coords_google}), and an addtional sf geometry column with the chosen CRS.
 }
 \description{
-\code{coords_to_google} is a function to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
+The function \code{coords_to_google} can be used to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
 }
 \examples{
 address_to_coords(zip_code = "0177", address = "Akersveien 26") \%>\%

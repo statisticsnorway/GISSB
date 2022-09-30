@@ -1,7 +1,7 @@
 
 #' Convert addresses to coordinates
 #'
-#' `address_to_coords` is a function to find coordinates to supplied Norwegian addresses. Internet access is required as the function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
+#' The function `address_to_coords` can be used to find coordinates to supplied Norwegian addresses. Internet access is required as the function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
 #'
 #' @param zip_code Character vector with zip codes.
 #' @param address Character vector with addresses (street name and house number).

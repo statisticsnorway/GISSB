@@ -1,7 +1,7 @@
 
 #' Convert the Norwegian road network (NVDB Ruteplan nettverksdatasett) into network graphs in R
 #'
-#' `vegnett_to_R` is a function to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
+#' The function `vegnett_to_R` can be used to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (tbl_graph and cppRouting).
 #'
 #' @param vegnett The Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, as an sf object.
 #' @param crs_out Numeric vector with the chosen coordinate reference system (CRS).
@@ -16,7 +16,7 @@
 #'
 #' `[4] graph_cppRouting_FT_MINUTES`: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 #'
-#' `[5] graph_cppRouting_LENGTH`: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
+#' `[5] graph_cppRouting_SHAPE_LENGTH`: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 #' @export
 #'
 #' @examples
@@ -27,7 +27,7 @@
 #' nodes <- vegnett_list[[2]]
 #' edges <- vegnett_list[[3]]
 #' graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
-#' graph_cppRouting_LENGTH <- vegnett_list[[5]]
+#' graph_cppRouting_SHAPE_LENGTH <- vegnett_list[[5]]
 #'
 #' graph
 #' nodes
@@ -37,23 +37,24 @@
 #' head(graph_cppRouting_FT_MINUTES$dict)
 #' graph_cppRouting_FT_MINUTES$nbnode
 #'
-#' head(graph_cppRouting_LENGTH$data)
-#' head(graph_cppRouting_LENGTH$coords)
-#' head(graph_cppRouting_LENGTH$dict)
-#' graph_cppRouting_LENGTH$nbnode
+#' head(graph_cppRouting_SHAPE_LENGTH$data)
+#' head(graph_cppRouting_SHAPE_LENGTH$coords)
+#' head(graph_cppRouting_SHAPE_LENGTH$dict)
+#' graph_cppRouting_SHAPE_LENGTH$nbnode
 #'
 #' @encoding UTF-8
 #'
 #'
 
 vegnett_to_R <- function(vegnett,
-                         crs_out = 25833) {
+                         crs_out = 25833,
+                         ferry = TRUE) {
 
   suppressWarnings(
   vegnett <- vegnett %>%
     sf::st_zm(drop = T) %>%
     dplyr::rename_all(toupper) %>%
-    dplyr::rename(LENGTH = SHAPE_LENGTH) %>%
+    dplyr::rename(LENGTH = SHAPE_LENGTH) %>% # OBS? Erstatt alle LENGTH med SHAPE_LENGTH
     sf::st_cast("LINESTRING")
   )
 
@@ -65,8 +66,27 @@ vegnett_to_R <- function(vegnett,
   }
 
   vegnett <- rename_geometry(vegnett, "geometry")
-
   sf::st_geometry(vegnett) <- "geometry"
+
+  # OBS?
+  if (is.numeric(ferry)==T){
+  vegnett <- vegnett %>%
+    dplyr::mutate(km = SHAPE_LENGTH/1000,
+                  timer = FT_MINUTES/60,
+                  km_t = km/timer,
+                  FT_MINUTES_ny = (km/ferry)*60,
+                  FT_MINUTES = case_when(
+                    # SPECIALVEG %in% c("[FERGE]", "[FERGE,TURIST]") ~ FT_MINUTES_ny,
+                    ROADCLASS == 4 ~ FT_MINUTES_ny,
+                    TRUE ~ FT_MINUTES
+                  ),
+                  TF_MINUTES = case_when(
+                    # SPECIALVEG %in% c("[FERGE]", "[FERGE,TURIST]") ~ FT_MINUTES_ny,
+                    ROADCLASS == 4 ~ FT_MINUTES_ny,
+                    TRUE ~ TF_MINUTES
+                  )) %>%
+    dplyr::select(-km, -timer, -km_t, FT_MINUTES_ny)
+  }
 
   ######################
   ## Data processing ###
@@ -173,11 +193,11 @@ vegnett_to_R <- function(vegnett,
     dplyr::mutate(from = as.character(from),
                   to = as.character(to))
 
-  # LENGTH #
-  edges_LENGTH <- edges %>%
+  # SHAPE_LENGTH #
+  edges_SHAPE_LENGTH <- edges %>%
     data.frame() %>%
-    dplyr::select(from, to, LENGTH) %>%
-    dplyr::rename(weight = LENGTH) %>%
+    dplyr::select(from, to, SHAPE_LENGTH) %>%
+    dplyr::rename(weight = SHAPE_LENGTH) %>%
     dplyr::mutate(from = as.character(from),
                   to = as.character(to))
 
@@ -189,13 +209,13 @@ vegnett_to_R <- function(vegnett,
 
   ### Creating cppRouting graph ###
   graph_cppRouting_FT_MINUTES <- cppRouting::makegraph(edges_FT_MINUTES, directed = T, coords = node_list_coord)
-  graph_cppRouting_LENGTH <- cppRouting::makegraph(edges_LENGTH, directed = T, coords = node_list_coord)
+  graph_cppRouting_SHAPE_LENGTH <- cppRouting::makegraph(edges_SHAPE_LENGTH, directed = T, coords = node_list_coord)
 
 
   return(list(graph,
               nodes,
               edges,
               graph_cppRouting_FT_MINUTES,
-              graph_cppRouting_LENGTH))
+              graph_cppRouting_SHAPE_LENGTH))
 
 }

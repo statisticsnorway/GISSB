@@ -2,7 +2,7 @@
 
 #' Convert coordinates to Google Maps
 #'
-#' `coords_to_google` is a function to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
+#' The function `coords_to_google` can be used to convert coordinates of an sf object to a format that is easy to copy and paste into Google Maps.
 #'
 #' @param coords An sf object with a geometry column that will be converted to CRS 4326.
 #' @param crs_out Chosen coordinate reference system (CRS) for the geometry column of the returned sf object.

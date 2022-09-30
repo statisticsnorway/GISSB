@@ -1,7 +1,7 @@
 
 #' Connect coordinates to the nearest nodes in the road network
 #'
-#' `coords_to_node` is a function to find the nearest nodes in the Norwegian road network for chosen coordinates.
+#' The function `coords_to_node` can be used to find the nearest nodes in the Norwegian road network (in meters) for chosen coordinates.
 #'
 #' Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function [GISSB::vegnett_to_R()].
 #'
