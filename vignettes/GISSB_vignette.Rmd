@@ -31,13 +31,13 @@ Pakken inneholder følgende funksjoner:
 + `path_leaflet`
 + `shortest_path_cppRouting`
 
-Ved å bruke disse funksjonene kan man bl.a. finne koordinater til adresser og beregne kjøretid- og avstand mellom disse ved å bruke vegnettet (NVDB Ruteplan nettverksdatasett). Dette kan være nyttig dersom man ønsker å analysere regionale forskjeller i befolkningens tilgang til offentlige tjenester.
+Ved å bruke disse funksjonene kan man bl.a. finne koordinater til adresser og beregne kjøretid og -avstand mellom disse ved å bruke vegnettet (NVDB Ruteplan nettverksdatasett). Dette kan være nyttig dersom man f.eks. ønsker å analysere regionale forskjeller i befolkningens tilgang til offentlige tjenester.
 
 Se [Avstand til fødested](https://github.com/statisticsnorway/geostat-wp2/blob/master/analysis/Avstand%20til%20f%C3%B8dested.ipynb) for et eksempel der denne pakken har blitt brukt i et produksjonsløp (kun tilgjengelig for ansatte i SSB).
 
 ## Finne koordinater til adresser (`address_to_coords`)
 
-Funksjonen `address_to_coords` bruker [Kartverkets adresse-API](https://ws.geonorge.no/adresser/v1/#/) for å finne koordinater til adresser. Denne API-en krever nettilgang og baserer seg på matrikkelen (Norges offisielle eiendomsregister som inneholder alle offisielle adresser med tilhørende koordinater). Ved å skrive inn postnummer og adresse returneres et [sf-objekt](https://r-spatial.github.io/sf/articles/sf1.html) med koordinatene til denne adressen.
+Funksjonen `address_to_coords` bruker [Kartverkets adresse-API](https://ws.geonorge.no/adresser/v1/#/) for å finne koordinater til adresser. Denne API-en krever nettilgang og baserer seg på matrikkelen, som er Norges offisielle eiendomsregister som inneholder alle offisielle adresser med tilhørende koordinater. Ved å skrive inn postnummer og adresse returneres et [sf-objekt](https://r-spatial.github.io/sf/articles/sf1.html) med koordinatene til denne adressen.
 
 Standardverdi for projeksjonen av koordinatene er satt til [CRS 25833](https://epsg.io/25833). Dette er det offisielle koordinatsystemet i Norge og brukes i de fleste norske kartfiler. 
 
@@ -49,11 +49,12 @@ library(GISSB)
 # Laster inn filene #
 # vegnett <- sf::read_sf("C:/Users/rdn/Downloads/Samferdsel_0000_Norge_25833_NVDBRuteplanNettverksdatasett_FGDB/vegnettRuteplan_FGDB_20210528.gdb", 'ERFKPS')
 
-graph <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph.rds")
-nodes <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/nodes.rds")
-edges <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/edges.rds")
-graph_cppRouting_FT_MINUTES <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_FT_MINUTES.rds")
-graph_cppRouting_LENGTH <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_LENGTH.rds")
+# OBS
+# graph <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph.rds")
+# nodes <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/nodes.rds")
+# edges <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/edges.rds")
+# graph_cppRouting_FT_MINUTES <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_FT_MINUTES.rds")
+# graph_cppRouting_LENGTH <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_LENGTH.rds")
 
 ```
 
@@ -114,7 +115,10 @@ ggplot() +
   ggplot2::geom_sf(data = vegnett)
 ```
 
-![](unnamed-chunk-6-1.PNG){width=600px}
+```{r, echo=FALSE, out.width = "600px"}
+knitr::include_graphics(paste0(here::here(), "/images/unnamed-chunk-6-1.png"))
+
+```
 
 Vegnettet består av punkter som er plassert ca. 50 meter fra hverandre. Disse punktene kalles for noder. Lenkene som forbinder nodene/punktene sammen heter edges. For en mer detaljert gjennomgang av strukturen til vegnettet og hvordan dette blir behandlet med funksjonen `vegnett_to_R`, se [her](https://github.com/statisticsnorway/geostat-wp2/blob/3272bbb87bad79b3f976a83923da39b023973e36/analysis/Demo_databehandling.ipynb).
 
@@ -150,7 +154,7 @@ I funksjonen `coords_to_node` legger man inn et sf-objekt (med CRS 25833) som in
 
 For å benytte funksjonen `coords_to_node` må objektene `nodes` og `edges` (som lages med funksjonen `vegnett_to_R`) være lastet inn.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 from_node <- GISSB::coords_to_node(coords = fra, direction = "from")
 from_node
 
@@ -174,7 +178,7 @@ For å kjøre koden må objektet `graph` (som lages med funksjonen `vegnett_to_R
 
 OBS: `shortest_path_igraph` fungerer ikke med vektorer, dvs. en liste over flere fra- eller til-noder. Med `shortest_path_igraph` er det altså kun mulig å beregne avstander én til én. For å beregne avstand med flere fra- og/eller til-noder brukes funksjonen `shortest_path_cppRouting` (se nedenfor).
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 avstand_min <- GISSB::shortest_path_igraph(from_node_ID = from_node$from_node,
                            to_node_ID = to_node$to_node,
                            unit = "FT_MINUTES",
@@ -198,7 +202,7 @@ paste0(round(avstand_meter$length, digits = 1), " meter / ",
 
 For å få oppgitt hvilke noder i hvilken rekkefølge som utgjør den korteste ruten mellom start- og stoppunktet legges argumentet `path = TRUE` til:
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 path <- GISSB::shortest_path_igraph(from_node_ID = from_node$from_node,
                            to_node_ID = to_node$to_node,
                            unit = "FT_MINUTES",
@@ -209,7 +213,7 @@ path$epath
 
 Det er mulig å visualisere kjøreruter laget med funksjonen 'shortest_path_igraph' (der `path = TRUE`) ved å bruke funksjonen `path_leaflet`:
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 GISSB::path_leaflet(path)
 ```
 
@@ -221,7 +225,7 @@ I funksjonen `shortest_path_cppRouting` kan man legge inn vektorer med flere nod
 
 For å beregne korteste kjøretid i minutter med `shortest_path_cppRouting` settes `graph_cppRouting = graph_cppRouting_FT_MINUTES`, mens `graph_cppRouting = graph_cppRouting_LENGTH` beregner korteste kjøreavstand i meter. Objektet/objektene `graph_cppRouting_FT_MINUTES`/`graph_cppRouting_LENGTH` må være lastet inn (gjøres med funksjonen `vegnett_to_R`) før funksjonen `shortest_path_cppRouting` kan brukes.
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 avstand_cpp_min <- GISSB::shortest_path_cppRouting(from_node$from_node,
                                        to_node$to_node,
                                        unit = "FT_MINUTES")
@@ -239,7 +243,7 @@ avstand_cpp_meter
 
 I dette eksempelet beregnes korteste og lengste kjøretid fra to adresser ("Akersveien 26, 0177" og "Otervegen 23, 2211") til syv ulike adresser (fødestuer). 
 
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 
 adresser <- c("Sykehusveien 25",
               "Sognsvannsveien 20",

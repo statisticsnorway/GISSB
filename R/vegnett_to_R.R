@@ -16,7 +16,7 @@
 #'
 #' `[4] graph_cppRouting_FT_MINUTES`: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)
 #'
-#' `[5] graph_cppRouting_SHAPE_LENGTH`: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
+#' `[5] graph_cppRouting_METERS`: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)
 #' @export
 #'
 #' @examples
@@ -27,7 +27,7 @@
 #' nodes <- vegnett_list[[2]]
 #' edges <- vegnett_list[[3]]
 #' graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
-#' graph_cppRouting_SHAPE_LENGTH <- vegnett_list[[5]]
+#' graph_cppRouting_METERS <- vegnett_list[[5]]
 #'
 #' graph
 #' nodes
@@ -37,10 +37,10 @@
 #' head(graph_cppRouting_FT_MINUTES$dict)
 #' graph_cppRouting_FT_MINUTES$nbnode
 #'
-#' head(graph_cppRouting_SHAPE_LENGTH$data)
-#' head(graph_cppRouting_SHAPE_LENGTH$coords)
-#' head(graph_cppRouting_SHAPE_LENGTH$dict)
-#' graph_cppRouting_SHAPE_LENGTH$nbnode
+#' head(graph_cppRouting_METERS$data)
+#' head(graph_cppRouting_METERS$coords)
+#' head(graph_cppRouting_METERS$dict)
+#' graph_cppRouting_METERS$nbnode
 #'
 #' @encoding UTF-8
 #'
@@ -54,7 +54,7 @@ vegnett_to_R <- function(vegnett,
   vegnett <- vegnett %>%
     sf::st_zm(drop = T) %>%
     dplyr::rename_all(toupper) %>%
-    dplyr::rename(LENGTH = SHAPE_LENGTH) %>% # OBS? Erstatt alle LENGTH med SHAPE_LENGTH
+    # dplyr::rename(LENGTH = SHAPE_LENGTH) %>% # OBS? Erstatt alle LENGTH med SHAPE_LENGTH
     sf::st_cast("LINESTRING")
   )
 
@@ -68,25 +68,25 @@ vegnett_to_R <- function(vegnett,
   vegnett <- rename_geometry(vegnett, "geometry")
   sf::st_geometry(vegnett) <- "geometry"
 
-  # OBS?
-  if (is.numeric(ferry)==T){
-  vegnett <- vegnett %>%
-    dplyr::mutate(km = SHAPE_LENGTH/1000,
-                  timer = FT_MINUTES/60,
-                  km_t = km/timer,
-                  FT_MINUTES_ny = (km/ferry)*60,
-                  FT_MINUTES = case_when(
-                    # SPECIALVEG %in% c("[FERGE]", "[FERGE,TURIST]") ~ FT_MINUTES_ny,
-                    ROADCLASS == 4 ~ FT_MINUTES_ny,
-                    TRUE ~ FT_MINUTES
-                  ),
-                  TF_MINUTES = case_when(
-                    # SPECIALVEG %in% c("[FERGE]", "[FERGE,TURIST]") ~ FT_MINUTES_ny,
-                    ROADCLASS == 4 ~ FT_MINUTES_ny,
-                    TRUE ~ TF_MINUTES
-                  )) %>%
-    dplyr::select(-km, -timer, -km_t, FT_MINUTES_ny)
-  }
+  # # OBS?
+  # if (is.numeric(ferry)==T){
+  # vegnett <- vegnett %>%
+  #   dplyr::mutate(km = SHAPE_LENGTH/1000,
+  #                 timer = FT_MINUTES/60,
+  #                 km_t = km/timer,
+  #                 FT_MINUTES_ny = (km/ferry)*60,
+  #                 FT_MINUTES = case_when(
+  #                   # SPECIALVEG %in% c("[FERGE]", "[FERGE,TURIST]") ~ FT_MINUTES_ny,
+  #                   ROADCLASS == 4 ~ FT_MINUTES_ny,
+  #                   TRUE ~ FT_MINUTES
+  #                 ),
+  #                 TF_MINUTES = case_when(
+  #                   # SPECIALVEG %in% c("[FERGE]", "[FERGE,TURIST]") ~ FT_MINUTES_ny,
+  #                   ROADCLASS == 4 ~ FT_MINUTES_ny,
+  #                   TRUE ~ TF_MINUTES
+  #                 )) %>%
+  #   dplyr::select(-km, -timer, -km_t, FT_MINUTES_ny)
+  # }
 
   ######################
   ## Data processing ###
@@ -96,21 +96,27 @@ vegnett_to_R <- function(vegnett,
   # Creating a subset with values where the road goes both ways (B) and specifies direction from-to (FT) and to-from (TF) #
   B_FT <- vegnett %>%
     dplyr::filter(ONEWAY == "B") %>%
-    dplyr::mutate(direction = "B_FT")
+    dplyr::mutate(direction = "B_FT") %>%
+    dplyr::filter(FT_MINUTES > 0 | TF_MINUTES > 0) # Removes edges where FT_MINUTES or TF_MINUTES is missing
+
 
   B_TF <- vegnett %>%
     dplyr::filter(ONEWAY == "B") %>%
-    dplyr::mutate(direction = "B_TF")
+    dplyr::mutate(direction = "B_TF") %>%
+    dplyr::filter(FT_MINUTES > 0 | TF_MINUTES > 0) # Removes edges where FT_MINUTES or TF_MINUTES is missing
+
 
   # Subset with only FT #
   FT <- vegnett %>%
     dplyr::filter(ONEWAY == "FT") %>%
-    dplyr::mutate(direction = "FT")
+    dplyr::mutate(direction = "FT") %>%
+    dplyr::filter(FT_MINUTES > 0) # Removes edges where FT_MINUTES is missing
 
   # Subset with only TF #
   TF <- vegnett %>%
     dplyr::filter(ONEWAY == "TF") %>%
-    dplyr::mutate(direction = "TF")
+    dplyr::mutate(direction = "TF") %>%
+    dplyr::filter(TF_MINUTES > 0)  # Removes edges where TF_MINUTES is missing
 
   # Binding together all the edges #
   edges <- rbind(B_FT, FT, B_TF, TF) %>%
@@ -209,13 +215,13 @@ vegnett_to_R <- function(vegnett,
 
   ### Creating cppRouting graph ###
   graph_cppRouting_FT_MINUTES <- cppRouting::makegraph(edges_FT_MINUTES, directed = T, coords = node_list_coord)
-  graph_cppRouting_SHAPE_LENGTH <- cppRouting::makegraph(edges_SHAPE_LENGTH, directed = T, coords = node_list_coord)
+  graph_cppRouting_METERS <- cppRouting::makegraph(edges_SHAPE_LENGTH, directed = T, coords = node_list_coord)
 
 
   return(list(graph,
               nodes,
               edges,
               graph_cppRouting_FT_MINUTES,
-              graph_cppRouting_SHAPE_LENGTH))
+              graph_cppRouting_METERS))
 
 }
