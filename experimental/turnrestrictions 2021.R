@@ -41,16 +41,16 @@ vegnett <- ds %>%
 turnrestrictions_geom <- sf::read_sf("C:/Users/rdn/Documents/Kart/Vegnett/vegnettRuteplan_FGDB_20210401.gdb", layer = "ERFKPS_turns") %>%
   # sf::st_transform(crs = 4326)   %>%
   # sf::st_cast("LINESTRING") %>%
-  # dplyr::filter((Edge1FID == 1264892 | Edge2FCID == 1264892) | 
+  # dplyr::filter((Edge1FID == 1264892 | Edge2FCID == 1264892) |
   #                 (Edge1FID == 639359 | Edge2FCID == 639360) |
   #                 (Edge1FID == 1267023 | Edge2FCID == 466377)) %>%
   data.frame() %>%
-  dplyr::select(Edge1End, Edge1FID, Edge2FID) %>%
-  dplyr::filter(Edge1FID == 1264892)
+  dplyr::select(Edge1End, Edge1FID, Edge2FID) # %>%
+  # dplyr::filter(Edge1FID == 1264892)
 
 
 ########################################################################
-########################## Pakken begynner her########################## 
+########################## Pakken begynner her##########################
 ########################################################################
 
 suppressWarnings(
@@ -59,7 +59,7 @@ suppressWarnings(
     dplyr::rename_all(toupper) %>%
     # dplyr::rename(LENGTH = SHAPE_LENGTH) %>% # OBS? Erstatt alle LENGTH med SHAPE_LENGTH
     sf::st_cast("LINESTRING") %>%
-    dplyr::rename(FROMNODE = FROMNODEID, # OBS: gjøre likt som 2022 
+    dplyr::rename(FROMNODE = FROMNODEID, # OBS: gjøre likt som 2022
                   TONODE = TONODEID)
 )
 
@@ -88,30 +88,30 @@ vegnett_Edge1FID <- vegnett %>%
   data.frame() %>%
   dplyr::filter(FID %in% as.character(unique(turnrestrictions_geom$Edge1FID))) %>%
   dplyr::select(FID, FROMNODE, TONODE) %>%
-  dplyr::rename(FROMNODEID_1 = FROMNODE, 
+  dplyr::rename(FROMNODEID_1 = FROMNODE,
                 TONODEID_1 = TONODE)
 
 vegnett_Edge2FID <- vegnett %>%
   data.frame() %>%
   dplyr::filter(FID %in% as.character(unique(turnrestrictions_geom$Edge2FID))) %>%
   dplyr::select(FID, FROMNODE, TONODE) %>%
-  dplyr::rename(FROMNODEID_2 = FROMNODE, 
+  dplyr::rename(FROMNODEID_2 = FROMNODE,
                 TONODEID_2 = TONODE)
 
 turnrestrictions_geom_2 <- turnrestrictions_geom %>%
   dplyr::left_join(vegnett_Edge1FID, by = c("Edge1FID" = "FID")) %>%
   dplyr::left_join(vegnett_Edge2FID, by = c("Edge2FID" = "FID")) %>%
   dplyr::mutate(fromToNode = case_when(
-    Edge1End == "N" ~ FROMNODEID_1, 
-    Edge1End == "Y" ~ TONODEID_1, 
-    TRUE ~ ""), 
+    Edge1End == "N" ~ FROMNODEID_1,
+    Edge1End == "Y" ~ TONODEID_1,
+    TRUE ~ ""),
     toToNode = case_when(
-      Edge1End == "N" & FROMNODEID_1 == FROMNODEID_2 ~ TONODEID_2, 
-      Edge1End == "Y" & TONODEID_1 == FROMNODEID_2 ~ TONODEID_2, 
+      Edge1End == "N" & FROMNODEID_1 == FROMNODEID_2 ~ TONODEID_2,
+      Edge1End == "Y" & TONODEID_1 == FROMNODEID_2 ~ TONODEID_2,
       TRUE ~ FROMNODEID_2
-    ), 
+    ),
     turn = 1) %>%
-  dplyr::select(fromToNode, toToNode, Edge1End, FROMNODEID_1, TONODEID_1, FROMNODEID_2, TONODEID_2) 
+  dplyr::select(fromToNode, toToNode, Edge1End, FROMNODEID_1, TONODEID_1, FROMNODEID_2, TONODEID_2)
 
 # # 2460182
 # test <- turnrestrictions_geom_2 %>%
@@ -123,6 +123,8 @@ turnrestrictions_geom <- turnrestrictions_geom_2 %>%
                 TONODEID = toToNode) %>%
   dplyr::mutate(turn = 1)
 
+test <- turnrestrictions_geom %>%
+  dplyr::filter(!is.na(FROMNODEID))
 
 ######################
 ## Data processing ###
@@ -153,8 +155,8 @@ TF <- vegnett %>%
 edges <- rbind(B_FT, FT, B_TF, TF) %>%
   dplyr::mutate(edgeID = c(1:dplyr::n())) %>% # adding new edge ID
   dplyr::mutate(FT_MINUTES = dplyr::case_when( # specify correct FT_MINUTES for edges that go TF
-    direction %in% c("B_TF", "TF") ~ TF_MINUTES, TRUE ~ FT_MINUTES), 
-    FROMNODEID = case_when(direction %in% c("B_TF", "TF") ~ TONODE, TRUE ~ FROMNODE), 
+    direction %in% c("B_TF", "TF") ~ TF_MINUTES, TRUE ~ FT_MINUTES),
+    FROMNODEID = case_when(direction %in% c("B_TF", "TF") ~ TONODE, TRUE ~ FROMNODE),
     TONODEID = case_when(direction %in% c("B_TF", "TF") ~ FROMNODE, TRUE ~ TONODE))
 
 # OBS: kobler på turnrestrictions og fjerner lenkene der kjøreretning ikke er tillatt
@@ -162,7 +164,7 @@ edges <- dplyr::left_join(edges, turnrestrictions_geom, by = c("FROMNODEID", "TO
   dplyr::filter(is.na(turn))
 
 # OBS: denne trengs ikke?
-# edges <- edges %>% 
+# edges <- edges %>%
 #   dplyr::filter(is.na(turn)) # %>%
   # dplyr::select(FROMNODEID, TONODEID, LINKID, direction, turn)
 
@@ -190,8 +192,8 @@ nodes  <- dplyr::left_join(nodes, edges, by = c("edgeID")) %>%
 # OBS: denne fungerer ikke - igraph må ha nodeID-er som starter på 1?
 # nodes <- nodes %>%
 #   dplyr::mutate(nodeID = case_when(
-#     direction %in% c("B_FT", "FT") ~ FROMNODEID, 
-#     direction %in% c("B_TF", "TF") ~ TONODEID, 
+#     direction %in% c("B_FT", "FT") ~ FROMNODEID,
+#     direction %in% c("B_TF", "TF") ~ TONODEID,
 #     TRUE ~ ""
 #   ))
 
@@ -269,7 +271,7 @@ graph_cppRouting_SHAPE_LENGTH <- cppRouting::makegraph(edges_SHAPE_LENGTH, direc
 
 
 #######################################################################
-########################## Pakken stopper her########################## 
+########################## Pakken stopper her##########################
 #######################################################################
 
 # Bogstadveien eksempel
@@ -281,12 +283,22 @@ graph_cppRouting_SHAPE_LENGTH <- cppRouting::makegraph(edges_SHAPE_LENGTH, direc
 # to_node_original <-  632345
 
 # Annet ex
-from_node_original <-  2394232
-to_node_original <-  2394213
+# from_node_original <-  2394232
+# to_node_original <-  2394213
+# from_node_original <-  2394213
+# to_node_original <-  2394232
 
-from_node_original <-  2394213
-to_node_original <-  2394232
+# OBS: hva skjer her? Feil i vegnettet? Hvorfor dukker denne opp to ganger?
+# from_node_original <-  2460196
+# to_node_original <-  2460161
+# from_node_original <- 2460161
+# to_node_original <- 2460196
 
+from_node_original <- 634745
+to_node_original <- 2674120
+
+# from_node_original <- 2674120
+# to_node_original <- 634745
 
 from_node <- edges %>%
   dplyr::filter(FROMNODEID == from_node_original & direction %in% c("B_FT", "FT")) %>%
@@ -298,13 +310,13 @@ to_node <- edges %>%
   data.frame() %>%
   dplyr::select(TONODEID, to)
 
-GISSB::shortest_path_igraph(from_node_ID = unique(from_node$from), 
-                            to_node_ID = unique(to_node$to), 
+GISSB::shortest_path_igraph(from_node_ID = unique(from_node$from),
+                            to_node_ID = unique(to_node$to),
                             unit = "FT_MINUTES")
 
-path <- GISSB::shortest_path_igraph(from_node_ID = unique(from_node$from), 
-                               to_node_ID = unique(to_node$to), 
-                               unit = "FT_MINUTES", 
+path <- GISSB::shortest_path_igraph(from_node_ID = unique(from_node$from),
+                               to_node_ID = unique(to_node$to),
+                               unit = "FT_MINUTES",
                                path = T)
 
 GISSB::path_leaflet(path)
@@ -317,21 +329,21 @@ node_points <- nodes %>%
          lat = unlist(map(nodes$geometry,2)))
 
 test_points <- node_points %>%
-  dplyr::filter(nodeID %in% c(unique(from_node$from), 
+  dplyr::filter(nodeID %in% c(unique(from_node$from),
                               unique(to_node$to))) %>% # 79205
   # dplyr::filter(nodeID %in% c(75379, 60937)) %>%
   # dplyr::filter(nodeID %in%c(4, 6, 1)) %>% # 1473826, 1499638, 1450893
   leaflet::leaflet() %>%
   leaflet::addTiles() %>%
   leaflet::addMarkers(~long, ~lat, popup = ~as.character(paste(nodeID, ": ", lat, ", ", long)))
-# test_points
+test_points
 
 
 # path_graph_length <- graph %>%
 #   igraph::subgraph.edges(eids = path$epath %>%
 #                            unlist()) %>%
 #   tidygraph::as_tbl_graph()
-# 
+#
 # leaflet_out <- path_graph_length %>%
 #   tidygraph::activate(edges) %>%
 #   tibble::as_tibble() %>%
@@ -340,12 +352,12 @@ test_points <- node_points %>%
 #   leaflet::leaflet() %>%
 #   leaflet::addPolylines() %>%
 #   leaflet::addTiles()
-# 
+#
 # leaflet_out
 
 
 
-# 
+#
 # end.time <- Sys.time()
 # time.taken <- end.time - start.time
 # time.taken
