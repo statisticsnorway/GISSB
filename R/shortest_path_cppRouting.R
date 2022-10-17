@@ -51,19 +51,19 @@ shortest_path_cppRouting <- function(from_node_ID,
   dists2 <- tibble::rownames_to_column(dists2, "from_nodeID")
   dists2_long <- reshape2::melt(dists2, id.vars = "from_nodeID",
                                 variable.name = "to_nodeID",
-                                value.name = "meters")
+                                value.name = unit)
   dists2_long$to_nodeID <- gsub("X", "", dists2_long$to_nodeID)
 
   if (dist == "min") {
     dists2_long <- dists2_long %>%
       dplyr::group_by(from_nodeID) %>%
-      dplyr::slice(which.min(meters))
+      dplyr::slice(which.min(!!sym(unit)))
   }
 
   if (dist == "max") {
     dists2_long <- dists2_long %>%
       dplyr::group_by(from_nodeID) %>%
-      dplyr::slice(which.max(meters))
+      dplyr::slice(which.max(!!sym(unit)))
   }
 
   dists2_long$from_nodeID <- as.integer(dists2_long$from_nodeID)
