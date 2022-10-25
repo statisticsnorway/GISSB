@@ -56,86 +56,78 @@ vegnett_to_R <- function(vegnett,
                          meters = "SHAPE_LENGTH",
                          turn_restrictions = FALSE,
                          ferry = TRUE) {
-
-
+  
+  
   suppressWarnings(
-  vegnett <- vegnett %>%
-    sf::st_zm(drop = T) %>%
-    dplyr::rename_all(toupper) %>%
-    sf::st_cast("LINESTRING") %>%
-    dplyr::filter(ONEWAY == "TF" & !!sym(TF_minutes) > 0 |
-                  ONEWAY == "FT" & !!sym(FT_minutes) > 0 |
-                  ONEWAY == "B" & !!sym(FT_minutes) > 0 |
-                  ONEWAY == "B" & !!sym(TF_minutes) > 0)
-
+    vegnett <- vegnett %>%
+      sf::st_zm(drop = T) %>%
+      dplyr::rename_all(toupper) %>%
+      sf::st_cast("LINESTRING") %>%
+      dplyr::filter(ONEWAY == "TF" & !!sym(TF_minutes) > 0 |
+                      ONEWAY == "FT" & !!sym(FT_minutes) > 0 |
+                      ONEWAY == "B" & !!sym(FT_minutes) > 0 |
+                      ONEWAY == "B" & !!sym(TF_minutes) > 0)
+    
   )
-
-  # if (aargang <= 2021) {
-  #   vegnett <- vegnett %>%
-  #   dplyr::rename(FROMNODE = FROMNODEID, # OBS
-  #                 TONODE = TONODEID)
-  # }
-
+  
   rename_geometry <- function(g, name){
     current = attr(g, "sf_column")
     names(g)[names(g)==current] = name
     sf::st_geometry(g)=name
     g
   }
-
+  
   vegnett <- rename_geometry(vegnett, "geometry")
   sf::st_geometry(vegnett) <- "geometry"
-
-  # # OBS?
-  # if (is.numeric(ferry)==T){
-  # vegnett <- vegnett %>%
-  #   dplyr::mutate(km = SHAPE_LENGTH/1000,
-  #                 timer = FT_MINUTES/60,
-  #                 km_t = km/timer,
-  #                 FT_MINUTES_ny = (km/ferry)*60,
-  #                 FT_MINUTES = case_when(
-  #                   # SPECIALVEG %in% c("[FERGE]", "[FERGE,TURIST]") ~ FT_MINUTES_ny,
-  #                   ROADCLASS == 4 ~ FT_MINUTES_ny,
-  #                   TRUE ~ FT_MINUTES
-  #                 ),
-  #                 TF_MINUTES = case_when(
-  #                   # SPECIALVEG %in% c("[FERGE]", "[FERGE,TURIST]") ~ FT_MINUTES_ny,
-  #                   ROADCLASS == 4 ~ FT_MINUTES_ny,
-  #                   TRUE ~ TF_MINUTES
-  #                 )) %>%
-  #   dplyr::select(-km, -timer, -km_t, FT_MINUTES_ny)
-  # }
-
+  
+  # Change km/h for ferry edges
+  if (is.numeric(ferry)==T){
+    vegnett <- vegnett %>%
+      dplyr::mutate(km = !!sym(meters)/1000,
+                    hours = !!sym(FT_minutes)/60,
+                    km_h = km/hours,
+                    FT_minutes_new = (km/ferry)*60,
+                    !!FT_minutes := case_when(
+                      ROADCLASS == 4 ~ FT_minutes_new,
+                      TRUE ~ !!sym(FT_minutes)
+                    ),
+                    !!TF_minutes := case_when(
+                      ROADCLASS == 4 ~ FT_minutes_new,
+                      TRUE ~ !!sym(TF_minutes)
+                    )) %>%
+      dplyr::select(-km, -hours, -km_h, FT_minutes_new)
+  }
+  
   ######################
   ## Data processing ###
   ######################
-
+  
   # Adding an extra row where the road goes both ways #
   # Creating a subset with values where the road goes both ways (B) and specifies direction from-to (FT) and to-from (TF) #
   B_FT <- vegnett %>%
     dplyr::filter(ONEWAY == "B") %>%
     dplyr::mutate(direction = "B_FT") %>%
     dplyr::filter(!!sym(FT_minutes) > 0 | !!sym(TF_minutes) > 0) # Removes edges where FT_MINUTES or TF_MINUTES is missing
-
-
+  
+  
   B_TF <- vegnett %>%
     dplyr::filter(ONEWAY == "B") %>%
     dplyr::mutate(direction = "B_TF") %>%
     dplyr::filter(!!sym(FT_minutes) > 0 | !!sym(TF_minutes) > 0) # Removes edges where FT_MINUTES or TF_MINUTES is missing
-
-
+  
+  
   # Subset with only FT #
   FT <- vegnett %>%
     dplyr::filter(ONEWAY == "FT") %>%
     dplyr::mutate(direction = "FT") %>%
     dplyr::filter(!!sym(FT_minutes) > 0) # Removes edges where FT_MINUTES is missing
-
+  
   # Subset with only TF #
   TF <- vegnett %>%
     dplyr::filter(ONEWAY == "TF") %>%
     dplyr::mutate(direction = "TF") %>%
     dplyr::filter(!!sym(TF_minutes) > 0)  # Removes edges where TF_MINUTES is missing
-
+  
   # Binding together all the edges #
   edges <- rbind(B_FT, FT, B_TF, TF) %>%
     dplyr::mutate(edgeID = c(1:dplyr::n())) %>% # adding new edge ID
@@ -143,48 +135,51 @@ vegnett_to_R <- function(vegnett,
       direction %in% c("B_TF", "TF") ~ !!sym(TF_minutes), TRUE ~ !!sym(FT_minutes)),
       FROMNODEID_new = case_when(direction %in% c("B_TF", "TF") ~ !!sym(tonodeID), TRUE ~ !!sym(fromnodeID)),
       TONODEID_new = case_when(direction %in% c("B_TF", "TF") ~ !!sym(fromnodeID), TRUE ~ !!sym(tonodeID))
-  )
+    )
+  
+  # Adding turn restrictions (optional) # 
   if (turn_restrictions==TRUE){
-    if (aargang <= 2021){
-    vegnett_Edge1FID <- vegnett %>%
-      data.frame() %>%
-      dplyr::filter(FID %in% as.character(unique(turnrestrictions_geom$Edge1FID))) %>%
-      dplyr::select(FID, all_of(fromnodeID), all_of(tonodeID)) %>%
-      dplyr::rename(FROMNODEID_1 = !!sym(fromnodeID),
-                    TONODEID_1 = !!sym(tonodeID))
-
-    vegnett_Edge2FID <- vegnett %>%
-      data.frame() %>%
-      dplyr::filter(FID %in% as.character(unique(turnrestrictions_geom$Edge2FID))) %>%
-      dplyr::select(FID, all_of(fromnodeID), all_of(tonodeID)) %>%
-      dplyr::rename(FROMNODEID_2 = !!sym(fromnodeID),
-                    TONODEID_2 = !!sym(tonodeID))
-
-    turnrestrictions_geom <- turnrestrictions_geom %>%
-      dplyr::left_join(vegnett_Edge1FID, by = c("Edge1FID" = "FID")) %>%
-      dplyr::left_join(vegnett_Edge2FID, by = c("Edge2FID" = "FID")) %>%
-      dplyr::mutate(fromToNode = case_when(
-        Edge1End == "N" ~ FROMNODEID_1,
-        Edge1End == "Y" ~ TONODEID_1,
-        TRUE ~ ""),
-        toToNode = case_when(
-          Edge1End == "N" & FROMNODEID_1 == FROMNODEID_2 ~ TONODEID_2,
-          Edge1End == "Y" & TONODEID_1 == FROMNODEID_2 ~ TONODEID_2,
-          TRUE ~ FROMNODEID_2
-        ),
-        turn = 1) %>%
-      dplyr::select(fromToNode, toToNode, Edge1End, FROMNODEID_1, TONODEID_1, FROMNODEID_2, TONODEID_2)
+    
+    if (year <= 2021){
+      vegnett_Edge1FID <- vegnett %>%
+        data.frame() %>%
+        dplyr::filter(FID %in% as.character(unique(turnrestrictions_geom$Edge1FID))) %>%
+        dplyr::select(FID, all_of(fromnodeID), all_of(tonodeID)) %>%
+        dplyr::rename(FROMNODEID_1 = !!sym(fromnodeID),
+                      TONODEID_1 = !!sym(tonodeID))
+      
+      vegnett_Edge2FID <- vegnett %>%
+        data.frame() %>%
+        dplyr::filter(FID %in% as.character(unique(turnrestrictions_geom$Edge2FID))) %>%
+        dplyr::select(FID, all_of(fromnodeID), all_of(tonodeID)) %>%
+        dplyr::rename(FROMNODEID_2 = !!sym(fromnodeID),
+                      TONODEID_2 = !!sym(tonodeID))
+      
+      turnrestrictions_geom <- turnrestrictions_geom %>%
+        dplyr::left_join(vegnett_Edge1FID, by = c("Edge1FID" = "FID")) %>%
+        dplyr::left_join(vegnett_Edge2FID, by = c("Edge2FID" = "FID")) %>%
+        dplyr::mutate(fromToNode = case_when(
+          Edge1End == "N" ~ FROMNODEID_1,
+          Edge1End == "Y" ~ TONODEID_1,
+          TRUE ~ ""),
+          toToNode = case_when(
+            Edge1End == "N" & FROMNODEID_1 == FROMNODEID_2 ~ TONODEID_2,
+            Edge1End == "Y" & TONODEID_1 == FROMNODEID_2 ~ TONODEID_2,
+            TRUE ~ FROMNODEID_2
+          ),
+          turn = 1) %>%
+        dplyr::select(fromToNode, toToNode, Edge1End, FROMNODEID_1, TONODEID_1, FROMNODEID_2, TONODEID_2)
     }
-
+    
     turnrestrictions_geom <- turnrestrictions_geom %>%
       dplyr::rename(FROMNODEID = fromToNode,
                     TONODEID = toToNode) %>%
       dplyr::mutate(turn = 1)
-
+    
     edges <- dplyr::left_join(edges, turnrestrictions_geom, by = c("FROMNODEID_new" = "FROMNODEID", "TONODEID_new" = "TONODEID")) %>%
       dplyr::filter(is.na(turn))
   }
-
+  
   # Extracting the nodes from the edges and specifies start and end #
   nodes <- edges %>%
     sf::st_coordinates() %>%
@@ -194,7 +189,7 @@ vegnett_to_R <- function(vegnett,
     dplyr::slice(c(1, dplyr::n())) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(start_end = rep(c('start', 'end'), times = dplyr::n()/2))
-
+  
   nodes  <- dplyr::left_join(nodes, edges, by = c("edgeID")) %>%
     dplyr::mutate(start_end = dplyr::case_when(
       direction %in% c("B_TF", "TF") & start_end == "start" ~ "end",
@@ -205,89 +200,86 @@ vegnett_to_R <- function(vegnett,
     dplyr::mutate(nodeID = dplyr::cur_group_id()) %>%
     dplyr::ungroup() %>%
     dplyr::select(-xy, -geometry) #
-
+  
   # Start nodes #
   source_nodes <- nodes %>%
     dplyr::filter(start_end == 'start') %>%
     dplyr::pull(nodeID)
-
+  
   # End nodes #
   target_nodes <- nodes %>%
     dplyr::filter(start_end == 'end') %>%
     dplyr::pull(nodeID)
-
+  
   # Creating edges from source_nodes and target_nodes #
   lookup <- c(meters = meters, minutes = FT_minutes) # OBS: legg denne direkte inn i all_of()?
   edges <- edges %>%
     dplyr::mutate(from = source_nodes, to = target_nodes) %>%
-  dplyr::rename(all_of(lookup))
-
+    dplyr::rename(all_of(lookup))
+  
   # Extracting distinct nodes with coordinates #
   nodes <- nodes %>%
     dplyr::distinct(nodeID, .keep_all = TRUE) %>%
     dplyr::select(-c(edgeID, start_end)) %>%
     sf::st_as_sf(coords = c('X', 'Y')) %>%
     sf::st_set_crs(sf::st_crs(edges))
-
+  
   # Creating tbl_graph object of the road network #
   graph <- tidygraph::tbl_graph(nodes = nodes, edges = dplyr::as_tibble(edges), directed = T)
-
+  
   # Removing loops in the graph #
   graph <- igraph::simplify(graph, remove.loops = T, remove.multiple = F)
   graph <- tidygraph::as_tbl_graph(graph)
-
+  
   # Extracting new edges (where loops are removed) #
   edges <- graph %>%
     tidygraph::activate(edges) %>%
     data.frame()
-
+  
   membership <- igraph::components(graph)$membership
   membership <- data.frame(membership)
-
+  
   nodes <- nodes %>%
     cbind(membership) %>%
     dplyr::select(nodeID, geometry, membership) %>%
     sf::st_set_crs(crs_out)
-
-
+  
+  
   ################################
   ## Creating cppRouting graph ###
   ################################
-
+  
   # Minutes #
   edges_minutes <- edges %>%
     data.frame() %>%
-    # dplyr::select(from, to, all_of(FT_minutes)) %>%
     dplyr::select(from, to, minutes) %>%
-    # dplyr::rename(weight = all_of(FT_minutes)) %>%
     dplyr::rename(weight = minutes) %>%
     dplyr::mutate(from = as.character(from),
                   to = as.character(to))
-
+  
   # Meters #
   edges_meters <- edges %>%
     data.frame() %>%
-    # dplyr::select(from, to, all_of(meters)) %>%
     dplyr::select(from, to, meters) %>%
     dplyr::rename(weight = meters) %>%
     dplyr::mutate(from = as.character(from),
                   to = as.character(to))
-
+  
   node_list_coord <- nodes %>%
     dplyr::mutate(X = unlist(purrr::map(geometry,1)),
                   Y = unlist(purrr::map(geometry,2))) %>%
     data.frame() %>%
     dplyr::select(nodeID, X, Y)
-
+  
   ### Creating cppRouting graph ###
   graph_cppRouting_minutes <- cppRouting::makegraph(edges_minutes, directed = T, coords = node_list_coord)
   graph_cppRouting_meters <- cppRouting::makegraph(edges_meters, directed = T, coords = node_list_coord)
-
-
+  
+  
   return(list(graph,
               nodes,
               edges,
               graph_cppRouting_minutes,
               graph_cppRouting_meters))
-
+  
 }
