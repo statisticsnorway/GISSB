@@ -19,9 +19,9 @@
 
 
 path_leaflet <- function(path, 
-                        graph = graph) {
+                        graph_object = graph) {
 
-  path_graph_length <- graph %>%
+  path_graph_length <- graph_object %>%
     igraph::subgraph.edges(eids = path$epath %>%
                              unlist()) %>%
     tidygraph::as_tbl_graph()
