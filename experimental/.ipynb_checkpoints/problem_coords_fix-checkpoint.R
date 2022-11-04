@@ -4,7 +4,9 @@ problem_coords_fix <- function(problem_coords,
                                direction = "from",
                                ID_col = "nodeID", 
                                dist_coord = "", 
-                               minutes_per_meter = 0.0021980747194065) { # ?
+                               minutes_per_meter = 0.002) {  # 30 km/t: ((1/1000)/30*60)   
+ 
+
     
 from_node <- coords_to_node(coords = problem_coords, 
                             nodes = nodes,
