@@ -77,31 +77,31 @@
 
 
 <dt>fromnodeID</dt>
-<dd><p>Character vector with the name of the column indicating the from node ID. Default value is set to FROMNODE (2022).</p></dd>
+<dd><p>Character vector with the name of the column indicating the from node ID. Default value is set to <code>FROMNODE</code> (2022).</p></dd>
 
 
 <dt>tonodeID</dt>
-<dd><p>Character vector with the name of the column indicating the to node ID. Default value is set to TONODE (2022).</p></dd>
+<dd><p>Character vector with the name of the column indicating the to node ID. Default value is set to <code>TONODE</code> (2022).</p></dd>
 
 
 <dt>FT_minutes</dt>
-<dd><p>Character vector with the name of the column that contains the cost in minutes from fromnodeID to tonodeID (FT). Default value is set to DRIVETIME_FW (2022).</p></dd>
+<dd><p>Character vector with the name of the column that contains the cost in minutes from <code>fromnodeID</code> to <code>tonodeID</code> (FT). Default value is set to <code>DRIVETIME_FW</code> (2022).</p></dd>
 
 
 <dt>TF_minutes</dt>
-<dd><p>Character vector with the name of the column that contains the cost in minutes from tonodeID to fromnodeID (TF). Default value is set to DRIVETIME_BW (2022).</p></dd>
+<dd><p>Character vector with the name of the column that contains the cost in minutes from <code>tonodeID</code> to <code>fromnodeID</code> (TF). Default value is set to <code>DRIVETIME_BW</code> (2022).</p></dd>
 
 
 <dt>meters</dt>
-<dd><p>Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to SHAPE_LENGTH (2022).</p></dd>
+<dd><p>Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to <code>SHAPE_LENGTH</code> (2022).</p></dd>
 
 
 <dt>turn_restrictions</dt>
-<dd><p>Boolean. Default value is FALSE. If TRUE turn restrictions will be added to the road network. Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.</p></dd>
+<dd><p>Boolean. Default value is <code>FALSE</code>. If <code>TRUE</code> turn restrictions will be added to the road network. Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.</p></dd>
 
 
 <dt>ferry</dt>
-<dd><p>Boolean/numeric vector. Default value is TRUE which means that all edges that involve ferries are given their original drive time (as is, somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to the supplied value in km/h.</p></dd>
+<dd><p>Boolean/numeric vector. Default value is <code>TRUE</code> which means that all edges that involve ferries are given their original drive time (as is, somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to the supplied value in km/h.</p></dd>
 
 </dl></div>
     <div class="section level2">

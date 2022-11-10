@@ -25,19 +25,19 @@ vegnett_to_R(
 
 \item{year}{Numeric vector with the year the road network is from. Due to changes in the format of the files between 2021 and 2022 the most important thing is to choose between the "old" format (-2021) or the new format (2022-). The default value is set to 2022.}
 
-\item{fromnodeID}{Character vector with the name of the column indicating the from node ID. Default value is set to FROMNODE (2022).}
+\item{fromnodeID}{Character vector with the name of the column indicating the from node ID. Default value is set to \code{FROMNODE} (2022).}
 
-\item{tonodeID}{Character vector with the name of the column indicating the to node ID. Default value is set to TONODE (2022).}
+\item{tonodeID}{Character vector with the name of the column indicating the to node ID. Default value is set to \code{TONODE} (2022).}
 
-\item{FT_minutes}{Character vector with the name of the column that contains the cost in minutes from fromnodeID to tonodeID (FT). Default value is set to DRIVETIME_FW (2022).}
+\item{FT_minutes}{Character vector with the name of the column that contains the cost in minutes from \code{fromnodeID} to \code{tonodeID} (FT). Default value is set to \code{DRIVETIME_FW} (2022).}
 
-\item{TF_minutes}{Character vector with the name of the column that contains the cost in minutes from tonodeID to fromnodeID (TF). Default value is set to DRIVETIME_BW (2022).}
+\item{TF_minutes}{Character vector with the name of the column that contains the cost in minutes from \code{tonodeID} to \code{fromnodeID} (TF). Default value is set to \code{DRIVETIME_BW} (2022).}
 
-\item{meters}{Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to SHAPE_LENGTH (2022).}
+\item{meters}{Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to \code{SHAPE_LENGTH} (2022).}
 
-\item{turn_restrictions}{Boolean. Default value is FALSE. If TRUE turn restrictions will be added to the road network. Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.}
+\item{turn_restrictions}{Boolean. Default value is \code{FALSE}. If \code{TRUE} turn restrictions will be added to the road network. Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.}
 
-\item{ferry}{Boolean/numeric vector. Default value is TRUE which means that all edges that involve ferries are given their original drive time (as is, somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to the supplied value in km/h.}
+\item{ferry}{Boolean/numeric vector. Default value is \code{TRUE} which means that all edges that involve ferries are given their original drive time (as is, somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to the supplied value in km/h.}
 }
 \value{
 List containing the following elements:
