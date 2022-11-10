@@ -24,6 +24,10 @@ turnrestrictions_geom <- turnrestrictions_geom %>%
   # dplyr::filter((fromFromNode == "1473826" & fromToNode == "1499638" & toToNode == "1450893") |
   #                 (fromFromNode == "1450893" & fromToNode == "1499638" & toToNode == "1473826"))
 
+
+# Lagrer som .parquet
+# arrow::write_parquet(turnrestrictions_geom, "C:/Users/rdn/Documents/Kart/Vegnett/turnrestrictions_geom_2022.parquet")
+
 vegnett_parquet_filsti <- paste0("C:/Users/rdn/Documents/Kart/Vegnett/vegnett", aargang, ".parquet")
 
 ds <- arrow::open_dataset(vegnett_parquet_filsti)
@@ -36,11 +40,11 @@ vegnett <- ds %>%
   dplyr::rename_all(toupper) %>%
   sf::st_zm(drop = T) %>%
   sf::st_cast("LINESTRING") %>%
-  dplyr::rename(FT_MINUTES = DRIVETIME_FW, 
+  dplyr::rename(FT_MINUTES = DRIVETIME_FW,
                 TF_MINUTES = DRIVETIME_BW) %>%
   dplyr::filter(ONEWAY == "TF" & TF_MINUTES > 0 |
-                  ONEWAY == "FT" & FT_MINUTES > 0 | 
-                  ONEWAY == "B" & FT_MINUTES > 0 | 
+                  ONEWAY == "FT" & FT_MINUTES > 0 |
+                  ONEWAY == "B" & FT_MINUTES > 0 |
                   ONEWAY == "B" & TF_MINUTES > 0)
 
 # source: 1473826 - target: 1499638
@@ -73,7 +77,7 @@ sf::st_transform(crs = 4326)
 
 ###
 
-# ggplot() + 
+# ggplot() +
 #   geom_sf(data = vegnett,  aes(geometry = geometry))
 
 
@@ -130,10 +134,10 @@ TF <- vegnett %>%
 edges <- rbind(B_FT, FT, B_TF, TF) %>%
   dplyr::mutate(edgeID = c(1:dplyr::n())) %>% # adding new edge ID
   dplyr::mutate(FT_MINUTES = dplyr::case_when( # specify correct FT_MINUTES for edges that go TF
-    direction %in% c("B_TF", "TF") ~ TF_MINUTES, TRUE ~ FT_MINUTES), 
+    direction %in% c("B_TF", "TF") ~ TF_MINUTES, TRUE ~ FT_MINUTES),
     FROMNODEID = case_when(
-      direction %in% c("B_TF", "TF") ~ TONODE, 
-      TRUE ~ FROMNODE), 
+      direction %in% c("B_TF", "TF") ~ TONODE,
+      TRUE ~ FROMNODE),
     TONODEID = case_when(
       direction %in% c("B_TF", "TF") ~ FROMNODE, # OBS: TF/FT?
       TRUE ~ TONODE)
@@ -143,14 +147,14 @@ edges <- rbind(B_FT, FT, B_TF, TF) %>%
 #   dplyr::filter(!is.na(LINKID))
 
 turnrestrictions_geom <- turnrestrictions_geom %>%
-  dplyr::rename(FROMNODEID = fromToNode, 
+  dplyr::rename(FROMNODEID = fromToNode,
                 TONODEID = toToNode) %>%
   dplyr::mutate(turn = 1)
 
 edges <- dplyr::left_join(edges, turnrestrictions_geom, by = c("FROMNODEID", "TONODEID")) %>%
   dplyr::filter(is.na(turn))
 
-# edges <- edges %>% 
+# edges <- edges %>%
 #   dplyr::filter(is.na(turn)) # %>%
   # dplyr::select(FROMNODEID, TONODEID, LINKID, direction, turn)
 
@@ -184,8 +188,8 @@ nodes  <- dplyr::left_join(nodes, edges, by = c("edgeID")) %>%
 # OBS!
 # nodes <- nodes %>%
 #   dplyr::mutate(nodeID = case_when(
-#     direction %in% c("B_FT", "FT") ~ FROMNODEID, 
-#     direction %in% c("B_TF", "TF") ~ TONODEID, 
+#     direction %in% c("B_FT", "FT") ~ FROMNODEID,
+#     direction %in% c("B_TF", "TF") ~ TONODEID,
 #     TRUE ~ ""
 #   ))
 
@@ -314,13 +318,13 @@ to_node <- edges %>%
   data.frame() %>%
   dplyr::select(TONODEID, to)
 
-GISSB::shortest_path_igraph(from_node_ID = unique(from_node$from), 
-                            to_node_ID = unique(to_node$to), 
+GISSB::shortest_path_igraph(from_node_ID = unique(from_node$from),
+                            to_node_ID = unique(to_node$to),
                             unit = "FT_MINUTES")
 
-path <- GISSB::shortest_path_igraph(from_node_ID = unique(from_node$from), 
-                               to_node_ID = unique(to_node$to), 
-                               unit = "FT_MINUTES", 
+path <- GISSB::shortest_path_igraph(from_node_ID = unique(from_node$from),
+                               to_node_ID = unique(to_node$to),
+                               unit = "FT_MINUTES",
                                path = T)
 
 GISSB::path_leaflet(path)
@@ -346,7 +350,7 @@ node_points %>%
 #   igraph::subgraph.edges(eids = path$epath %>%
 #                            unlist()) %>%
 #   tidygraph::as_tbl_graph()
-# 
+#
 # leaflet_out <- path_graph_length %>%
 #   tidygraph::activate(edges) %>%
 #   tibble::as_tibble() %>%
@@ -355,7 +359,7 @@ node_points %>%
 #   leaflet::leaflet() %>%
 #   leaflet::addPolylines() %>%
 #   leaflet::addTiles()
-# 
+#
 # leaflet_out
 
 

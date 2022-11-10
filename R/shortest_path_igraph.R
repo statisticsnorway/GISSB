@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 
 #' Shortest path (igraph)
@@ -8,7 +9,8 @@
 #'
 #' @param from_node_ID Numeric value with the from node ID (if multiple node ID’s are to be used, see the function [GISSB::shortest_path_cppRouting()]).
 #' @param to_node_ID Numeric value with the to node ID (if multiple node ID’s are to be used, see the function [GISSB::shortest_path_cppRouting()]).
-#' @param unit Character vector with "FT_MINUTES" to calculate the shortest path in minutes or "LENGTH" for the shortest path in meters.
+#' @param graph_object The road network structured as a tidy graph (tbl_graph object). This can be done with the function [GISSB::vegnett_to_R()].
+#' @param unit Character vector with "minutes" to calculate the shortest path in minutes or "meters" for the shortest path in meters.
 #' @param path Logical. If TRUE the node link with the shortest path is returned.
 #'
 #' @returns Vector with the shortest path in minutes or meters. If path = TRUE the node link that the shortest path consists of is returned.
@@ -18,15 +20,15 @@
 #' \dontrun{
 #' distance_min <- shortest_path_igraph(from_node_ID = 26956,
 #'                                to_node_ID = 210373,
-#'                                unit = "FT_MINUTES")
+#'                                unit = "minutes")
 #'
 #' distance_meter <- shortest_path_igraph(from_node_ID = 26956,
 #'                                  to_node_ID = 210373,
-#'                                  unit = "LENGTH")
+#'                                  unit = "meters")
 #'
 #' path <- shortest_path_igraph(from_node_ID = 26956,
 #'                         to_node_ID = 210373,
-#'                         unit = "FT_MINUTES",
+#'                         unit = "minutes",
 #'                         path = T)
 #'                         }
 #' @encoding UTF-8
@@ -34,20 +36,21 @@
 #'
 
 shortest_path_igraph <- function(from_node_ID,
-                            to_node_ID,
-                            unit = "FT_MINUTES",
-                            path = F) {
+                                 to_node_ID,
+                                 graph_object = graph,
+                                 unit = "minutes",
+                                 path = F) {
 
   path_graph <- igraph::shortest_paths(
-    graph = graph,
+    graph = graph_object,
     from = from_node_ID,
     to = to_node_ID,
     output = 'both',
-    weights = graph %>% tidygraph::activate(edges) %>% dplyr::pull(!!as.name(unit))
+    weights = graph_object %>% tidygraph::activate(edges) %>% dplyr::pull(!!as.name(unit))
 
   )
 
-  path_graph_length <- graph %>%
+  path_graph_length <- graph_object %>%
     igraph::subgraph.edges(eids = path_graph$epath %>%
                              unlist()) %>%
     tidygraph::as_tbl_graph()

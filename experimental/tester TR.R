@@ -1,4 +1,17 @@
 
+# ### OBS
+# crs_out <- 25833
+# year <- aargang
+# fromnodeID <- "FROMNODEID"
+# tonodeID <- "TONODEID"
+# FT_minutes <- "FT_MINUTES"
+# TF_minutes <- "TF_MINUTES"
+# meters <- "SHAPE_LENGTH"
+# turn_restrictions = FALSE
+# ferry = TRUE
+
+
+
 library(sf)
 library(tidyverse)
 library(sfarrow)
@@ -58,6 +71,13 @@ nodes <- vegnett_list[[2]]
 edges <- vegnett_list[[3]]
 graph_cppRouting_minutes <- vegnett_list[[4]]
 graph_cppRouting_meters <- vegnett_list[[5]]
+
+# # Lagrer nodes, edges og graph #
+# saveRDS(nodes, file = paste0("C:/Users/rdn/Documents/Kart/Vegnett/nodes_", aargang, ".rds"))
+# saveRDS(edges, file = paste0("C:/Users/rdn/Documents/Kart/Vegnett/edges_", aargang, ".rds"))
+# saveRDS(graph, file = paste0("C:/Users/rdn/Documents/Kart/Vegnett/graph_", aargang, ".rds"))
+# saveRDS(graph_cppRouting_minutes, file = paste0("C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_minutes_", aargang, ".rds"))
+# saveRDS(graph_cppRouting_meters, file = paste0("C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_meters_", aargang, ".rds"))
 
 if (aargang == 2021) {
 ### Bogstadveien eksempel 2021

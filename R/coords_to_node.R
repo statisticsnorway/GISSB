@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 #' Connect coordinates to the nearest nodes in the road network
 #'
@@ -6,6 +7,8 @@
 #' Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function [GISSB::vegnett_to_R()].
 #'
 #' @param coords An sf object with the coordinates that should be connected to the road network.
+#' @param nodes_object An sf object with the nodes of the road network. This can be done with the function [GISSB::vegnett_to_R()].
+#' @param edges_object A data frame with the edges of the road network. This can be done with the function [GISSB::vegnett_to_R()].
 #' @param direction Character vector with “from” if the points should be from nodes or “to” if the points should be to nodes.
 #' @param ID_col Character vector with the name of the ID column. Default value is set to “ID”.
 #' @param crs_out Numeric vector for the chosen coordinate reference system (CRS).
@@ -31,11 +34,16 @@
 #'
 
 coords_to_node <- function(coords,
-                       direction = "from",
-                       ID_col = "ID",
-                       crs_out = 25833,
-                       knn = 1,
-                       membership = F) {
+                           nodes_object = nodes,
+                           edges_object = edges,
+                           direction = "from",
+                           ID_col = "ID",
+                           crs_out = 25833,
+                           knn = 1,
+                           membership = F) {
+
+  nodes <- nodes_object
+  edges <- edges_object
 
   if (direction == "from"){
 
@@ -117,7 +125,7 @@ coords_to_node <- function(coords,
       data.frame() %>%
       dplyr::rename(to_nodeID = nodeID,
                     coords_google_to_node = coords_google,
-                   membership_to_node = membership) %>%
+                    membership_to_node = membership) %>%
       dplyr::select(-geometry)
 
     end_node <- nodes_end[node_index_d$nn.idx, ]

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 #' Shortest path (cppRouting)
 #'
@@ -8,6 +9,7 @@
 #' @param to_node_ID Numeric vector with one more to node ID’s.
 #' @param unit Character vector with "minutes" to calculate the shortest path in minutes or "meters" for the shortest path in meters.
 #' @param dist Character vector that specifies if all the shortest paths between all the supplied from and to nodes are returned, or if only the minimum/maximum value per from node ID is returned.
+#' @param graph_cppRouting_object The road network structured as a cppRouting graph object. This can be done with the function [GISSB::vegnett_to_R()].
 #'
 #' @returns Object (data.frame) with how many minutes or meters the shortest path is between the supplied from and to node ID’s.
 #' @export
@@ -27,17 +29,25 @@
 #'
 
 shortest_path_cppRouting <- function(from_node_ID,
-                                to_node_ID,
-                                unit = "minutes",
-                                dist = "all") {
+                                     to_node_ID,
+                                     unit = "minutes",
+                                     dist = "all",
+                                     graph_cppRouting_object = graph_cppRouting_minutes) {
 
-  if (unit == "minutes") {
-    graph_cppRouting <- graph_cppRouting_minutes
-  }
 
-  if (unit == "meters") {
-    graph_cppRouting <- graph_cppRouting_meters
-  }
+  graph_cppRouting <- graph_cppRouting_object
+
+  # if (unit == "minutes" & graph_cppRouting_fix == FALSE) {
+  #   graph_cppRouting <- graph_cppRouting_minutes
+  # }
+  #
+  # if (unit == "meters" & graph_cppRouting_fix == FALSE) {
+  #   graph_cppRouting <- graph_cppRouting_meters
+  # }
+  #
+  # if (graph_cppRouting_fix == TRUE) {
+  #   graph_cppRouting <- graph_cppRouting_new
+  # }
 
   # OBS: legg til feilmelding dersom graph_cppRouting_minutes eller graph_cppRouting_meters ikke finnes?
 

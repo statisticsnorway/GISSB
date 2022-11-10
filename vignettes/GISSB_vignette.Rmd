@@ -53,8 +53,8 @@ library(GISSB)
 # graph <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph.rds")
 # nodes <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/nodes.rds")
 # edges <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/edges.rds")
-# graph_cppRouting_FT_MINUTES <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_FT_MINUTES.rds")
-# graph_cppRouting_LENGTH <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_LENGTH.rds")
+# graph_cppRouting_minutes <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_minutes.rds")
+# graph_cppRouting_meters <- readRDS(file = "C:/Users/rdn/Documents/Kart/Vegnett/graph_cppRouting_meters.rds")
 
 ```
 
@@ -127,14 +127,14 @@ For at vegnettet skal kunne brukes til nettverksanalyser i R må dataene behandl
 + [1] `graph` (tbl_graph)
 + [2] `nodes` (sf)
 + [3] `edges` (data.frame)
-+ [4] `graph_cppRouting_FT_MINUTES` (cppRouting)
-+ [5] `graph_cppRouting_LENGTH` (cppRouting)
++ [4] `graph_cppRouting_minutes` (cppRouting)
++ [5] `graph_cppRouting_meters` (cppRouting)
 
 Objektene `nodes` og `edges` benyttes for å plassere koordinatene til sitt nærmeste punkt i vegnettet med funksjonen `coords_to_node`.
 
 Objektet `graph` benyttes for å beregne korteste kjøretid/-vei i meter eller minutter med funksjonen `shortest_path_igraph`. Denne benyttes også for å vise hvilke noder i hvilken rekkefølge som utgjør den korteste kjøreruten mellom to punkter i vegnettet.
 
-Objektet `graph_cppRouting_FT_MINUTES` benyttes for å beregne korteste kjøretid i minutter med funksjonen `shortest_path_cppRouting`. Objektet `graph_cppRouting_LENGTH` benyttes for å beregne korteste kjøreavstand i meter.
+Objektet `graph_cppRouting_minutes` benyttes for å beregne korteste kjøretid i minutter med funksjonen `shortest_path_cppRouting`. Tilsvarende benyttes objektet `graph_cppRouting_meters` for å beregne korteste kjøreavstand i meter.
 
 ```{r, eval=FALSE}
 vegnett_list <- GISSB::vegnett_to_R(vegnett = vegnett)
@@ -142,13 +142,13 @@ vegnett_list <- GISSB::vegnett_to_R(vegnett = vegnett)
 graph <- vegnett_list[[1]]
 nodes <- vegnett_list[[2]]
 edges <- vegnett_list[[3]]
-graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
-graph_cppRouting_LENGTH <- vegnett_list[[5]]
+graph_cppRouting_minutes <- vegnett_list[[4]]
+graph_cppRouting_meters <- vegnett_list[[5]]
 ```
 
 ## Knytte koordinater til vegnettet (`coords_to_node`)
 
-For å kunne beregne kjøretid-/vei fra et valgt start- og stoppunkt (uten å vite hvilken node-ID disse har) må man knytte adressene man ønsker å analysere til deres nærmeste punkt i vegnettet. Dette gjøres ved å finne hvilken node som er den nærmeste et gitt koordinatpunkt (X og Y) i vegnettet. Ved å bruke funksjonen `knn` fra pakken [nabor](https://rdrr.io/cran/nabor/man/knn.html) finner man det nærmeste punktet i meter (målt i luftlinje) fra et gitt koordinatpunkt. `knn = 1` betyr at man kun er interessert i å lokalisere det nærmeste punktet til koordinatene og dette er satt som standardverdi i funksjonen `coords_to_node`. Dersom denne settes til et annet tall (gjøres ved å endre argumentet `knn = X` i funksjonen) finner man det nærmeste punktet (1), to nærmeste punktene (2), tre nærmeste punktene (3) osv. Dette kan være nyttig dersom det nærmeste punktet i vegnettet ikke finner en gyldig rute pga. enveiskjørte veier eller andre brudd i vegnettet.
+For å kunne beregne kjøretid/-vei fra et valgt start- og stoppunkt (uten å vite hvilken node-ID disse har) må man knytte adressene man ønsker å analysere til deres nærmeste punkt i vegnettet. Dette gjøres ved å finne hvilken node som er den nærmeste et gitt koordinatpunkt (X og Y) i vegnettet. Ved å bruke funksjonen `knn` fra pakken [nabor](https://rdrr.io/cran/nabor/man/knn.html) finner man det nærmeste punktet i meter (målt i luftlinje) fra et gitt koordinatpunkt. `knn = 1` betyr at man kun er interessert i å lokalisere det nærmeste punktet til koordinatene og dette er satt som standardverdi i funksjonen `coords_to_node`. Dersom denne settes til et annet tall (gjøres ved å endre argumentet `knn = X` i funksjonen) finner man det nærmeste punktet (`knn = 1`), to nærmeste punktene (`knn = 2`), tre nærmeste punktene (`knn = 3`) osv. Dette kan være nyttig dersom det nærmeste punktet i vegnettet ikke finner en gyldig rute pga. enveiskjørte veier eller andre brudd i vegnettet.
 
 I funksjonen `coords_to_node` legger man inn et sf-objekt (med CRS 25833) som inneholder koordinatene til ett eller flere punkter. Resultatet er et objekt (data.frame) der node-ID-en til den nærmeste noden til koordinatene målt i luftlinje har blitt lagt til (`from_node`/`to_node`). I tillegg viser kolonnen `dist_coord_node_from`/`dist_coord_node_to` hvor mange meter det er i luftlinje mellom koordinatene og det nærmeste punktet i vegnettet til hvert koordinatpunkt. Dette kan være nyttig for å avgjøre om det er enkelte koordinater som har blitt tildelt noder som er for langt unna den opprinnelige plasseringen (og som man dermed kan vurdere å utelate fra den videre analysen).
 
@@ -211,7 +211,7 @@ path <- GISSB::shortest_path_igraph(from_node_ID = from_node$from_node,
 path$epath
 ```
 
-Det er mulig å visualisere kjøreruter laget med funksjonen 'shortest_path_igraph' (der `path = TRUE`) ved å bruke funksjonen `path_leaflet`:
+Det er mulig å visualisere kjøreruter laget med funksjonen `shortest_path_igraph` (der `path = TRUE`) ved å bruke funksjonen `path_leaflet`:
 
 ```{r, eval=FALSE}
 GISSB::path_leaflet(path)
@@ -223,18 +223,18 @@ Det er mulig å bruke funksjonen `shortest_path_igraph` til å beregne kjøretid
 
 I funksjonen `shortest_path_cppRouting` kan man legge inn vektorer med flere noder i både argumentene `from_node` og `to_node`. Det betyr at dersom man legger inn to noder i `from_node` og fire noder i `to_node` beregnes den korteste kjøreruten fra begge startnodene til alle de fire stoppnodene. Resultatet blir et objekt med åtte rader. Om man kun er interessert i den korteste kjøreavstanden fra hver av startnodene til én av stoppnodene legger man inn argumentet `dist = "min"` i funksjonen. Om man derimot vil ha hvilken av stoppnodene som har lengst kjøreavstand per startnode settes `dist = "max"`.
 
-For å beregne korteste kjøretid i minutter med `shortest_path_cppRouting` settes `graph_cppRouting = graph_cppRouting_FT_MINUTES`, mens `graph_cppRouting = graph_cppRouting_LENGTH` beregner korteste kjøreavstand i meter. Objektet/objektene `graph_cppRouting_FT_MINUTES`/`graph_cppRouting_LENGTH` må være lastet inn (gjøres med funksjonen `vegnett_to_R`) før funksjonen `shortest_path_cppRouting` kan brukes.
+For å beregne korteste kjøretid i minutter med `shortest_path_cppRouting` settes `graph_cppRouting = graph_cppRouting_minutes`, mens `graph_cppRouting = graph_cppRouting_meters` beregner korteste kjøreavstand i meter. Objektet/objektene `graph_cppRouting_minutes`/`graph_cppRouting_meters` må være lastet inn (gjøres med funksjonen `vegnett_to_R`) før funksjonen `shortest_path_cppRouting` kan brukes.
 
 ```{r, eval=FALSE}
 avstand_cpp_min <- GISSB::shortest_path_cppRouting(from_node$from_node,
                                        to_node$to_node,
-                                       unit = "FT_MINUTES")
+                                       unit = "minutes")
 
 avstand_cpp_min
 
 avstand_cpp_meter <- GISSB::shortest_path_cppRouting(from_node$from_node,
                                        to_node$to_node,
-                                       unit = "LENGTH")
+                                       unit = "meters")
 
 avstand_cpp_meter
 ```
