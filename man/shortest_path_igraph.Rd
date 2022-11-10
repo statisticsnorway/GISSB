@@ -5,14 +5,22 @@
 \alias{shortest_path_igraph}
 \title{Shortest path (igraph)}
 \usage{
-shortest_path_igraph(from_node_ID, to_node_ID, unit = "FT_MINUTES", path = F)
+shortest_path_igraph(
+  from_node_ID,
+  to_node_ID,
+  graph_object = graph,
+  unit = "minutes",
+  path = F
+)
 }
 \arguments{
 \item{from_node_ID}{Numeric value with the from node ID (if multiple node ID’s are to be used, see the function \code{\link[=shortest_path_cppRouting]{shortest_path_cppRouting()}}).}
 
 \item{to_node_ID}{Numeric value with the to node ID (if multiple node ID’s are to be used, see the function \code{\link[=shortest_path_cppRouting]{shortest_path_cppRouting()}}).}
 
-\item{unit}{Character vector with "FT_MINUTES" to calculate the shortest path in minutes or "LENGTH" for the shortest path in meters.}
+\item{graph_object}{The road network structured as a tidy graph (tbl_graph object). This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
+
+\item{unit}{Character vector with "minutes" to calculate the shortest path in minutes or "meters" for the shortest path in meters.}
 
 \item{path}{Logical. If TRUE the node link with the shortest path is returned.}
 }
@@ -23,21 +31,21 @@ Vector with the shortest path in minutes or meters. If path = TRUE the node link
 The function \code{shortest_path_igraph} can be used to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.
 }
 \details{
-Before the function can be used, the road network must be converted to a tbl_graph object that is called “graph”. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}).
+Before the function can be used, the road network must be converted to a tbl_graph object. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}). There objects \code{graph} and \code{edges} needs to be loaded.
 }
 \examples{
 \dontrun{
 distance_min <- shortest_path_igraph(from_node_ID = 26956,
                                to_node_ID = 210373,
-                               unit = "FT_MINUTES")
+                               unit = "minutes")
 
 distance_meter <- shortest_path_igraph(from_node_ID = 26956,
                                  to_node_ID = 210373,
-                                 unit = "LENGTH")
+                                 unit = "meters")
 
 path <- shortest_path_igraph(from_node_ID = 26956,
                         to_node_ID = 210373,
-                        unit = "FT_MINUTES",
+                        unit = "minutes",
                         path = T)
                         }
 }

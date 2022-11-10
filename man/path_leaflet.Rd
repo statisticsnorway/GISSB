@@ -5,10 +5,12 @@
 \alias{path_leaflet}
 \title{Visualize the shortest path with Leaflet}
 \usage{
-path_leaflet(path)
+path_leaflet(path, graph_object = graph)
 }
 \arguments{
 \item{path}{Object (list) that has been created with the function \code{\link[=shortest_path_igraph]{shortest_path_igraph()}} (where path = TRUE).}
+
+\item{graph_object}{The road network structured as a tidy graph (tbl_graph object). This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 }
 \value{
 Interactive Leaflet map that shows the shortest path (in minutes or meters) between a chosen from and to node in the road network.

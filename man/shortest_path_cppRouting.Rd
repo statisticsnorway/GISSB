@@ -8,8 +8,9 @@
 shortest_path_cppRouting(
   from_node_ID,
   to_node_ID,
-  unit = "FT_MINUTES",
-  dist = "all"
+  unit = "minutes",
+  dist = "all",
+  graph_cppRouting_object = graph_cppRouting_minutes
 )
 }
 \arguments{
@@ -17,25 +18,27 @@ shortest_path_cppRouting(
 
 \item{to_node_ID}{Numeric vector with one more to node ID’s.}
 
-\item{unit}{Character vector with "FT_MINUTES" to calculate the shortest path in minutes or "LENGTH" for the shortest path in meters.}
+\item{unit}{Character vector with "minutes" to calculate the shortest path in minutes or "meters" for the shortest path in meters.}
 
 \item{dist}{Character vector that specifies if all the shortest paths between all the supplied from and to nodes are returned, or if only the minimum/maximum value per from node ID is returned.}
+
+\item{graph_cppRouting_object}{The road network structured as a cppRouting graph object. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 }
 \value{
 Object (data.frame) with how many minutes or meters the shortest path is between the supplied from and to node ID’s.
 }
 \description{
 The function \code{shortest_path_cppRouting} can be used to calculate the shortest path (either in minutes or meters) between two or more nodes in the Norwegian road network. The function also works with vectors with multiple from and to node ID’s.
-Before the function can be used, the road network must be converted to a cppRouting object that is called \code{graph_cppRouting_FT_MINUTES} or \code{graph_cppRouting_LENGTH}. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.
+Before the function can be used, the road network must be converted to a cppRouting object that is called \code{graph_cppRouting_minutes} or \code{graph_cppRouting_meters}. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.
 }
 \examples{
 \dontrun{
 distance_min <- shortest_path_cppRouting(26956,
                                        210373,
-                                       unit = "FT_MINUTES")
+                                       unit = "minutes")
 
 distance_meter <- shortest_path_cppRouting(26956,
                                          210373,
-                                         unit = "LENGTH")
+                                         unit = "meters")
                                          }
 }

@@ -48,17 +48,60 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vegnett_to_R</span><span class="op">(</span><span class="va">vegnett</span>, crs_out <span class="op">=</span> <span class="fl">25833</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vegnett_to_R</span><span class="op">(</span></span>
+<span>  <span class="va">vegnett</span>,</span>
+<span>  crs_out <span class="op">=</span> <span class="fl">25833</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2022</span>,</span>
+<span>  fromnodeID <span class="op">=</span> <span class="st">"FROMNODE"</span>,</span>
+<span>  tonodeID <span class="op">=</span> <span class="st">"TONODE"</span>,</span>
+<span>  FT_minutes <span class="op">=</span> <span class="st">"DRIVETIME_FW"</span>,</span>
+<span>  TF_minutes <span class="op">=</span> <span class="st">"DRIVETIME_BW"</span>,</span>
+<span>  meters <span class="op">=</span> <span class="st">"SHAPE_LENGTH"</span>,</span>
+<span>  turn_restrictions <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ferry <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>vegnett</dt>
-<dd><p>The Norwegian road network, downloaded from <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/" class="external-link">Geonorge</a>, as an sf object.</p></dd>
+<dd><p>The Norwegian road network as an sf object, downloaded from <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/" class="external-link">Geonorge</a>.</p></dd>
 
 
 <dt>crs_out</dt>
-<dd><p>Numeric vector with the chosen coordinate reference system (CRS).</p></dd>
+<dd><p>Numeric vector with the chosen coordinate reference system (CRS). The default value is set to CRS 25833.</p></dd>
+
+
+<dt>year</dt>
+<dd><p>Numeric vector with the year the road network is from. Due to changes in the format of the files between 2021 and 2022 the most important thing is to choose between the "old" format (-2021) or the new format (2022-). The default value is set to 2022.</p></dd>
+
+
+<dt>fromnodeID</dt>
+<dd><p>Character vector with the name of the column indicating the from node ID. Default value is set to FROMNODE (2022).</p></dd>
+
+
+<dt>tonodeID</dt>
+<dd><p>Character vector with the name of the column indicating the to node ID. Default value is set to TONODE (2022).</p></dd>
+
+
+<dt>FT_minutes</dt>
+<dd><p>Character vector with the name of the column that contains the cost in minutes from fromnodeID to tonodeID (FT). Default value is set to DRIVETIME_FW (2022).</p></dd>
+
+
+<dt>TF_minutes</dt>
+<dd><p>Character vector with the name of the column that contains the cost in minutes from tonodeID to fromnodeID (TF). Default value is set to DRIVETIME_BW (2022).</p></dd>
+
+
+<dt>meters</dt>
+<dd><p>Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to SHAPE_LENGTH (2022).</p></dd>
+
+
+<dt>turn_restrictions</dt>
+<dd><p>Boolean. Default value is FALSE. If TRUE turn restrictions will be added to the road network. Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.</p></dd>
+
+
+<dt>ferry</dt>
+<dd><p>Boolean/numeric vector. Default value is TRUE which means that all edges that involve ferries are given their original drive time (as is, somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to the supplied value in km/h.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -77,10 +120,10 @@
 <p><code>[3] edges</code>: road network's edges/node links (data.frame)</p>
 
 
-<p><code>[4] graph_cppRouting_FT_MINUTES</code>: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)</p>
+<p><code>[4] graph_cppRouting_minutes</code>: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)</p>
 
 
-<p><code>[5] graph_cppRouting_LENGTH</code>: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)</p>
+<p><code>[5] graph_cppRouting_meters</code>: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)</p>
     </div>
 
     <div class="section level2">
@@ -112,10 +155,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   SPERRING &lt;int&gt;, DT_TURIST_FT &lt;dbl&gt;, DT_TURIST_TF &lt;dbl&gt;, DT_TRUCK_FT &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   DT_TRUCK_TF &lt;dbl&gt;, TOTALVIKT &lt;dbl&gt;, SK_HO_FT &lt;dbl&gt;, SK_HO_TF &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   VOGNTOGLENGDE &lt;dbl&gt;, RoadClass &lt;int&gt;, Medium &lt;chr&gt;, FT_Fart &lt;int&gt;, ...</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
-<span class="r-in"><span><span class="va">vegnett_list</span> <span class="op">&lt;-</span> <span class="fu">vegnett_to_R</span><span class="op">(</span>vegnett <span class="op">=</span> <span class="va">vegnett_sampledata</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dplyr::select(., from, to, SHAPE_LENGTH):</span> Can't subset columns that don't exist.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">x</span> Column `SHAPE_LENGTH` doesn't exist.</span>
+<span class="r-in"><span><span class="va">vegnett_list</span> <span class="op">&lt;-</span> <span class="fu">vegnett_to_R</span><span class="op">(</span>vegnett <span class="op">=</span> <span class="va">vegnett_sampledata</span>,</span></span>
+<span class="r-in"><span>                             year <span class="op">=</span> <span class="fl">2021</span>,</span></span>
+<span class="r-in"><span>                             fromnodeID <span class="op">=</span> <span class="st">"FROMNODEID"</span>,</span></span>
+<span class="r-in"><span>                             tonodeID <span class="op">=</span> <span class="st">"TONODEID"</span>,</span></span>
+<span class="r-in"><span>                             FT_minutes <span class="op">=</span> <span class="st">"FT_MINUTES"</span>,</span></span>
+<span class="r-in"><span>                             TF_minutes <span class="op">=</span> <span class="st">"TF_MINUTES"</span>,</span></span>
+<span class="r-in"><span>                             meters <span class="op">=</span> <span class="st">"SHAPE_LENGTH"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in vegnett_to_R(vegnett = vegnett_sampledata, year = 2021, fromnodeID = "FROMNODEID",     tonodeID = "TONODEID", FT_minutes = "FT_MINUTES", TF_minutes = "TF_MINUTES",     meters = "SHAPE_LENGTH"):</span> unused arguments (year = 2021, fromnodeID = "FROMNODEID", tonodeID = "TONODEID", FT_minutes = "FT_MINUTES", TF_minutes = "TF_MINUTES", meters = "SHAPE_LENGTH")</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
@@ -123,9 +170,9 @@
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
 <span class="r-in"><span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
-<span class="r-in"><span><span class="va">graph_cppRouting_FT_MINUTES</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">graph_cppRouting_minutes</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
-<span class="r-in"><span><span class="va">graph_cppRouting_LENGTH</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">graph_cppRouting_meters</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">graph</span></span></span>
@@ -134,23 +181,23 @@
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'nodes' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">edges</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(edges):</span> object 'edges' not found</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_FT_MINUTES</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_FT_MINUTES$data):</span> object 'graph_cppRouting_FT_MINUTES' not found</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_FT_MINUTES</span><span class="op">$</span><span class="va">coords</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_FT_MINUTES$coords):</span> object 'graph_cppRouting_FT_MINUTES' not found</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_FT_MINUTES</span><span class="op">$</span><span class="va">dict</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_FT_MINUTES$dict):</span> object 'graph_cppRouting_FT_MINUTES' not found</span>
-<span class="r-in"><span><span class="va">graph_cppRouting_FT_MINUTES</span><span class="op">$</span><span class="va">nbnode</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'graph_cppRouting_FT_MINUTES' not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_minutes</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_minutes$data):</span> object 'graph_cppRouting_minutes' not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_minutes</span><span class="op">$</span><span class="va">coords</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_minutes$coords):</span> object 'graph_cppRouting_minutes' not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_minutes</span><span class="op">$</span><span class="va">dict</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_minutes$dict):</span> object 'graph_cppRouting_minutes' not found</span>
+<span class="r-in"><span><span class="va">graph_cppRouting_minutes</span><span class="op">$</span><span class="va">nbnode</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'graph_cppRouting_minutes' not found</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_LENGTH</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_LENGTH$data):</span> object 'graph_cppRouting_LENGTH' not found</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_LENGTH</span><span class="op">$</span><span class="va">coords</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_LENGTH$coords):</span> object 'graph_cppRouting_LENGTH' not found</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_LENGTH</span><span class="op">$</span><span class="va">dict</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_LENGTH$dict):</span> object 'graph_cppRouting_LENGTH' not found</span>
-<span class="r-in"><span><span class="va">graph_cppRouting_LENGTH</span><span class="op">$</span><span class="va">nbnode</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'graph_cppRouting_LENGTH' not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_meters</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_meters$data):</span> object 'graph_cppRouting_meters' not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_meters</span><span class="op">$</span><span class="va">coords</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_meters$coords):</span> object 'graph_cppRouting_meters' not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_meters</span><span class="op">$</span><span class="va">dict</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_meters$dict):</span> object 'graph_cppRouting_meters' not found</span>
+<span class="r-in"><span><span class="va">graph_cppRouting_meters</span><span class="op">$</span><span class="va">nbnode</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'graph_cppRouting_meters' not found</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

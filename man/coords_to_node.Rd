@@ -7,6 +7,8 @@
 \usage{
 coords_to_node(
   coords,
+  nodes_object = nodes,
+  edges_object = edges,
   direction = "from",
   ID_col = "ID",
   crs_out = 25833,
@@ -16,6 +18,10 @@ coords_to_node(
 }
 \arguments{
 \item{coords}{An sf object with the coordinates that should be connected to the road network.}
+
+\item{nodes_object}{An sf object with the nodes of the road network. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
+
+\item{edges_object}{A data frame with the edges of the road network. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 
 \item{direction}{Character vector with “from” if the points should be from nodes or “to” if the points should be to nodes.}
 
