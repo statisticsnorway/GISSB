@@ -8,7 +8,7 @@
 path_leaflet(path, graph_object = graph)
 }
 \arguments{
-\item{path}{Object (list) that has been created with the function \code{\link[=shortest_path_igraph]{shortest_path_igraph()}} (where path = TRUE).}
+\item{path}{Object (list) that has been created with the function \code{\link[=shortest_path_igraph]{shortest_path_igraph()}} (where \code{path = TRUE}).}
 
 \item{graph_object}{The road network structured as a tidy graph (tbl_graph object). This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 }
@@ -16,7 +16,7 @@ path_leaflet(path, graph_object = graph)
 Interactive Leaflet map that shows the shortest path (in minutes or meters) between a chosen from and to node in the road network.
 }
 \description{
-The function \code{path_leaflet} visualizes the shortest path (in minutes or meters) that has been calculated with the function \code{\link[=shortest_path_igraph]{shortest_path_igraph()}} (where path = TRUE).
+The function \code{path_leaflet} visualizes the shortest path (in minutes or meters) that has been calculated with the function \code{\link[=shortest_path_igraph]{shortest_path_igraph()}} (where \code{path = TRUE}).
 Internet connection is required to load the background tiles.
 }
 \examples{

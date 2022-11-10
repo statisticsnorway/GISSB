@@ -18,7 +18,7 @@ shortest_path_cppRouting(
 
 \item{to_node_ID}{Numeric vector with one more to node ID’s.}
 
-\item{unit}{Character vector with "minutes" to calculate the shortest path in minutes or "meters" for the shortest path in meters.}
+\item{unit}{Character vector with \code{minutes} to calculate the shortest path in minutes or \code{meters} for the shortest path in meters.}
 
 \item{dist}{Character vector that specifies if all the shortest paths between all the supplied from and to nodes are returned, or if only the minimum/maximum value per from node ID is returned.}
 

@@ -115,8 +115,8 @@ ggplot() +
   ggplot2::geom_sf(data = vegnett)
 ```
 
-```{r, echo=FALSE, out.width = "100%"}
-knitr::include_graphics(paste0(here::here(), "/images/unnamed-chunk-6-1.png"))
+```{r, echo=FALSE, error = TRUE, out.width = "100%"}
+knitr::include_graphics(paste0(here::here(), "/vignettes/images/unnamed-chunk-6-1.png"))
 
 ```
 

@@ -35,9 +35,9 @@ vegnett_to_R(
 
 \item{meters}{Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to \code{SHAPE_LENGTH} (2022).}
 
-\item{turn_restrictions}{Boolean. Default value is \code{FALSE}. If \code{TRUE} turn restrictions will be added to the road network. Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.}
+\item{turn_restrictions}{Boolean. Default value is \code{FALSE}. If \code{TRUE} turn restrictions will be added to the road network. The turn restrictions layer from the road network file has to be loaded before this can be used (and the object has to be called \code{turnrestrictions_geom}). Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.}
 
-\item{ferry}{Boolean/numeric vector. Default value is \code{TRUE} which means that all edges that involve ferries are given their original drive time (as is, somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to the supplied value in km/h.}
+\item{ferry}{Boolean/numeric vector. Default value is \code{TRUE} which means that all edges that involve ferries are given their original drive time (somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to correspond to the supplied value in km/h.}
 }
 \value{
 List containing the following elements:

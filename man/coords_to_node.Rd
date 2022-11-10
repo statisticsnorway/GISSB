@@ -31,7 +31,7 @@ coords_to_node(
 
 \item{knn}{Numeric vector with the chosen number of nodes that should be returned for each of the coordinates. If \code{knn = 1} only the nearest nodes to the chosen coordinates will be returned. If \code{knn = 2} the two nearest nodes will be returned etc.}
 
-\item{membership}{Logical. If TRUE the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to FALSE in the search for to nodes and membership = TRUE for the from nodes (in that order).}
+\item{membership}{Logical. If \code{TRUE} the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to \code{FALSE} in the search for to nodes and \code{membership = TRUE} for the from nodes (in that order).}
 }
 \value{
 An object (data.frame) with the following columns; \code{from_nodeID}/\code{to_nodeID}, \code{membership_from_node}/\code{membership_to_node}, \code{coords_google_from_node}/\code{coords_google_to_node}, \code{knn_from_node}/\code{knn_to_node}, and \code{ID}.

@@ -20,12 +20,12 @@ shortest_path_igraph(
 
 \item{graph_object}{The road network structured as a tidy graph (tbl_graph object). This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 
-\item{unit}{Character vector with "minutes" to calculate the shortest path in minutes or "meters" for the shortest path in meters.}
+\item{unit}{Character vector with \code{minutes} to calculate the shortest path in minutes or \code{meters} for the shortest path in meters.}
 
-\item{path}{Logical. If TRUE the node link with the shortest path is returned.}
+\item{path}{Logical. If \code{TRUE} the node link with the shortest path is returned.}
 }
 \value{
-Vector with the shortest path in minutes or meters. If path = TRUE the node link that the shortest path consists of is returned.
+Vector with the shortest path in minutes or meters. If \code{path = TRUE} the node link that the shortest path consists of is returned.
 }
 \description{
 The function \code{shortest_path_igraph} can be used to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.

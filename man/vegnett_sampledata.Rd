@@ -14,7 +14,7 @@ An object of class sf.
 data(vegnett_sampledata)
 }
 \description{
-Sample of the Norwegian Road Network (NVDB Ruteplan Nettverksdatasett FGDB) downloaded from Geonorge on August 8 2022. Only the first 1000 rows from Oslo county are included.
+Sample of the Norwegian Road Network (\code{vegnettRuteplan_FGDB_20210528.gdb}) downloaded from Geonorge. Only the first 1000 rows from Oslo county are included.
 }
 \examples{
 data(vegnett_sampledata)
