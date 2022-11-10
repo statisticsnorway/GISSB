@@ -155,7 +155,7 @@ graph_cppRouting_meters <- vegnett_list[[5]]
 
 Merk at vegnettsfilene fra Geonorge endret struktur og kolonnenavn i 2022. Standardverdiene for funksjonen `vegnett_to_R` er gyldige for den nye strukturen, mens for vegnett fra 2021 og tidligere må følgende argumenter spesifiseres: `year = 2021`, `fromnodeID = "FROMNODEID"`, `tonodeID = "TONODEID"`, `FT_minutes = "FT_MINUTES"`, `TF_minutes = "TF_MINUTES"` og `meters = "SHAPE_LENGTH"`. 
 
-Det er også mulig å legge til "turn restrictions" i vegnettet. Dette finnes som et separat kartlag i .gdb-filene man laster ned fra Geonorge. Disse filene inneholder mange feil (?) og derfor anbefales det ikke å ta disse i bruk (før problemene har blitt løst). Om man allikevel ønsker å teste med "turn restrictions" må man laste inn kartlaget i et objekt som heter `turn_restrictions` og sette argumentet `turn_restrictions = TRUE` i funksjonen `vegnett_to_R`. 
+Det er også mulig å legge til "turn restrictions" i vegnettet. Dette finnes som et separat kartlag i .gdb-filene man laster ned fra Geonorge. Disse filene inneholder mange feil (?) og derfor anbefales det ikke å ta disse i bruk (før problemene har blitt løst). Om man allikevel ønsker å teste med "turn restrictions" må man laste inn kartlaget i et objekt som heter `turnrestrictions_geom` og sette argumentet `turn_restrictions = TRUE` i funksjonen `vegnett_to_R`. 
 
 ## Knytte koordinater til vegnettet (`coords_to_node`)
 

@@ -37,5 +37,6 @@ Most of the functions in the GISSB package require that the Norwegian road netwo
 After the file has been downloaded it has to be read into R using the sf package:
 
 ``` r
-vegnett <- sf::read_sf("vegnettRuteplan_FGDB_20210528.gdb")
+vegnett <- sf::read_sf("vegnettRuteplan_FGDB_20210528.gdb", layer = 'ERFKPS')
+turnrestrictions_geom <- sf::read_sf("vegnettRuteplan_FGDB_20210528.gdb", layer = "ERFKPS_turns")
 ```
