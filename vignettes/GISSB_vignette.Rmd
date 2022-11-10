@@ -2,7 +2,9 @@
 title: "GISSB - Netverksanalyse i R"
 author: "Sindre Mikael Haugen"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 resource_files:
   - vignettes/unnamed-chunk-6-1.png
 vignette: >
@@ -117,7 +119,6 @@ ggplot() +
 
 ```{r, echo=FALSE, error = TRUE, out.width = "100%"}
 knitr::include_graphics(paste0(here::here(), "/vignettes/images/unnamed-chunk-6-1.png"))
-
 ```
 
 Vegnettet består av punkter som er plassert ca. 50 meter fra hverandre. Disse punktene kalles for noder. Lenkene som forbinder nodene/punktene sammen heter edges. For en mer detaljert gjennomgang av strukturen til vegnettet og hvordan dette blir behandlet med funksjonen `vegnett_to_R`, se [her](https://github.com/statisticsnorway/geostat-wp2/blob/3272bbb87bad79b3f976a83923da39b023973e36/analysis/Demo_databehandling.ipynb).
