@@ -13,7 +13,7 @@
 #' @param ID_col Character vector with the name of the ID column. Default value is set to “ID”.
 #' @param crs_out Numeric vector for the chosen coordinate reference system (CRS).
 #' @param knn Numeric vector with the chosen number of nodes that should be returned for each of the coordinates. If `knn = 1` only the nearest nodes to the chosen coordinates will be returned. If `knn = 2` the two nearest nodes will be returned etc.
-#' @param membership Logical. If TRUE the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to FALSE in the search for to nodes and membership = TRUE for the from nodes (in that order).
+#' @param membership Logical. If `TRUE` the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to `FALSE` in the search for to nodes and `membership = TRUE` for the from nodes (in that order).
 #'
 #'
 #' @returns An object (data.frame) with the following columns; `from_nodeID`/`to_nodeID`, `membership_from_node`/`membership_to_node`, `coords_google_from_node`/`coords_google_to_node`, `knn_from_node`/`knn_to_node`, and `ID`.

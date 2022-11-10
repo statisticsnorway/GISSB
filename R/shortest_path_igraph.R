@@ -10,10 +10,10 @@
 #' @param from_node_ID Numeric value with the from node ID (if multiple node ID’s are to be used, see the function [GISSB::shortest_path_cppRouting()]).
 #' @param to_node_ID Numeric value with the to node ID (if multiple node ID’s are to be used, see the function [GISSB::shortest_path_cppRouting()]).
 #' @param graph_object The road network structured as a tidy graph (tbl_graph object). This can be done with the function [GISSB::vegnett_to_R()].
-#' @param unit Character vector with "minutes" to calculate the shortest path in minutes or "meters" for the shortest path in meters.
-#' @param path Logical. If TRUE the node link with the shortest path is returned.
+#' @param unit Character vector with `minutes` to calculate the shortest path in minutes or `meters` for the shortest path in meters.
+#' @param path Logical. If `TRUE` the node link with the shortest path is returned.
 #'
-#' @returns Vector with the shortest path in minutes or meters. If path = TRUE the node link that the shortest path consists of is returned.
+#' @returns Vector with the shortest path in minutes or meters. If `path = TRUE` the node link that the shortest path consists of is returned.
 #' @export
 #'
 #' @examples

@@ -11,8 +11,8 @@
 #' @param FT_minutes Character vector with the name of the column that contains the cost in minutes from `fromnodeID` to `tonodeID` (FT). Default value is set to `DRIVETIME_FW` (2022).
 #' @param TF_minutes Character vector with the name of the column that contains the cost in minutes from `tonodeID` to `fromnodeID` (TF). Default value is set to `DRIVETIME_BW` (2022).
 #' @param meters Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to `SHAPE_LENGTH` (2022).
-#' @param turn_restrictions Boolean. Default value is `FALSE`. If `TRUE` turn restrictions will be added to the road network. Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.
-#' @param ferry Boolean/numeric vector. Default value is `TRUE` which means that all edges that involve ferries are given their original drive time (as is, somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to the supplied value in km/h.
+#' @param turn_restrictions Boolean. Default value is `FALSE`. If `TRUE` turn restrictions will be added to the road network. The turn restrictions layer from the road network file has to be loaded before this can be used (and the object has to be called `turnrestrictions_geom`). Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.
+#' @param ferry Boolean/numeric vector. Default value is `TRUE` which means that all edges that involve ferries are given their original drive time (somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to correspond to the supplied value in km/h.
 #'
 #' @returns List containing the following elements:
 #'

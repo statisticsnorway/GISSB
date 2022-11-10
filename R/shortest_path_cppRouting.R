@@ -7,7 +7,7 @@
 #'
 #' @param from_node_ID Numeric vector with one more from node ID’s.
 #' @param to_node_ID Numeric vector with one more to node ID’s.
-#' @param unit Character vector with "minutes" to calculate the shortest path in minutes or "meters" for the shortest path in meters.
+#' @param unit Character vector with `minutes` to calculate the shortest path in minutes or `meters` for the shortest path in meters.
 #' @param dist Character vector that specifies if all the shortest paths between all the supplied from and to nodes are returned, or if only the minimum/maximum value per from node ID is returned.
 #' @param graph_cppRouting_object The road network structured as a cppRouting graph object. This can be done with the function [GISSB::vegnett_to_R()].
 #'

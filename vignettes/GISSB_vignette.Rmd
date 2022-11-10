@@ -37,7 +37,7 @@ Se [Avstand til fødested](https://github.com/statisticsnorway/geostat-wp2/blob/
 
 ## Finne koordinater til adresser (`address_to_coords`)
 
-Funksjonen `address_to_coords` bruker [Kartverkets adresse-API](https://ws.geonorge.no/adresser/v1/#/) for å finne koordinater til adresser. Denne API-en krever nettilgang og baserer seg på matrikkelen, som er Norges offisielle eiendomsregister som inneholder alle offisielle adresser med tilhørende koordinater. Ved å skrive inn postnummer og adresse returneres et [sf-objekt](https://r-spatial.github.io/sf/articles/sf1.html) med koordinatene til denne adressen.
+Funksjonen `address_to_coords` bruker [Kartverkets adresse-API](https://ws.geonorge.no/adresser/v1/#/) for å finne koordinater til adresser. Denne API-en krever nettilgang og baserer seg på matrikkelen, som er Norges offisielle eiendomsregister og inneholder alle offisielle adresser med tilhørende koordinater. Ved å skrive inn postnummer og adresse returneres et [sf-objekt](https://r-spatial.github.io/sf/articles/sf1.html) med koordinatene til denne adressen.
 
 Standardverdi for projeksjonen av koordinatene er satt til [CRS 25833](https://epsg.io/25833). Dette er det offisielle koordinatsystemet i Norge og brukes i de fleste norske kartfiler. 
 
@@ -87,7 +87,7 @@ fra_4326
 Etter å ha omgjort koordinatene til CRS 4326 kan de plasseres på internasjonale kart, her med pakken Leaflet:
 
 ```{r, eval=TRUE}
-leaflet::leaflet() %>%
+leaflet::leaflet(width = "100%") %>%
   leaflet::addTiles() %>%
   leaflet::addMarkers(data = fra_4326$geometry)
 ```
@@ -115,7 +115,7 @@ ggplot() +
   ggplot2::geom_sf(data = vegnett)
 ```
 
-```{r, echo=FALSE, out.width = "600px"}
+```{r, echo=FALSE, out.width = "100%"}
 knitr::include_graphics(paste0(here::here(), "/images/unnamed-chunk-6-1.png"))
 
 ```
@@ -137,7 +137,13 @@ Objektet `graph` benyttes for å beregne korteste kjøretid/-vei i meter eller m
 Objektet `graph_cppRouting_minutes` benyttes for å beregne korteste kjøretid i minutter med funksjonen `shortest_path_cppRouting`. Tilsvarende benyttes objektet `graph_cppRouting_meters` for å beregne korteste kjøreavstand i meter.
 
 ```{r, eval=FALSE}
-vegnett_list <- GISSB::vegnett_to_R(vegnett = vegnett)
+vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata,
+                            year = 2021,
+                            fromnodeID = "FROMNODEID",
+                            tonodeID = "TONODEID",
+                            FT_minutes = "FT_MINUTES",
+                            TF_minutes = "TF_MINUTES",
+                            meters = "SHAPE_LENGTH")
 
 graph <- vegnett_list[[1]]
 nodes <- vegnett_list[[2]]
@@ -145,6 +151,10 @@ edges <- vegnett_list[[3]]
 graph_cppRouting_minutes <- vegnett_list[[4]]
 graph_cppRouting_meters <- vegnett_list[[5]]
 ```
+
+Merk at vegnettsfilene fra Geonorge endret struktur og kolonnenavn i 2022. Standardverdiene for funksjonen `vegnett_to_R` er gyldige for den nye strukturen, mens for vegnett fra 2021 og tidligere må følgende argumenter spesifiseres: `year = 2021`, `fromnodeID = "FROMNODEID"`, `tonodeID = "TONODEID"`, `FT_minutes = "FT_MINUTES"`, `TF_minutes = "TF_MINUTES"` og `meters = "SHAPE_LENGTH"`. 
+
+Det er også mulig å legge til "turn restrictions" i vegnettet. Dette finnes som et separat kartlag i .gdb-filene man laster ned fra Geonorge. Disse filene inneholder mange feil (?) og derfor anbefales det ikke å ta disse i bruk (før problemene har blitt løst). Om man allikevel ønsker å teste med "turn restrictions" må man laste inn kartlaget i et objekt som heter `turn_restrictions` og sette argumentet `turn_restrictions = TRUE` i funksjonen `vegnett_to_R`. 
 
 ## Knytte koordinater til vegnettet (`coords_to_node`)
 
@@ -181,7 +191,7 @@ OBS: `shortest_path_igraph` fungerer ikke med vektorer, dvs. en liste over flere
 ```{r, eval=FALSE}
 avstand_min <- GISSB::shortest_path_igraph(from_node_ID = from_node$from_node,
                            to_node_ID = to_node$to_node,
-                           unit = "FT_MINUTES",
+                           unit = "minutes",
                            path = F)
 
 paste0(round(avstand_min$length, digits = 1), " minutter / ",
@@ -191,7 +201,7 @@ paste0(round(avstand_min$length, digits = 1), " minutter / ",
 
 avstand_meter <- GISSB::shortest_path_igraph(from_node_ID = from_node$from_node,
                                  to_node_ID = to_node$to_node,
-                                 unit = "LENGTH",
+                                 unit = "meters",
                                  path = F)
 
 paste0(round(avstand_meter$length, digits = 1), " meter / ",
@@ -205,7 +215,7 @@ For å få oppgitt hvilke noder i hvilken rekkefølge som utgjør den korteste r
 ```{r, eval=FALSE}
 path <- GISSB::shortest_path_igraph(from_node_ID = from_node$from_node,
                            to_node_ID = to_node$to_node,
-                           unit = "FT_MINUTES",
+                           unit = "minutes",
                            path = TRUE)
 
 path$epath
@@ -228,13 +238,15 @@ For å beregne korteste kjøretid i minutter med `shortest_path_cppRouting` sett
 ```{r, eval=FALSE}
 avstand_cpp_min <- GISSB::shortest_path_cppRouting(from_node$from_node,
                                        to_node$to_node,
-                                       unit = "minutes")
+                                       unit = "minutes", 
+                                       graph_cppRouting_object = graph_cppRouting_minutes)
 
 avstand_cpp_min
 
 avstand_cpp_meter <- GISSB::shortest_path_cppRouting(from_node$from_node,
                                        to_node$to_node,
-                                       unit = "meters")
+                                       unit = "meters", 
+                                       graph_cppRouting_object = graph_cppRouting_meters)
 
 avstand_cpp_meter
 ```
@@ -279,18 +291,18 @@ from_node
 
 avstand_cpp <- GISSB::shortest_path_cppRouting(unique(from_node$from_node),
                                        unique(to_node$to_node),
-                                       unit = "FT_MINUTES")
+                                       unit = "minutes")
 avstand_cpp
 
 avstand_cpp_min <- GISSB::shortest_path_cppRouting(unique(from_node$from_node),
                                        unique(to_node$to_node),
-                                       unit = "FT_MINUTES",
+                                       unit = "minutes",
                                        dist = "min")
 avstand_cpp_min
 
 avstand_cpp_max <- GISSB::shortest_path_cppRouting(unique(from_node$from_node),
                                        unique(to_node$to_node),
-                                       unit = "FT_MINUTES",
+                                       unit = "minutes",
                                        dist = "max")
 avstand_cpp_max
 
