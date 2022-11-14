@@ -3,8 +3,8 @@ problem_coords_fix <- function(problem_coords,
                                nodes = nodes,
                                direction = "from",
                                ID_col = "nodeID",
-                               dist_coord = "",
-                               minutes_per_meter = 0.0021980747194065) { # ?
+                               extra_length = 1,
+                               minutes_per_meter = 0.002) { # 30 km/t: ((1/1000)/30*60)
 
     from_node <- coords_to_node(coords = problem_coords,
                                 nodes = nodes,
@@ -43,7 +43,7 @@ problem_coords_fix <- function(problem_coords,
                       to = as.character(to))
 
     ny_edge_from <- from_node %>%
-        dplyr::mutate(weight = minutes_per_meter*dist_coord_node_from) %>% # OBS
+        dplyr::mutate(weight = minutes_per_meter*(dist_coord_node_from*extra_length)) %>% # OBS
         dplyr::select(nodeID, from_nodeID, weight) %>%
         dplyr::rename(from = nodeID,
                       to = from_nodeID) %>%
@@ -58,7 +58,7 @@ problem_coords_fix <- function(problem_coords,
         dplyr::select(from, to, weight, geometry)
 
     ny_edge_to <- from_node %>%
-        dplyr::mutate(weight = minutes_per_meter*dist_coord_node_from) %>% # OBS
+        dplyr::mutate(weight = minutes_per_meter*(dist_coord_node_from*extra_length)) %>% # OBS
         dplyr::select(nodeID, from_nodeID, weight) %>%
         dplyr::rename(to = nodeID,
                       from = from_nodeID) %>%
