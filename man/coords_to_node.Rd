@@ -17,11 +17,11 @@ coords_to_node(
 )
 }
 \arguments{
-\item{coords}{An sf object with the coordinates that should be connected to the road network.}
+\item{coords}{An \code{sf} object with the coordinates that should be connected to the road network.}
 
-\item{nodes_object}{An sf object with the nodes of the road network. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
+\item{nodes_object}{An \code{sf} object with the nodes of the road network. This can be created with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 
-\item{edges_object}{A data frame with the edges of the road network. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
+\item{edges_object}{A data frame with the edges of the road network. This can be created with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 
 \item{direction}{Character vector with “from” if the points should be from nodes or “to” if the points should be to nodes.}
 
@@ -34,13 +34,13 @@ coords_to_node(
 \item{membership}{Logical. If \code{TRUE} the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to \code{FALSE} in the search for to nodes and \code{membership = TRUE} for the from nodes (in that order).}
 }
 \value{
-An object (data.frame) with the following columns; \code{from_nodeID}/\code{to_nodeID}, \code{membership_from_node}/\code{membership_to_node}, \code{coords_google_from_node}/\code{coords_google_to_node}, \code{knn_from_node}/\code{knn_to_node}, and \code{ID}.
+An object (data frame) with the following columns; \code{from_nodeID}/\code{to_nodeID}, \code{membership_from_node}/\code{membership_to_node}, \code{coords_google_from_node}/\code{coords_google_to_node}, \code{knn_from_node}/\code{knn_to_node}, and \code{ID}.
 }
 \description{
 The function \code{coords_to_node} can be used to find the nearest nodes in the Norwegian road network (in meters) for chosen coordinates.
 }
 \details{
-Before the function can be used, the nodes of the road network must be converted to an sf object that is called \code{nodes}. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.
+Before the function can be used, the nodes of the road network must be converted to an \code{sf} object that is called \code{nodes} (or another name supplied to the \code{nodes_object} argument). This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.
 }
 \examples{
 \dontrun{

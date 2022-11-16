@@ -4,11 +4,11 @@
 #'
 #' The function `coords_to_node` can be used to find the nearest nodes in the Norwegian road network (in meters) for chosen coordinates.
 #'
-#' Before the function can be used, the nodes of the road network must be converted to an sf object that is called `nodes`. This can be done with the function [GISSB::vegnett_to_R()].
+#' Before the function can be used, the nodes of the road network must be converted to an `sf` object that is called `nodes` (or another name supplied to the `nodes_object` argument). This can be done with the function [GISSB::vegnett_to_R()].
 #'
-#' @param coords An sf object with the coordinates that should be connected to the road network.
-#' @param nodes_object An sf object with the nodes of the road network. This can be done with the function [GISSB::vegnett_to_R()].
-#' @param edges_object A data frame with the edges of the road network. This can be done with the function [GISSB::vegnett_to_R()].
+#' @param coords An `sf` object with the coordinates that should be connected to the road network.
+#' @param nodes_object An `sf` object with the nodes of the road network. This can be created with the function [GISSB::vegnett_to_R()].
+#' @param edges_object A data frame with the edges of the road network. This can be created with the function [GISSB::vegnett_to_R()].
 #' @param direction Character vector with “from” if the points should be from nodes or “to” if the points should be to nodes.
 #' @param ID_col Character vector with the name of the ID column. Default value is set to “ID”.
 #' @param crs_out Numeric vector for the chosen coordinate reference system (CRS).
@@ -16,7 +16,7 @@
 #' @param membership Logical. If `TRUE` the search for nodes is limited to nodes that belong to a road network that is connected either to the from or to nodes (only possible for either from or to). E.g. if you only want to search for from nodes that belong to the same road network as the to nodes, membership is set to `FALSE` in the search for to nodes and `membership = TRUE` for the from nodes (in that order).
 #'
 #'
-#' @returns An object (data.frame) with the following columns; `from_nodeID`/`to_nodeID`, `membership_from_node`/`membership_to_node`, `coords_google_from_node`/`coords_google_to_node`, `knn_from_node`/`knn_to_node`, and `ID`.
+#' @returns An object (data frame) with the following columns; `from_nodeID`/`to_nodeID`, `membership_from_node`/`membership_to_node`, `coords_google_from_node`/`coords_google_to_node`, `knn_from_node`/`knn_to_node`, and `ID`.
 #' @export
 #'
 #' @examples

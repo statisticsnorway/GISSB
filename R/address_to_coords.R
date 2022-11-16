@@ -5,7 +5,7 @@
 #'
 #' @param zip_code Character vector with zip codes.
 #' @param address Character vector with addresses (street name and house number).
-#' @param format Format of the returned object. Default value is set to “sf” (which returns an sf object). It is also possible set the format to “tibble” or “data.frame”.
+#' @param format Format of the returned object. Default value is set to “sf” (which returns an `sf` object). It is also possible set the format to “tibble” or “data.frame”.
 #' @param crs_out Numeric vector with the chosen coordinate reference system (CRS). Default value is set to CRS 25833.
 #'
 #' @returns Object with coordinates to the supplied addresses.

@@ -18,7 +18,7 @@ shortest_path_igraph(
 
 \item{to_node_ID}{Numeric value with the to node ID (if multiple node ID’s are to be used, see the function \code{\link[=shortest_path_cppRouting]{shortest_path_cppRouting()}}).}
 
-\item{graph_object}{The road network structured as a tidy graph (tbl_graph object). This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
+\item{graph_object}{The road network structured as a tidy graph (\code{tbl_graph} object). This can be created with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 
 \item{unit}{Character vector with \code{minutes} to calculate the shortest path in minutes or \code{meters} for the shortest path in meters.}
 
@@ -31,7 +31,7 @@ Vector with the shortest path in minutes or meters. If \code{path = TRUE} the no
 The function \code{shortest_path_igraph} can be used to calculate the shortest path (either in minutes or meters) between nodes in the Norwegian road network. The function can also return the node link (path) that the shortest path consists of.
 }
 \details{
-Before the function can be used, the road network must be converted to a tbl_graph object. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}). There objects \code{graph} and \code{edges} needs to be loaded.
+Before the function can be used, the road network must be converted to a \code{tbl_graph} object. This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}). There objects \code{graph} and \code{edges} needs to be loaded.
 }
 \examples{
 \dontrun{

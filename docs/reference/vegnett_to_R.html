@@ -43,7 +43,7 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>The function <code>vegnett_to_R</code> can be used to convert the Norwegian road network, downloaded from <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/" class="external-link">Geonorge</a>, to formats that allows for network analysis in R (tbl_graph and cppRouting).</p>
+    <p>The function <code>vegnett_to_R</code> can be used to convert the Norwegian road network, downloaded from <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/" class="external-link">Geonorge</a>, to formats that allows for network analysis in R (<code>tbl_graph</code> and <code>cppRouting</code>).</p>
     </div>
 
     <div class="section level2">
@@ -65,7 +65,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>vegnett</dt>
-<dd><p>The Norwegian road network as an sf object, downloaded from <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/" class="external-link">Geonorge</a>.</p></dd>
+<dd><p>The Norwegian road network as an <code>sf</code> object, downloaded from <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/" class="external-link">Geonorge</a>.</p></dd>
 
 
 <dt>crs_out</dt>
@@ -73,35 +73,35 @@
 
 
 <dt>year</dt>
-<dd><p>Numeric vector with the year the road network is from. Due to changes in the format of the files between 2021 and 2022 the most important thing is to choose between the "old" format (-2021) or the new format (2022-). The default value is set to 2022.</p></dd>
+<dd><p>Numeric vector with the year the road network is from. Due to changes in the format of the files between 2021 and 2022, the most important thing is to choose between the "old" format (-2021) or the new format (2022-). The default value is set to 2022.</p></dd>
 
 
 <dt>fromnodeID</dt>
-<dd><p>Character vector with the name of the column indicating the from node ID. Default value is set to <code>FROMNODE</code> (2022).</p></dd>
+<dd><p>Character vector with the name of the column indicating the from node ID. Default value is set to <code>FROMNODE</code> (column name in 2022).</p></dd>
 
 
 <dt>tonodeID</dt>
-<dd><p>Character vector with the name of the column indicating the to node ID. Default value is set to <code>TONODE</code> (2022).</p></dd>
+<dd><p>Character vector with the name of the column indicating the to node ID. Default value is set to <code>TONODE</code> (column name in 2022).</p></dd>
 
 
 <dt>FT_minutes</dt>
-<dd><p>Character vector with the name of the column that contains the cost in minutes from <code>fromnodeID</code> to <code>tonodeID</code> (FT). Default value is set to <code>DRIVETIME_FW</code> (2022).</p></dd>
+<dd><p>Character vector with the name of the column that contains the cost in minutes from <code>fromnodeID</code> to <code>tonodeID</code> (FT). Default value is set to <code>DRIVETIME_FW</code> (column name in 2022).</p></dd>
 
 
 <dt>TF_minutes</dt>
-<dd><p>Character vector with the name of the column that contains the cost in minutes from <code>tonodeID</code> to <code>fromnodeID</code> (TF). Default value is set to <code>DRIVETIME_BW</code> (2022).</p></dd>
+<dd><p>Character vector with the name of the column that contains the cost in minutes from <code>tonodeID</code> to <code>fromnodeID</code> (TF). Default value is set to <code>DRIVETIME_BW</code> (column name in 2022).</p></dd>
 
 
 <dt>meters</dt>
-<dd><p>Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to <code>SHAPE_LENGTH</code> (2022).</p></dd>
+<dd><p>Character vector with the name of the column that contains the cost in meters (equal for FT and TF). Default value is set to <code>SHAPE_LENGTH</code> (column name in 2022).</p></dd>
 
 
 <dt>turn_restrictions</dt>
-<dd><p>Boolean. Default value is <code>FALSE</code>. If <code>TRUE</code> turn restrictions will be added to the road network. The turn restrictions layer from the road network file has to be loaded before this can be used (and the object has to be called <code>turnrestrictions_geom</code>). Due to errors in the turn restrictions file for 2022 it is not recommended to use this as of now.</p></dd>
+<dd><p>Logical. Default value is <code>FALSE</code>. If <code>TRUE</code> turn restrictions will be added to the road network. The turn restrictions layer from the road network file has to be loaded before this can be used (and the object has to be called <code>turnrestrictions_geom</code>). Due to errors in the turn restrictions file for 2022 it is not recommended to use this feature for now.</p></dd>
 
 
 <dt>ferry</dt>
-<dd><p>Boolean/numeric vector. Default value is <code>TRUE</code> which means that all edges that involve ferries are given their original drive time (somewhere between 10 and 13 km/h). If numeric value all edges involving ferries will change to correspond to the supplied value in km/h.</p></dd>
+<dd><p>Logical/numeric vector. Default value is <code>TRUE</code> which means that all edges that involve ferries are given their original drive time (somewhere between 10 and 13 km/h). If numeric value is supplied, the cost for all edges involving ferries will be converted to the supplied value in km/h.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -111,19 +111,19 @@
 <p>List containing the following elements:</p>
 
 
-<p><code>[1] graph</code>: the road network structured as a tidy graph (tbl_graph object)</p>
+<p><code>[1] graph</code>: the road network structured as a tidy graph (<code>tbl_graph</code> object)</p>
 
 
-<p><code>[2] nodes</code>: the road network's nodes (sf object)</p>
+<p><code>[2] nodes</code>: the road network's nodes (<code>sf</code> object)</p>
 
 
-<p><code>[3] edges</code>: road network's edges/node links (data.frame)</p>
+<p><code>[3] edges</code>: road network's edges/node links (data frame)</p>
 
 
-<p><code>[4] graph_cppRouting_minutes</code>: the road network structured as a cppRouting graph with the cost of travel in minutes (cppRouting object)</p>
+<p><code>[4] graph_cppRouting_minutes</code>: the road network structured as a <code>cppRouting</code> graph with the cost of travel in minutes (<code>cppRouting</code> object)</p>
 
 
-<p><code>[5] graph_cppRouting_meters</code>: the road network structured as a cppRouting graph with the cost of travel in meters (cppRouting object)</p>
+<p><code>[5] graph_cppRouting_meters</code>: the road network structured as a <code>cppRouting</code> graph with the cost of travel in meters (<code>cppRouting</code> object)</p>
     </div>
 
     <div class="section level2">
@@ -162,42 +162,186 @@
 <span class="r-in"><span>                             FT_minutes <span class="op">=</span> <span class="st">"FT_MINUTES"</span>,</span></span>
 <span class="r-in"><span>                             TF_minutes <span class="op">=</span> <span class="st">"TF_MINUTES"</span>,</span></span>
 <span class="r-in"><span>                             meters <span class="op">=</span> <span class="st">"SHAPE_LENGTH"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in vegnett_to_R(vegnett = vegnett_sampledata, year = 2021, fromnodeID = "FROMNODEID",     tonodeID = "TONODEID", FT_minutes = "FT_MINUTES", TF_minutes = "TF_MINUTES",     meters = "SHAPE_LENGTH"):</span> unused arguments (year = 2021, fromnodeID = "FROMNODEID", tonodeID = "TONODEID", FT_minutes = "FT_MINUTES", TF_minutes = "TF_MINUTES", meters = "SHAPE_LENGTH")</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
 <span class="r-in"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
 <span class="r-in"><span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
 <span class="r-in"><span><span class="va">graph_cppRouting_minutes</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
 <span class="r-in"><span><span class="va">graph_cppRouting_meters</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'vegnett_list' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">graph</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'graph' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tbl_graph: 1159 nodes and 1741 edges</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A directed multigraph with 195 components</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Node Data: 1,159 x 50 (active)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ROUTEID FROM_M  TO_M FROMNO~ TONODE~ GATENA~ VEGTYPE ONEWAY FT_MIN~ TF_MIN~</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 1214418      0     1 1662509 1214440 <span style="color: #949494;">"</span>priva~ P       B       0.028<span style="text-decoration: underline;">4</span>  0.028<span style="text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 1214418      0     1 1662509 1214440 <span style="color: #949494;">"</span>priva~ P       B       0.028<span style="text-decoration: underline;">4</span>  0.028<span style="text-decoration: underline;">4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 1214420      0     1 1214442 1662511 <span style="color: #949494;">"</span>Thorn~ P       B       0.047<span style="text-decoration: underline;">6</span>  0.047<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 1214420      0     1 1214442 1662511 <span style="color: #949494;">"</span>Thorn~ P       B       0.047<span style="text-decoration: underline;">6</span>  0.047<span style="text-decoration: underline;">6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 1214425      0     1 1214447 1662513 <span style="color: #949494;">"</span>priva~ P       B       0.026<span style="text-decoration: underline;">2</span>  0.026<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 1214425      0     1 1214447 1662513 <span style="color: #949494;">"</span>priva~ P       B       0.026<span style="text-decoration: underline;">2</span>  0.026<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with 1,153 more rows, and 40 more variables: METER_ORG &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   VEGNUMMER &lt;int&gt;, FYLKE_ID &lt;chr&gt;, HIERARCHY &lt;int&gt;, HIERARCHY_FVK &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FUNCROADCLASS &lt;int&gt;, VEGID &lt;chr&gt;, SPECIALVEG &lt;chr&gt;, URL &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ATTRIBUTES &lt;chr&gt;, FT_BOM_LIT &lt;dbl&gt;, FT_BOM_STO &lt;dbl&gt;, TF_BOM_LIT &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TF_BOM_STO &lt;dbl&gt;, SPERRING &lt;int&gt;, DT_TURIST_FT &lt;dbl&gt;, DT_TURIST_TF &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   DT_TRUCK_FT &lt;dbl&gt;, DT_TRUCK_TF &lt;dbl&gt;, TOTALVIKT &lt;dbl&gt;, SK_HO_FT &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   SK_HO_TF &lt;dbl&gt;, VOGNTOGLENGDE &lt;dbl&gt;, ROADCLASS &lt;int&gt;, MEDIUM &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FT_FART &lt;int&gt;, TF_FART &lt;int&gt;, BRUKSKLASSE &lt;chr&gt;, BK_VINTER &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TOTVEKT_TOMMER &lt;dbl&gt;, LENGDE_TOMMER &lt;dbl&gt;, FROM_Z &lt;dbl&gt;, TO_Z &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ISBIKEROAD &lt;int&gt;, SHAPE_LENGTH &lt;dbl&gt;, direction &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FROMNODEID_new &lt;chr&gt;, TONODEID_new &lt;chr&gt;, nodeID &lt;int&gt;, geometry &lt;POINT</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   [m]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Edge Data: 1,741 x 52</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    from    to ROUTEID FROM_M  TO_M FROMNO~ TONODE~ GATENA~ VEGTYPE ONEWAY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     1     2 1214418      0     1 1662509 1214440 <span style="color: #949494;">"</span>priva~ P       B     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     3     4 1214420      0     1 1214442 1662511 <span style="color: #949494;">"</span>Thorn~ P       B     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     5     6 1214425      0     1 1214447 1662513 <span style="color: #949494;">"</span>priva~ P       B     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with 1,738 more rows, and 42 more variables: minutes &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TF_MINUTES &lt;dbl&gt;, METER_ORG &lt;dbl&gt;, VEGNUMMER &lt;int&gt;, FYLKE_ID &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   HIERARCHY &lt;int&gt;, HIERARCHY_FVK &lt;int&gt;, FUNCROADCLASS &lt;int&gt;, VEGID &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   SPECIALVEG &lt;chr&gt;, URL &lt;chr&gt;, ATTRIBUTES &lt;chr&gt;, FT_BOM_LIT &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FT_BOM_STO &lt;dbl&gt;, TF_BOM_LIT &lt;dbl&gt;, TF_BOM_STO &lt;dbl&gt;, SPERRING &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   DT_TURIST_FT &lt;dbl&gt;, DT_TURIST_TF &lt;dbl&gt;, DT_TRUCK_FT &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   DT_TRUCK_TF &lt;dbl&gt;, TOTALVIKT &lt;dbl&gt;, SK_HO_FT &lt;dbl&gt;, SK_HO_TF &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   VOGNTOGLENGDE &lt;dbl&gt;, ROADCLASS &lt;int&gt;, MEDIUM &lt;chr&gt;, FT_FART &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   TF_FART &lt;int&gt;, BRUKSKLASSE &lt;chr&gt;, BK_VINTER &lt;chr&gt;, TOTVEKT_TOMMER &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   LENGDE_TOMMER &lt;dbl&gt;, FROM_Z &lt;dbl&gt;, TO_Z &lt;dbl&gt;, ISBIKEROAD &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   meters &lt;dbl&gt;, geometry &lt;LINESTRING [m]&gt;, direction &lt;chr&gt;, edgeID &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   FROMNODEID_new &lt;chr&gt;, TONODEID_new &lt;chr&gt;</span></span>
 <span class="r-in"><span><span class="va">nodes</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'nodes' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 1159 features and 2 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: 248861 ymin: 6639120 xmax: 273374.5 ymax: 6672977</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: ETRS89 / UTM zone 33N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> First 10 features:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    nodeID membership                 geometry</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1          1 POINT (266382.6 6639605)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2          1 POINT (266378.9 6639596)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3          2 POINT (266349.2 6639372)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       4          2 POINT (266349.4 6639389)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5          3 POINT (266360.5 6639120)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       6          3 POINT (266369.4 6639120)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7          4 POINT (266351.3 6639416)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       8          4 POINT (266359.4 6639416)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9          5 POINT (266548.5 6639482)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10          5 POINT (266549.8 6639514)</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">edges</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(edges):</span> object 'edges' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   from to ROUTEID    FROM_M     TO_M FROMNODEID TONODEID</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1  2 1214418 0.0000000 1.000000    1662509  1214440</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    3  4 1214420 0.0000000 1.000000    1214442  1662511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    5  6 1214425 0.0000000 1.000000    1214447  1662513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    7  8 1214427 0.0000000 1.000000    1214448  1662515</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    9 10 1214430 0.2488051 0.311621    2030964  2717563</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   10 11 1214430 0.3116210 0.357439    2717563  1906573</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    GATENAVN VEGTYPE ONEWAY    minutes TF_MINUTES METER_ORG</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                privat veg       P      B 0.02842094 0.02842094  9.666985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Thorn D&lt;U+00F8&gt;nhaugs Vei       P      B 0.04759177 0.04759177 16.187677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                privat veg       P      B 0.02618001 0.02618001  8.904767</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Thorn D&lt;U+00F8&gt;nhaugs Vei       P      B 0.02397816 0.02397816  8.155837</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5              kommunal veg       K      B 0.09209707 0.09209707 31.540092</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6              kommunal veg       K      B 0.06537617 0.06537617 22.389101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   VEGNUMMER FYLKE_ID HIERARCHY HIERARCHY_FVK FUNCROADCLASS    VEGID SPECIALVEG</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     81795        3         3             3             7 {P81795}           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     20496        3         3             3             7 {P20496}           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     81754        3         3             3             7 {P81754}           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     20496        3         3             3             7 {P20496}           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     81753        3         3             3            -1 {K81753}           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     81753        3         3             3            -1 {K81753}           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   URL ATTRIBUTES FT_BOM_LIT FT_BOM_STO TF_BOM_LIT TF_BOM_STO SPERRING</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                         0          0          0          0       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                         0          0          0          0       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                         0          0          0          0       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                         0          0          0          0       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                         0          0          0          0       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                         0          0          0          0       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   DT_TURIST_FT DT_TURIST_TF DT_TRUCK_FT DT_TRUCK_TF TOTALVIKT SK_HO_FT SK_HO_TF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.02842094   0.02842094          NA          NA        NA       NA       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.04759177   0.04759177          NA          NA        NA       NA       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.02618001   0.02618001          NA          NA        NA       NA       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.02397816   0.02397816          NA          NA        NA       NA       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.09209707   0.09209707          NA          NA        NA       NA       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.06537617   0.06537617          NA          NA        NA       NA       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   VOGNTOGLENGDE ROADCLASS MEDIUM FT_FART TF_FART    BRUKSKLASSE BK_VINTER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1            NA         0             30      30                       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2            NA         0             30      30                       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3            NA         0             30      30                       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4            NA         0             30      30                       -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            NA         0             30      30 Bk10 - 50 tonn        -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6            NA         0             30      30 Bk10 - 50 tonn        -1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   TOTVEKT_TOMMER LENGDE_TOMMER   FROM_Z     TO_Z ISBIKEROAD    meters</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1             -1          -1.0 160.7000 160.7000          0  9.666985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2             -1          -1.0 171.1600 171.1600          0 16.187677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3             -1          -1.0 172.5704 172.5704          0  8.904767</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4             -1          -1.0 169.4539 169.5000          0  8.155837</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             -1          19.5 179.8200 179.8440          1 31.540092</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             -1          19.5 179.8440 179.6700          1 22.389101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         geometry direction edgeID FROMNODEID_new TONODEID_new</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 LINESTRING (266382.6 663960...      B_FT      1        1662509      1214440</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 LINESTRING (266349.2 663937...      B_FT      2        1214442      1662511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 LINESTRING (266360.5 663912...      B_FT      3        1214447      1662513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 LINESTRING (266351.3 663941...      B_FT      4        1214448      1662515</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 LINESTRING (266548.5 663948...      B_FT      5        2030964      2717563</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 LINESTRING (266549.8 663951...      B_FT      6        2717563      1906573</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_minutes</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_minutes$data):</span> object 'graph_cppRouting_minutes' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   from  to       dist</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    0 837 0.02842094</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    1 838 0.04759177</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    2 839 0.02618001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3 840 0.02397816</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    4   5 0.09209707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    5 841 0.06537617</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_minutes</span><span class="op">$</span><span class="va">coords</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_minutes$coords):</span> object 'graph_cppRouting_minutes' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    nodeID        X       Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1 266382.6 6639605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3 266349.2 6639372</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5 266360.5 6639120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7 266351.3 6639416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9 266548.5 6639482</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10 266549.8 6639514</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_minutes</span><span class="op">$</span><span class="va">dict</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_minutes$dict):</span> object 'graph_cppRouting_minutes' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ref id</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   3  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   5  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   7  3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   9  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  10  5</span>
 <span class="r-in"><span><span class="va">graph_cppRouting_minutes</span><span class="op">$</span><span class="va">nbnode</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'graph_cppRouting_minutes' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1159</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_meters</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_meters$data):</span> object 'graph_cppRouting_meters' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   from  to      dist</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    0 837  9.666985</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    1 838 16.187677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    2 839  8.904767</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3 840  8.155837</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    4   5 31.540092</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    5 841 22.389101</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_meters</span><span class="op">$</span><span class="va">coords</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_meters$coords):</span> object 'graph_cppRouting_meters' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    nodeID        X       Y</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1 266382.6 6639605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3 266349.2 6639372</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5 266360.5 6639120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       7 266351.3 6639416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       9 266548.5 6639482</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     10 266549.8 6639514</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">graph_cppRouting_meters</span><span class="op">$</span><span class="va">dict</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in head(graph_cppRouting_meters$dict):</span> object 'graph_cppRouting_meters' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ref id</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   3  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   5  2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   7  3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   9  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  10  5</span>
 <span class="r-in"><span><span class="va">graph_cppRouting_meters</span><span class="op">$</span><span class="va">nbnode</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'graph_cppRouting_meters' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1159</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -63,15 +63,15 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>coords</dt>
-<dd><p>An sf object with the coordinates that should be connected to the road network.</p></dd>
+<dd><p>An <code>sf</code> object with the coordinates that should be connected to the road network.</p></dd>
 
 
 <dt>nodes_object</dt>
-<dd><p>An sf object with the nodes of the road network. This can be done with the function <code><a href="vegnett_to_R.html">vegnett_to_R()</a></code>.</p></dd>
+<dd><p>An <code>sf</code> object with the nodes of the road network. This can be created with the function <code><a href="vegnett_to_R.html">vegnett_to_R()</a></code>.</p></dd>
 
 
 <dt>edges_object</dt>
-<dd><p>A data frame with the edges of the road network. This can be done with the function <code><a href="vegnett_to_R.html">vegnett_to_R()</a></code>.</p></dd>
+<dd><p>A data frame with the edges of the road network. This can be created with the function <code><a href="vegnett_to_R.html">vegnett_to_R()</a></code>.</p></dd>
 
 
 <dt>direction</dt>
@@ -98,11 +98,11 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An object (data.frame) with the following columns; <code>from_nodeID</code>/<code>to_nodeID</code>, <code>membership_from_node</code>/<code>membership_to_node</code>, <code>coords_google_from_node</code>/<code>coords_google_to_node</code>, <code>knn_from_node</code>/<code>knn_to_node</code>, and <code>ID</code>.</p>
+<p>An object (data frame) with the following columns; <code>from_nodeID</code>/<code>to_nodeID</code>, <code>membership_from_node</code>/<code>membership_to_node</code>, <code>coords_google_from_node</code>/<code>coords_google_to_node</code>, <code>knn_from_node</code>/<code>knn_to_node</code>, and <code>ID</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Before the function can be used, the nodes of the road network must be converted to an sf object that is called <code>nodes</code>. This can be done with the function <code><a href="vegnett_to_R.html">vegnett_to_R()</a></code>.</p>
+    <p>Before the function can be used, the nodes of the road network must be converted to an <code>sf</code> object that is called <code>nodes</code> (or another name supplied to the <code>nodes_object</code> argument). This can be done with the function <code><a href="vegnett_to_R.html">vegnett_to_R()</a></code>.</p>
     </div>
 
     <div class="section level2">
