@@ -6,7 +6,6 @@ library(roxygen2)
 library(testthat)
 library(tidyverse)
 
-
 # Oppstart #
 use_mit_license()
 use_readme_rmd()
@@ -67,11 +66,15 @@ install()
 # Lag pakke (?)
 devtools::build()
 
-# install.packages("C:/Users/rdn/Documents/Github/GISSB_1.0.tar.gz", repos = NULL, type="source")
 
 # ?
-# detach(package:GISSB, unload=TRUE)
-# devtools::install_github("statisticsnorway/GISSB")
+# devtools::detach(package:GISSB, unload=TRUE)
+# install.packages("C:/Users/rdn/Documents/Github/GISSB_1.1.tar.gz", repos = NULL, type="source")
+# devtools::install_github("statisticsnorway/GISSB", ref = "main")
+#
+# library(devtools)
+# install_github("statisticsnorway/GISSB")
+
 # devtools::install_github
 
 # Lager vignette
