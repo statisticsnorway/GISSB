@@ -3,6 +3,8 @@
 #'
 #' The function `address_to_coords` can be used to find coordinates to supplied Norwegian addresses. Internet access is required as the function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
 #'
+#' If there are no coordinates found for the supplied address it means that it does not exist in [Matrikkelen](https://www.kartverket.no/eiendom/eiendomsgrenser/matrikkelen-norgeseiendomsregister) - Norway's official property register. See \href{https://www.rettikartet.no/app/veger} to search for existing addresses.
+#'
 #' @param zip_code Character vector with zip codes.
 #' @param address Character vector with addresses (street name and house number).
 #' @param format Format of the returned object. Default value is set to “sf” (which returns an `sf` object). It is also possible set the format to “tibble” or “data.frame”.
