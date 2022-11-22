@@ -1,8 +1,11 @@
 
+
 library(devtools)
 library(usethis)
 library(roxygen2)
 library(testthat)
+library(tidyverse)
+
 
 # Oppstart #
 use_mit_license()
@@ -66,7 +69,9 @@ devtools::build()
 
 # install.packages("C:/Users/rdn/Documents/Github/GISSB_1.0.tar.gz", repos = NULL, type="source")
 
-
+# ?
+# detach(package:GISSB, unload=TRUE)
+# devtools::install_github("statisticsnorway/GISSB")
 # devtools::install_github
 
 # Lager vignette

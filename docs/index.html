@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">GISSB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,17 +66,19 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of GISSB like so:</p>
+<p>You can install the development version of <code>GISSB</code> like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"statisticsnorway/GISSB"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="requirements">Requirements<a class="anchor" aria-label="anchor" href="#requirements"></a>
 </h2>
-<p>Most of the functions in the GISSB package require that the Norwegian road network <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313" class="external-link">NVDB Ruteplan nettverksdatasett</a> has been downloaded locally. The format of the file should be “FGDB 10.0”.</p>
-<p>After the file has been downloaded it has to be read into R using the sf package:</p>
+<p>Most of the functions in the GISSB package require that the Norwegian road network <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313" class="external-link">NVDB Ruteplan nettverksdatasett</a> has been downloaded locally to your computer. The format of the file should be “FGDB 10.0”.</p>
+<p>After the file has been downloaded it has to be read into R using the <code>sf</code> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">vegnett</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="st">"vegnettRuteplan_FGDB_20210528.gdb"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">vegnett</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="st">"vegnettRuteplan_FGDB_20210528.gdb"</span>, layer <span class="op">=</span> <span class="st">'ERFKPS'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">turnrestrictions_geom</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="st">"vegnettRuteplan_FGDB_20210528.gdb"</span>, layer <span class="op">=</span> <span class="st">"ERFKPS_turns"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">

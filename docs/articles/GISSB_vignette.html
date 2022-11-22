@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">GISSB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
                         <h4 data-toc-skip class="author">Sindre Mikael
 Haugen</h4>
             
-            <h4 data-toc-skip class="date">2022-11-16</h4>
+            <h4 data-toc-skip class="date">2022-11-22</h4>
       
       
       <div class="d-none name"><code>GISSB_vignette.Rmd</code></div>
@@ -167,8 +167,8 @@ internasjonale kart, her med pakken Leaflet:</p>
 <code class="sourceCode R"><span><span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addMarkers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fra_4326</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span></span></code></pre></div>
-<div id="htmlwidget-c25589dd250c942fb765" style="width:100%;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c25589dd250c942fb765">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[59.9220274187717,60.1738313973094],[10.7468516818247,12.0163762410388],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[59.9220274187717,60.1738313973094],"lng":[10.7468516818247,12.0163762410388]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e9b380909922a84b0ef6" style="width:100%;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e9b380909922a84b0ef6">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[59.9220274187717,60.1738313973094],[10.7468516818247,12.0163762410388],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[59.9220274187717,60.1738313973094],"lng":[10.7468516818247,12.0163762410388]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="søke-opp-koordinater-i-google-maps-coords_to_google">Søke opp koordinater i Google Maps
@@ -201,7 +201,7 @@ det kan ta ca. 3 minutter å laste inn filen):</p>
 <span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">vegnett</span><span class="op">)</span></span></code></pre></div>
-<p><img src="images/unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="images/Vegnett%202021.png" width="100%"></p>
 <p>Vegnettet består av punkter som er plassert ca. 50 meter fra
 hverandre. Disse punktene kalles for noder. Lenkene som forbinder
 nodene/punktene sammen heter edges. For en mer detaljert gjennomgang av
@@ -293,7 +293,15 @@ mange meter det er i luftlinje mellom koordinatene og det nærmeste
 punktet i vegnettet til hvert koordinatpunkt. Dette kan være nyttig for
 å avgjøre om det er enkelte koordinater som har blitt tildelt noder som
 er for langt unna den opprinnelige plasseringen (og som man dermed kan
-vurdere å utelate fra den videre analysen).</p>
+vurdere å utelate fra den videre analysen). Det kan også være lurt å
+legge til en ekstra kostnad for avstanden mellom koordinatene til en
+adresse og den nærmeste noden i vegnettet. F.eks. kan man regne ut hvor
+lang tid det tar å kjøre avstanden i 30 km/t i minutter ved å gange
+avstanden i
+<code>dist_coord_node_from</code>/<code>dist_coord_node_to</code> med
+0,002. Man bør også gange selve avstanden først med et tall høyere enn 1
+(f.eks. 1,5) for å kompensere for svinger i veien ettersom det sjelden
+er mulig å reise i luftlinje.</p>
 <p>For å benytte funksjonen <code>coords_to_node</code> må objektene
 <code>nodes</code> og <code>edges</code> (som lages med funksjonen
 <code>vegnett_to_R</code>) være lastet inn.</p>
@@ -326,9 +334,9 @@ som har <code>membership = TRUE</code>:</p>
 <p>Når man har en node-ID for både et start- og stoppunkt kan man
 benytte funksjonen <code>shortest_path_igraph</code> for å beregne den
 korteste kjøreavstanden mellom disse. For å beregne korteste kjøretid i
-minutter angis argumentet <code>unit = "FT_MINUTES"</code>
-(standardverdi), mens <code>unit = "LENGTH"</code> beregner korteste
-kjøreavstand i meter.</p>
+minutter angis argumentet <code>unit = "minutes"</code> (standardverdi),
+mens <code>unit = "meters"</code> beregner korteste kjøreavstand i
+meter.</p>
 <p>For å kjøre koden må objektet <code>graph</code> (som lages med
 funksjonen <code>vegnett_to_R</code>) være lastet inn.</p>
 <p>OBS: <code>shortest_path_igraph</code> fungerer ikke med vektorer,
@@ -389,7 +397,7 @@ en fordel mtp. på tiden det tar å kjøre koden, men ulempen er at man
 ikke får sjekket hvilke veglenker hver rute består av. Dette kan derfor
 funksjonen <code>shortest_path_igraph</code> (med
 <code>path = TRUE</code>) brukes til dersom man ønsker å kontrollere
-eller visualisere kjøreruter mellom ett startpunkt og ett stoppunkt.</p>
+eller visualisere kjøreruter mellom ett start- og stoppunkt.</p>
 <p>I funksjonen <code>shortest_path_cppRouting</code> kan man legge inn
 vektorer med flere noder i både argumentene <code>from_node</code> og
 <code>to_node</code>. Det betyr at dersom man legger inn to noder i
@@ -424,11 +432,11 @@ funksjonen <code>shortest_path_cppRouting</code> kan brukes.</p>
 <span><span class="va">avstand_cpp_meter</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="eksempel">Eksempel<a class="anchor" aria-label="anchor" href="#eksempel"></a>
+<h2 id="eksempel-beregnet-kjøretid-til-nærmeste-fødested">Eksempel: beregnet kjøretid til nærmeste fødested<a class="anchor" aria-label="anchor" href="#eksempel-beregnet-kj%C3%B8retid-til-n%C3%A6rmeste-f%C3%B8dested"></a>
 </h2>
 <p>I dette eksempelet beregnes korteste og lengste kjøretid fra to
 adresser (“Akersveien 26, 0177” og “Otervegen 23, 2211”) til syv ulike
-adresser (fødestuer).</p>
+adresser (fødesteder).</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">adresser</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sykehusveien 25"</span>,</span>
