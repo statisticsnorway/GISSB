@@ -1,30 +1,32 @@
 
-# OBS:
-
-library(dplyr)
-
-vegnett <- arrow::open_dataset("X:/330/Helse-Individ-gruppe/2020-PA8-S-E-GEOS -WP2/GIS i R/Data/Vegnettverk/vegnett2021.parquet") %>%
-  dplyr::filter(FYLKE_ID %in% c("3", "2", "4")) %>% # OBSOBSOBS
-  sfarrow::read_sf_dataset()
-
-vegnett_list <- vegnett_to_R(vegnett = vegnett)
-graph_cppRouting_FT_MINUTES <- vegnett_list[[4]]
-graph_cppRouting_LENGTH <- vegnett_list[[5]]
-
 testthat::test_that("Testing shortest_paths_cppRouting", {
 
-  distance_cpp_min <- shortest_paths_cppRouting(26956,
-                                                210373,
-                                                enhet = "FT_MINUTES")
+  vegnett <- vegnett_sampledata
 
-  expect_type(distance_cpp_min, "list")
+  vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata,
+                               year = 2021,
+                               fromnodeID = "FROMNODEID",
+                               tonodeID = "TONODEID",
+                               FT_minutes = "FT_MINUTES",
+                               TF_minutes = "TF_MINUTES",
+                               meters = "SHAPE_LENGTH")
 
-  distance_cpp_meter <- shortest_paths_cppRouting(26956,
-                                                  210373,
-                                                  enhet = "LENGTH")
+  graph_cppRouting_minutes <- vegnett_list[[4]]
+  graph_cppRouting_meters <- vegnett_list[[5]]
 
-  expect_type(distance_cpp_meter, "list")
+  distance_cpp_min <- shortest_path_cppRouting(54,
+                                               61,
+                                               unit = "minutes",
+                                               graph_cppRouting_object = graph_cppRouting_minutes)
 
+  testthat::expect_type(distance_cpp_min, "list")
+
+  distance_cpp_meter <- shortest_path_cppRouting(54,
+                                                 61,
+                                                 unit = "meters",
+                                                 graph_cppRouting_object = graph_cppRouting_meters)
+
+  testthat::expect_type(distance_cpp_meter, "list")
 
 
 })
