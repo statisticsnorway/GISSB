@@ -35,7 +35,8 @@ Pakken inneholder følgende funksjoner:
 
 Ved å bruke disse funksjonene kan man bl.a. finne koordinater til adresser og beregne kjøretid og -avstand mellom disse ved å bruke vegnettet (NVDB Ruteplan nettverksdatasett). Dette kan være nyttig dersom man f.eks. ønsker å analysere regionale forskjeller i befolkningens tilgang til offentlige tjenester.
 
-Se [Avstand til fødested](https://github.com/statisticsnorway/geostat-wp2/blob/master/analysis/Avstand%20til%20f%C3%B8dested.ipynb) for et eksempel der denne pakken har blitt brukt i et produksjonsløp (kun tilgjengelig for ansatte i SSB).
+
+Se [Hvor lang tid tar det å kjøre til nærmeste fødested?](https://www.ssb.no/helse/helsetjenester/statistikk/spesialisthelsetjenesten/artikler/hvor-lang-tid-tar-det-a-kjore-til-naermeste-fodested) for et eksempel der denne pakken har blitt brukt i et produksjonsløp.
 
 ## Finne koordinater til adresser (`address_to_coords`)
 
@@ -155,7 +156,7 @@ graph_cppRouting_meters <- vegnett_list[[5]]
 
 Merk at vegnettsfilene fra Geonorge endret struktur og kolonnenavn i 2022. Standardverdiene for funksjonen `vegnett_to_R` er gyldige for den nye strukturen, mens for vegnett fra 2021 og tidligere må følgende argumenter spesifiseres: `year = 2021`, `fromnodeID = "FROMNODEID"`, `tonodeID = "TONODEID"`, `FT_minutes = "FT_MINUTES"`, `TF_minutes = "TF_MINUTES"` og `meters = "SHAPE_LENGTH"`. 
 
-Det er også mulig å legge til "turn restrictions" i vegnettet. Dette finnes som et separat kartlag i .gdb-filene man laster ned fra Geonorge. Disse filene inneholder mange feil (?) og derfor anbefales det ikke å ta disse i bruk (før problemene har blitt løst). Om man allikevel ønsker å teste med "turn restrictions" må man laste inn kartlaget i et objekt som heter `turnrestrictions_geom` og sette argumentet `turn_restrictions = TRUE` i funksjonen `vegnett_to_R`. 
+Det er også mulig å legge til svingrestriksjon ("turn restrictions") i vegnettet. Dette finnes som et separat kartlag i .gdb-filene man laster ned fra Geonorge. Disse filene inneholder mange feil (?) og derfor anbefales det ikke å ta disse i bruk (før problemene har blitt løst). Om man allikevel ønsker å teste med svingrestriksjoner må man laste inn kartlaget i et objekt som heter `turnrestrictions_geom` og sette argumentet `turn_restrictions = TRUE` i funksjonen `vegnett_to_R`. 
 
 ## Knytte koordinater til vegnettet (`coords_to_node`)
 

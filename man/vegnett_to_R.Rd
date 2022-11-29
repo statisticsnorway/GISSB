@@ -19,7 +19,7 @@ vegnett_to_R(
 )
 }
 \arguments{
-\item{vegnett}{The Norwegian road network as an \code{sf} object, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}.}
+\item{vegnett}{The Norwegian road network as an \code{sf} object, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313}{Geonorge}.}
 
 \item{crs_out}{Numeric vector with the chosen coordinate reference system (CRS). The default value is set to CRS 25833.}
 
@@ -53,7 +53,7 @@ List containing the following elements:
 \verb{[5] graph_cppRouting_meters}: the road network structured as a \code{cppRouting} graph with the cost of travel in meters (\code{cppRouting} object)
 }
 \description{
-The function \code{vegnett_to_R} can be used to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (\code{tbl_graph} and \code{cppRouting}).
+The function \code{vegnett_to_R} can be used to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313}{Geonorge}, to formats that allows for network analysis in R (\code{tbl_graph} and \code{cppRouting}).
 }
 \examples{
 vegnett_sampledata

@@ -1,9 +1,9 @@
 
 #' Convert the Norwegian road network (NVDB Ruteplan nettverksdatasett) into network graphs in R
 #'
-#' The function `vegnett_to_R` can be used to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}, to formats that allows for network analysis in R (`tbl_graph` and `cppRouting`).
+#' The function `vegnett_to_R` can be used to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313}{Geonorge}, to formats that allows for network analysis in R (`tbl_graph` and `cppRouting`).
 #'
-#' @param vegnett The Norwegian road network as an `sf` object, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{Geonorge}.
+#' @param vegnett The Norwegian road network as an `sf` object, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313}{Geonorge}.
 #' @param crs_out Numeric vector with the chosen coordinate reference system (CRS). The default value is set to CRS 25833.
 #' @param year Numeric vector with the year the road network is from. Due to changes in the format of the files between 2021 and 2022, the most important thing is to choose between the "old" format (-2021) or the new format (2022-). The default value is set to 2022.
 #' @param fromnodeID Character vector with the name of the column indicating the from node ID. Default value is set to `FROMNODE` (column name in 2022).

@@ -17,8 +17,9 @@ library(tidygraph)
 library(cppRouting)
 
 # Laster inn vegnettet #
-sf::st_layers("C:/Users/rdn/Documents/Kart/Vegnett/vegnettRuteplan_FGDB_20220703.gdb")
-turnrestrictions_geom <- sf::read_sf("C:/Users/rdn/Documents/Kart/Vegnett/vegnettRuteplan_FGDB_20220703.gdb", layer = "turnrestrictions_geom")
+sf::st_layers("C:/Users/rdn/Documents/Kart/Vegnett/vegnettRuteplan_FGDB_20221109.gdb")
+turnrestrictions_geom <- sf::read_sf("C:/Users/rdn/Documents/Kart/Vegnett/vegnettRuteplan_FGDB_20221109.gdb", layer = "turnrestrictions_geom")
+
 turnrestrictions_geom <- turnrestrictions_geom %>%
   dplyr::filter(!(fromFromNode == "1450893" & fromToNode == "1499638" & toToNode == "1473826"))
   # dplyr::filter((fromFromNode == "1473826" & fromToNode == "1499638" & toToNode == "1450893") |
@@ -29,6 +30,7 @@ turnrestrictions_geom <- turnrestrictions_geom %>%
 # arrow::write_parquet(turnrestrictions_geom, "C:/Users/rdn/Documents/Kart/Vegnett/turnrestrictions_geom_2022.parquet")
 
 vegnett_parquet_filsti <- paste0("C:/Users/rdn/Documents/Kart/Vegnett/vegnett", aargang, ".parquet")
+# vegnett <- sf::read_sf("C:/Users/rdn/Documents/Kart/Vegnett/vegnettRuteplan_FGDB_20221109.gdb", layer = "ruttger_link_geom")
 
 ds <- arrow::open_dataset(vegnett_parquet_filsti)
 

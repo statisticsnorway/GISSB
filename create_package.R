@@ -60,11 +60,11 @@ devtools::document()
 
 devtools::check()
 
-# Installerer pakken lokalt #
-install()
-
 # Lag pakke (?)
 devtools::build()
+
+# Installerer pakken lokalt #
+devtools::install()
 
 
 # ?
