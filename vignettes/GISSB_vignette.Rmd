@@ -6,7 +6,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
 resource_files:
-  - vignettes/Vegnett 2021.png
+  - vignettes/vegnett_2021.png
 vignette: >
   %\VignetteIndexEntry{GISSB - Netverksanalyse i R}
   %\VignetteEngine{knitr::rmarkdown}
@@ -46,7 +46,7 @@ Standardverdi for projeksjonen av koordinatene er satt til [CRS 25833](https://e
 
 ```{r, include=FALSE}
 
-library(tidyverse)
+# library(tidyverse)
 library(GISSB)
 
 # Laster inn filene #
@@ -119,7 +119,7 @@ ggplot() +
 ```
 
 ```{r, echo=FALSE, error = TRUE, out.width = "100%"}
-knitr::include_graphics(paste0(here::here(), "/vignettes/images/Vegnett 2021.png"))
+knitr::include_graphics(paste0(here::here(), "/vignettes/images/vegnett_2021.png"))
 ```
 
 Vegnettet består av punkter som er plassert ca. 50 meter fra hverandre. Disse punktene kalles for noder. Lenkene som forbinder nodene/punktene sammen heter edges. For en mer detaljert gjennomgang av strukturen til vegnettet og hvordan dette blir behandlet med funksjonen `vegnett_to_R`, se [her](https://github.com/statisticsnorway/geostat-wp2/blob/3272bbb87bad79b3f976a83923da39b023973e36/analysis/Demo_databehandling.ipynb).

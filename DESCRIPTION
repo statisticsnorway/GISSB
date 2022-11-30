@@ -18,6 +18,7 @@ Roxygen: list(markdown = TRUE)
 Imports: 
     cppRouting,
     dplyr,
+    here,
     httr,
     igraph,
     leaflet,
@@ -26,10 +27,12 @@ Imports:
     purrr,
     RCurl,
     reshape2,
+    rlang,
     sf,
     stringr,
     tibble,
-    tidygraph
+    tidygraph,
+    tidyselect
 VignetteBuilder: knitr
 URL: https://statisticsnorway.github.io/GISSB/
 Depends: 
