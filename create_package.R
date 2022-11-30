@@ -27,6 +27,13 @@ build_readme() # Kjøres etter .rmd-filen er ferdig utfylt
 # usethis::use_package("leaflet", type = "imports")
 # usethis::use_package("RCurl", type = "imports")
 # usethis::use_package("stringr", type = "imports")
+# usethis::use_package("rlang", type = "imports")
+# usethis::use_package("here", type = "imports")
+# usethis::use_package("tidyselect", type = "imports")
+
+# usethis::use_package("here", type = "imports")
+
+# Fix for "no visible binding for global variable"
 
 # Legger til automatiske tester for funksjonene #
 
@@ -59,6 +66,12 @@ devtools::load_all()
 devtools::document()
 
 devtools::check()
+
+
+# > checking R files for syntax errors ... WARNING
+# Warning in Sys.setlocale("LC_CTYPE", oLC_ct) :
+#   OS reports request to set locale to "Norwegian BokmC%l_Norway.utf8" cannot be honored
+
 
 # Lag pakke (?)
 devtools::build()

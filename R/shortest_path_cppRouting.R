@@ -67,13 +67,13 @@ shortest_path_cppRouting <- function(from_node_ID,
   if (dist == "min") {
     dists2_long <- dists2_long %>%
       dplyr::group_by(from_nodeID) %>%
-      dplyr::slice(which.min(!!sym(unit)))
+      dplyr::slice(which.min(!!rlang::sym(unit)))
   }
 
   if (dist == "max") {
     dists2_long <- dists2_long %>%
       dplyr::group_by(from_nodeID) %>%
-      dplyr::slice(which.max(!!sym(unit)))
+      dplyr::slice(which.max(!!rlang::sym(unit)))
   }
 
   dists2_long$from_nodeID <- as.integer(dists2_long$from_nodeID)

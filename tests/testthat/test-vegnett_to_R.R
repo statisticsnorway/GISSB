@@ -1,9 +1,11 @@
 
 # OBS:
 
-vegnett <- vegnett_sampledata
 
 testthat::test_that("Testing vegnett_to_R", {
+
+  vegnett <- vegnett_sampledata
+
 
   vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata,
                                year = 2021,

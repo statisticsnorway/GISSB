@@ -158,14 +158,14 @@ vegnett_to_R <- function(vegnett,
       vegnett_Edge1FID <- vegnett %>%
         data.frame() %>%
         dplyr::filter(FID %in% as.character(unique(turnrestrictions_geom$Edge1FID))) %>%
-        dplyr::select(FID, all_of(fromnodeID), all_of(tonodeID)) %>%
+        dplyr::select(FID, tidyselect::all_of(fromnodeID), tidyselect::all_of(tonodeID)) %>%
         dplyr::rename(FROMNODEID_1 = !!rlang::sym(fromnodeID),
                       TONODEID_1 = !!rlang::sym(tonodeID))
 
       vegnett_Edge2FID <- vegnett %>%
         data.frame() %>%
         dplyr::filter(FID %in% as.character(unique(turnrestrictions_geom$Edge2FID))) %>%
-        dplyr::select(FID, all_of(fromnodeID), all_of(tonodeID)) %>%
+        dplyr::select(FID, tidyselect::all_of(fromnodeID), tidyselect::all_of(tonodeID)) %>%
         dplyr::rename(FROMNODEID_2 = !!rlang::sym(fromnodeID),
                       TONODEID_2 = !!rlang::sym(tonodeID))
 
@@ -229,7 +229,7 @@ vegnett_to_R <- function(vegnett,
   lookup <- c(meters = meters, minutes = FT_minutes) # OBS: legg denne direkte inn i all_of()?
   edges <- edges %>%
     dplyr::mutate(from = source_nodes, to = target_nodes) %>%
-    dplyr::rename(all_of(lookup))
+    dplyr::rename(tidyselect::all_of(lookup))
 
   # Extracting distinct nodes with coordinates #
   nodes <- nodes %>%
@@ -297,3 +297,16 @@ vegnett_to_R <- function(vegnett,
               graph_cppRouting_meters))
 
 }
+
+
+
+# globalVariables
+utils::globalVariables(c("graph", "edges", "ONEWAY", "km", "hours", ":=", "km_h",
+                         "FT_minutes_new", "FID", "fromToNode", "fromToNode", "toToNode", "FROMNODEID_1", "TONODEID_1", "FROMNODEID_2", "TONODEID_2", "turn", "L1", "edgeID", ".", "xy", "geometry",
+                         "Edge1End", "start_end", "nodeID", "from", "to", "minutes", "X", "Y", "to_node", "coords_google", "variabel", "from_node", "graph_cppRouting_minutes", "from_nodeID",
+                         "coords_google_1", "coords_google_2", "lat"))
+
+
+# Suppress R CMD check note
+#' @importFrom here here
+NULL

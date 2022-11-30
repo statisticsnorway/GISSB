@@ -79,7 +79,7 @@ address_to_coords <- function(zip_code,
 
   if (format == "tibble") {
     addresses_coord <- addresses_coord %>%
-      as_tibble()
+      tibble::as_tibble()
   }
 
   return(addresses_coord)
