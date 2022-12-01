@@ -6,7 +6,7 @@
 #'
 #' @usage data(vegnett_sampledata)
 #'
-#' @format An object of class sf.
+#' @format An object of class `sf`.
 #'
 #' @keywords datasets
 #'

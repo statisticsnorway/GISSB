@@ -8,12 +8,12 @@
 coords_to_google(coords, crs_out = 25833)
 }
 \arguments{
-\item{coords}{An \code{sf} object with a geometry column that will be converted to CRS 4326.}
+\item{coords}{An \code{sf} object with a geometry column that will be converted to \verb{CRS 4326}.}
 
 \item{crs_out}{Chosen coordinate reference system (CRS) for the geometry column of the returned \code{sf} object.}
 }
 \value{
-An \code{sf} object with a new column added (\code{coords_google}), and an addtional sf geometry column with the chosen CRS.
+An \code{sf} object with a new column added (\code{coords_google}), and an addtional \code{sf} geometry column with the chosen CRS.
 }
 \description{
 The function \code{coords_to_google} can be used to convert coordinates of an \code{sf} object to a format that is easy to copy and paste into Google Maps.

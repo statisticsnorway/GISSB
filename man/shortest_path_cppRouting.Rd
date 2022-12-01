@@ -20,12 +20,12 @@ shortest_path_cppRouting(
 
 \item{unit}{Character vector with \code{minutes} to calculate the shortest path in minutes or \code{meters} for the shortest path in meters.}
 
-\item{dist}{Character vector that specifies if all the shortest paths between all the supplied from and to nodes are returned (\code{all}), or if only the minimum (\code{min})/maximum (\code{max}) value for each from node ID is returned.}
+\item{dist}{Character vector that specifies if all the shortest paths between all the supplied from and to nodes are returned (\code{all}), or if only the minimum (\code{min}) or maximum (\code{max}) value for each from node ID is returned.}
 
 \item{graph_cppRouting_object}{The road network structured as a \code{cppRouting} graph object. This can be created with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 }
 \value{
-Object (data frame) with how many minutes or meters the shortest path is between the supplied from and to node ID’s.
+Object (\code{data.frame}) with how many minutes or meters the shortest path is between the supplied from and to node ID’s.
 }
 \description{
 The function \code{shortest_path_cppRouting} can be used to calculate the shortest path (either in minutes or meters) between two or more nodes in the Norwegian road network. The function also works with vectors with multiple from and to node ID’s.

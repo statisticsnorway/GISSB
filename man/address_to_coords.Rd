@@ -14,7 +14,7 @@ address_to_coords(zip_code, address, format = "sf", crs_out = 25833)
 
 \item{format}{Format of the returned object. Default value is set to “sf” (which returns an \code{sf} object). It is also possible set the format to “tibble” or “data.frame”.}
 
-\item{crs_out}{Numeric vector with the chosen coordinate reference system (CRS). Default value is set to CRS 25833.}
+\item{crs_out}{Numeric vector with the chosen coordinate reference system (CRS). Default value is set to \verb{CRS 25833}.}
 }
 \value{
 Object with coordinates to the supplied addresses.

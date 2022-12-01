@@ -67,7 +67,7 @@
                         <h4 data-toc-skip class="author">Sindre Mikael
 Haugen</h4>
             
-            <h4 data-toc-skip class="date">2022-11-22</h4>
+            <h4 data-toc-skip class="date">2022-12-01</h4>
       
       
       <div class="d-none name"><code>GISSB_vignette.Rmd</code></div>
@@ -90,12 +90,13 @@ gjennomføre nettverksanalyser i R.</p>
 </ul>
 <p>Ved å bruke disse funksjonene kan man bl.a. finne koordinater til
 adresser og beregne kjøretid og -avstand mellom disse ved å bruke
-vegnettet (NVDB Ruteplan nettverksdatasett). Dette kan være nyttig
-dersom man f.eks. ønsker å analysere regionale forskjeller i
-befolkningens tilgang til offentlige tjenester.</p>
-<p>Se <a href="https://github.com/statisticsnorway/geostat-wp2/blob/master/analysis/Avstand%20til%20f%C3%B8dested.ipynb" class="external-link">Avstand
-til fødested</a> for et eksempel der denne pakken har blitt brukt i et
-produksjonsløp (kun tilgjengelig for ansatte i SSB).</p>
+vegnettet (<a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313" class="external-link">NVDB
+Ruteplan nettverksdatasett</a>). Dette kan være nyttig dersom man f.eks.
+ønsker å analysere regionale forskjeller i befolkningens tilgang til
+offentlige tjenester.</p>
+<p>Se <a href="https://www.ssb.no/helse/helsetjenester/statistikk/spesialisthelsetjenesten/artikler/hvor-lang-tid-tar-det-a-kjore-til-naermeste-fodested" class="external-link">Hvor
+lang tid tar det å kjøre til nærmeste fødested?</a> for et eksempel der
+denne pakken har blitt brukt til å lage offisiell statiatikk.</p>
 <div class="section level2">
 <h2 id="finne-koordinater-til-adresser-address_to_coords">Finne koordinater til adresser (<code>address_to_coords</code>)<a class="anchor" aria-label="anchor" href="#finne-koordinater-til-adresser-address_to_coords"></a>
 </h2>
@@ -104,7 +105,9 @@ for å finne koordinater til adresser. Denne API-en krever nettilgang og
 baserer seg på matrikkelen, som er Norges offisielle eiendomsregister og
 inneholder alle offisielle adresser med tilhørende koordinater. Ved å
 skrive inn postnummer og adresse returneres et <a href="https://r-spatial.github.io/sf/articles/sf1.html" class="external-link">sf-objekt</a>
-med koordinatene til denne adressen.</p>
+med koordinatene til denne adressen. Dersom det er én eller flere
+adresser som ikke finnes i matrikkelen returneres det et datasett med
+manglenede verdier for lon/lat for adressene som mangler.</p>
 <p>Standardverdi for projeksjonen av koordinatene er satt til <a href="https://epsg.io/25833" class="external-link">CRS 25833</a>. Dette er det offisielle
 koordinatsystemet i Norge og brukes i de fleste norske kartfiler.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -167,14 +170,14 @@ internasjonale kart, her med pakken Leaflet:</p>
 <code class="sourceCode R"><span><span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addMarkers</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fra_4326</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span></span></code></pre></div>
-<div id="htmlwidget-6b2d32b18941795b00d8" style="width:100%;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6b2d32b18941795b00d8">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[59.9220274187717,60.1738313973094],[10.7468516818247,12.0163762410388],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[59.9220274187717,60.1738313973094],"lng":[10.7468516818247,12.0163762410388]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4a810d47e11453bd062a" style="width:100%;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4a810d47e11453bd062a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[59.9220274187717,60.1738313973094],[10.7468516818247,12.0163762410388],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[59.9220274187717,60.1738313973094],"lng":[10.7468516818247,12.0163762410388]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="søke-opp-koordinater-i-google-maps-coords_to_google">Søke opp koordinater i Google Maps
 (<code>coords_to_google</code>)<a class="anchor" aria-label="anchor" href="#s%C3%B8ke-opp-koordinater-i-google-maps-coords_to_google"></a>
 </h2>
-<p>Når man skal kombinere ulike datakilder er det viktig at alle filene
+<p>Når man skal kombinere flere kartfiler er det viktig at alle filene
 er angitt med samme koordinatsystem. Om man derfor ønsker å beholde
 sf-objektet med CRS 25833, men ønsker å legge til en kolonne med
 koordinatene i CRS 4326 (som er enklere å klippe og lime inn i Google
@@ -193,20 +196,18 @@ det til en kolonne som heter <code>coords_google</code>.</p>
 <h2 id="databehandling-av-vegnettet-vegnett_to_r">Databehandling av vegnettet (<code>vegnett_to_R</code>)<a class="anchor" aria-label="anchor" href="#databehandling-av-vegnettet-vegnett_to_r"></a>
 </h2>
 <p>For å beregne kjøretid og -avstand mellom ulike koordinater benyttes
-vegnettet lastet ned fra <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/" class="external-link">Geonorge</a>.
+vegnettet som kan lastes ned fra <a href="https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/" class="external-link">Geonorge</a>.
 Når man laster inn vegnettsfilen som et sf-objekt ser den slik ut (OBS:
-det kan ta ca. 3 minutter å laste inn filen):</p>
+det kan ta opptil 3 minutter å laste inn filen):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vegnett</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">read_sf</a></span><span class="op">(</span><span class="st">"vegnettRuteplan_FGDB_20210528.gdb"</span>, <span class="st">'ERFKPS'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">vegnett</span><span class="op">)</span></span></code></pre></div>
-<p><img src="images/Vegnett%202021.png" width="100%"></p>
+<p><img src="images/vegnett_2021.png" width="100%"></p>
 <p>Vegnettet består av punkter som er plassert ca. 50 meter fra
 hverandre. Disse punktene kalles for noder. Lenkene som forbinder
-nodene/punktene sammen heter edges. For en mer detaljert gjennomgang av
-strukturen til vegnettet og hvordan dette blir behandlet med funksjonen
-<code>vegnett_to_R</code>, se <a href="https://github.com/statisticsnorway/geostat-wp2/blob/3272bbb87bad79b3f976a83923da39b023973e36/analysis/Demo_databehandling.ipynb" class="external-link">her</a>.</p>
+nodene/punktene sammen heter edges.</p>
 <p>For at vegnettet skal kunne brukes til nettverksanalyser i R må
 dataene behandles og formatet omgjøres (med funksjoner bl.a. fra pakkene
 <a href="https://igraph.org/r/" class="external-link">igraph</a> og <a href="https://github.com/vlarmet/cppRouting/blob/master/README.md" class="external-link">cppRouting</a>).
@@ -256,12 +257,13 @@ må følgende argumenter spesifiseres: <code>year = 2021</code>,
 <code>FT_minutes = "FT_MINUTES"</code>,
 <code>TF_minutes = "TF_MINUTES"</code> og
 <code>meters = "SHAPE_LENGTH"</code>.</p>
-<p>Det er også mulig å legge til “turn restrictions” i vegnettet. Dette
-finnes som et separat kartlag i .gdb-filene man laster ned fra Geonorge.
-Disse filene inneholder mange feil (?) og derfor anbefales det ikke å ta
-disse i bruk (før problemene har blitt løst). Om man allikevel ønsker å
-teste med “turn restrictions” må man laste inn kartlaget i et objekt som
-heter <code>turnrestrictions_geom</code> og sette argumentet
+<p>Det er også mulig å legge til svingrestriksjoner (“turn
+restrictions”) i vegnettet. Dette finnes som et separat kartlag i
+.gdb-filene man laster ned fra Geonorge. Disse filene inneholder flere
+feil (?) og derfor anbefales det ikke å ta disse i bruk (før problemene
+har blitt løst). Om man allikevel ønsker å teste med svingrestriksjoner
+må man laste inn kartlaget i et objekt som heter
+<code>turnrestrictions_geom</code> og sette argumentet
 <code>turn_restrictions = TRUE</code> i funksjonen
 <code>vegnett_to_R</code>.</p>
 </div>
@@ -285,8 +287,8 @@ punktet i vegnettet ikke finner en gyldig rute pga. enveiskjørte veier
 eller andre brudd i vegnettet.</p>
 <p>I funksjonen <code>coords_to_node</code> legger man inn et sf-objekt
 (med CRS 25833) som inneholder koordinatene til ett eller flere punkter.
-Resultatet er et objekt (data.frame) der node-ID-en til den nærmeste
-noden til koordinatene målt i luftlinje har blitt lagt til
+Resultatet er et objekt der node-ID-en til den nærmeste noden til
+koordinatene målt i luftlinje har blitt lagt til
 (<code>from_node</code>/<code>to_node</code>). I tillegg viser kolonnen
 <code>dist_coord_node_from</code>/<code>dist_coord_node_to</code> hvor
 mange meter det er i luftlinje mellom koordinatene og det nærmeste
@@ -314,14 +316,13 @@ er mulig å reise i luftlinje.</p>
 <p>Vegnettet består av flere mindre deler/vegnett der flere av disse
 ikke har noen tilknytning til hverandre. Dersom man har et startpunkt
 som tilhører en annen del av vegnettet enn stoppunktet vil det ikke være
-mulig å finne en gyldig rute mellom disse. Se mer om dette under “Ett
-eller flere separate vegnett?” <a href="https://github.com/statisticsnorway/geostat-wp2/blob/master/analysis/Demo_databehandling.ipynb" class="external-link">her</a>.
-Ved å legge til argumentet <code>membership = TRUE</code> begrenses
-listen over hvilke noder man leter etter til å kun gjelde noder som er
-tilknyttet samme del av vegnettet som enten start- eller stoppnoden.
-Dette kan bare gjøres for enten “from” eller “to” og koden som har
-angitt argumentet <code>membership = FALSE</code> må kjøres før koden
-som har <code>membership = TRUE</code>:</p>
+mulig å finne en gyldig rute mellom disse. Ved å legge til argumentet
+<code>membership = TRUE</code> begrenses listen over hvilke noder man
+leter etter til å kun gjelde noder som er tilknyttet samme del av
+vegnettet som enten start- eller stoppnoden. Dette kan bare gjøres for
+enten “from” eller “to” og koden som har angitt argumentet
+<code>membership = FALSE</code> må kjøres før koden som har
+<code>membership = TRUE</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">from_node</span> <span class="op">&lt;-</span> <span class="fu">GISSB</span><span class="fu">::</span><span class="fu"><a href="../reference/coords_to_node.html">coords_to_node</a></span><span class="op">(</span>coords <span class="op">=</span> <span class="va">fra</span>, direction <span class="op">=</span> <span class="st">"from"</span>, membership <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>

@@ -5,7 +5,7 @@
 \alias{vegnett_sampledata}
 \title{Sample data}
 \format{
-An object of class sf.
+An object of class \code{sf}.
 }
 \source{
 \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{National roads database - road network for routing}

@@ -33,20 +33,20 @@ Pakken inneholder følgende funksjoner:
 + `path_leaflet`
 + `shortest_path_cppRouting`
 
-Ved å bruke disse funksjonene kan man bl.a. finne koordinater til adresser og beregne kjøretid og -avstand mellom disse ved å bruke vegnettet (NVDB Ruteplan nettverksdatasett). Dette kan være nyttig dersom man f.eks. ønsker å analysere regionale forskjeller i befolkningens tilgang til offentlige tjenester.
+Ved å bruke disse funksjonene kan man bl.a. finne koordinater til adresser og beregne kjøretid og -avstand mellom disse ved å bruke vegnettet ([NVDB Ruteplan nettverksdatasett](https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313)). Dette kan være nyttig dersom man f.eks. ønsker å analysere regionale forskjeller i befolkningens tilgang til offentlige tjenester.
 
 
-Se [Hvor lang tid tar det å kjøre til nærmeste fødested?](https://www.ssb.no/helse/helsetjenester/statistikk/spesialisthelsetjenesten/artikler/hvor-lang-tid-tar-det-a-kjore-til-naermeste-fodested) for et eksempel der denne pakken har blitt brukt i et produksjonsløp.
+Se [Hvor lang tid tar det å kjøre til nærmeste fødested?](https://www.ssb.no/helse/helsetjenester/statistikk/spesialisthelsetjenesten/artikler/hvor-lang-tid-tar-det-a-kjore-til-naermeste-fodested) for et eksempel der denne pakken har blitt brukt til å lage offisiell statiatikk. 
 
 ## Finne koordinater til adresser (`address_to_coords`)
 
-Funksjonen `address_to_coords` bruker [Kartverkets adresse-API](https://ws.geonorge.no/adresser/v1/#/) for å finne koordinater til adresser. Denne API-en krever nettilgang og baserer seg på matrikkelen, som er Norges offisielle eiendomsregister og inneholder alle offisielle adresser med tilhørende koordinater. Ved å skrive inn postnummer og adresse returneres et [sf-objekt](https://r-spatial.github.io/sf/articles/sf1.html) med koordinatene til denne adressen.
+Funksjonen `address_to_coords` bruker [Kartverkets adresse-API](https://ws.geonorge.no/adresser/v1/#/) for å finne koordinater til adresser. Denne API-en krever nettilgang og baserer seg på matrikkelen, som er Norges offisielle eiendomsregister og inneholder alle offisielle adresser med tilhørende koordinater. Ved å skrive inn postnummer og adresse returneres et [sf-objekt](https://r-spatial.github.io/sf/articles/sf1.html) med koordinatene til denne adressen. Dersom det er én eller flere adresser som ikke finnes i matrikkelen returneres det et datasett med manglenede verdier for lon/lat for adressene som mangler.
 
 Standardverdi for projeksjonen av koordinatene er satt til [CRS 25833](https://epsg.io/25833). Dette er det offisielle koordinatsystemet i Norge og brukes i de fleste norske kartfiler. 
 
 ```{r, include=FALSE}
 
-# library(tidyverse)
+library(dplyr)
 library(GISSB)
 
 # Laster inn filene #
@@ -97,7 +97,7 @@ leaflet::leaflet(width = "100%") %>%
 
 ## Søke opp koordinater i Google Maps (`coords_to_google`)
 
-Når man skal kombinere ulike datakilder er det viktig at alle filene er angitt med samme koordinatsystem. Om man derfor ønsker å beholde sf-objektet med CRS 25833, men ønsker å legge til en kolonne med koordinatene i CRS 4326 (som er enklere å klippe og lime inn i Google Maps) kan man bruke funksjonen `coords_to_google`. Da legges det til en kolonne som heter `coords_google`.
+Når man skal kombinere flere kartfiler er det viktig at alle filene er angitt med samme koordinatsystem. Om man derfor ønsker å beholde sf-objektet med CRS 25833, men ønsker å legge til en kolonne med koordinatene i CRS 4326 (som er enklere å klippe og lime inn i Google Maps) kan man bruke funksjonen `coords_to_google`. Da legges det til en kolonne som heter `coords_google`.
 
 ```{r, eval=TRUE}
 fra <- GISSB::coords_to_google(fra)
@@ -109,12 +109,12 @@ til$coords_google
 
 ## Databehandling av vegnettet (`vegnett_to_R`)
 
-For å beregne kjøretid og -avstand mellom ulike koordinater benyttes vegnettet lastet ned fra [Geonorge](https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/). Når man laster inn vegnettsfilen som et sf-objekt ser den slik ut (OBS: det kan ta ca. 3 minutter å laste inn filen):
+For å beregne kjøretid og -avstand mellom ulike koordinater benyttes vegnettet som kan lastes ned fra [Geonorge](https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/). Når man laster inn vegnettsfilen som et sf-objekt ser den slik ut (OBS: det kan ta opptil 3 minutter å laste inn filen):
 
 ```{r, eval=FALSE}
 vegnett <- sf::read_sf("vegnettRuteplan_FGDB_20210528.gdb", 'ERFKPS')
 
-ggplot() +
+ggplot2::ggplot() +
   ggplot2::geom_sf(data = vegnett)
 ```
 
@@ -122,7 +122,7 @@ ggplot() +
 knitr::include_graphics(paste0(here::here(), "/vignettes/images/vegnett_2021.png"))
 ```
 
-Vegnettet består av punkter som er plassert ca. 50 meter fra hverandre. Disse punktene kalles for noder. Lenkene som forbinder nodene/punktene sammen heter edges. For en mer detaljert gjennomgang av strukturen til vegnettet og hvordan dette blir behandlet med funksjonen `vegnett_to_R`, se [her](https://github.com/statisticsnorway/geostat-wp2/blob/3272bbb87bad79b3f976a83923da39b023973e36/analysis/Demo_databehandling.ipynb).
+Vegnettet består av punkter som er plassert ca. 50 meter fra hverandre. Disse punktene kalles for noder. Lenkene som forbinder nodene/punktene sammen heter edges.
 
 For at vegnettet skal kunne brukes til nettverksanalyser i R må dataene behandles og formatet omgjøres (med funksjoner bl.a. fra pakkene [igraph](https://igraph.org/r/) og [cppRouting](https://github.com/vlarmet/cppRouting/blob/master/README.md)). Denne databehandlingen av vegnettet er samlet i funksjonen `vegnett_to_R`. Resultatet er en liste med følgende objekter:
 
@@ -156,13 +156,13 @@ graph_cppRouting_meters <- vegnett_list[[5]]
 
 Merk at vegnettsfilene fra Geonorge endret struktur og kolonnenavn i 2022. Standardverdiene for funksjonen `vegnett_to_R` er gyldige for den nye strukturen, mens for vegnett fra 2021 og tidligere må følgende argumenter spesifiseres: `year = 2021`, `fromnodeID = "FROMNODEID"`, `tonodeID = "TONODEID"`, `FT_minutes = "FT_MINUTES"`, `TF_minutes = "TF_MINUTES"` og `meters = "SHAPE_LENGTH"`. 
 
-Det er også mulig å legge til svingrestriksjon ("turn restrictions") i vegnettet. Dette finnes som et separat kartlag i .gdb-filene man laster ned fra Geonorge. Disse filene inneholder mange feil (?) og derfor anbefales det ikke å ta disse i bruk (før problemene har blitt løst). Om man allikevel ønsker å teste med svingrestriksjoner må man laste inn kartlaget i et objekt som heter `turnrestrictions_geom` og sette argumentet `turn_restrictions = TRUE` i funksjonen `vegnett_to_R`. 
+Det er også mulig å legge til svingrestriksjoner ("turn restrictions") i vegnettet. Dette finnes som et separat kartlag i .gdb-filene man laster ned fra Geonorge. Disse filene inneholder flere feil (?) og derfor anbefales det ikke å ta disse i bruk (før problemene har blitt løst). Om man allikevel ønsker å teste med svingrestriksjoner må man laste inn kartlaget i et objekt som heter `turnrestrictions_geom` og sette argumentet `turn_restrictions = TRUE` i funksjonen `vegnett_to_R`. 
 
 ## Knytte koordinater til vegnettet (`coords_to_node`)
 
 For å kunne beregne kjøretid/-vei fra et valgt start- og stoppunkt (uten å vite hvilken node-ID disse har) må man knytte adressene man ønsker å analysere til deres nærmeste punkt i vegnettet. Dette gjøres ved å finne hvilken node som er den nærmeste et gitt koordinatpunkt (X og Y) i vegnettet. Ved å bruke funksjonen `knn` fra pakken [nabor](https://rdrr.io/cran/nabor/man/knn.html) finner man det nærmeste punktet i meter (målt i luftlinje) fra et gitt koordinatpunkt. `knn = 1` betyr at man kun er interessert i å lokalisere det nærmeste punktet til koordinatene og dette er satt som standardverdi i funksjonen `coords_to_node`. Dersom denne settes til et annet tall (gjøres ved å endre argumentet `knn = X` i funksjonen) finner man det nærmeste punktet (`knn = 1`), to nærmeste punktene (`knn = 2`), tre nærmeste punktene (`knn = 3`) osv. Dette kan være nyttig dersom det nærmeste punktet i vegnettet ikke finner en gyldig rute pga. enveiskjørte veier eller andre brudd i vegnettet.
 
-I funksjonen `coords_to_node` legger man inn et sf-objekt (med CRS 25833) som inneholder koordinatene til ett eller flere punkter. Resultatet er et objekt (data.frame) der node-ID-en til den nærmeste noden til koordinatene målt i luftlinje har blitt lagt til (`from_node`/`to_node`). I tillegg viser kolonnen `dist_coord_node_from`/`dist_coord_node_to` hvor mange meter det er i luftlinje mellom koordinatene og det nærmeste punktet i vegnettet til hvert koordinatpunkt. Dette kan være nyttig for å avgjøre om det er enkelte koordinater som har blitt tildelt noder som er for langt unna den opprinnelige plasseringen (og som man dermed kan vurdere å utelate fra den videre analysen). Det kan også være lurt å legge til en ekstra kostnad for avstanden mellom koordinatene til en adresse og den nærmeste noden i vegnettet. F.eks. kan man regne ut hvor lang tid det tar å kjøre avstanden i 30 km/t i minutter ved å gange avstanden i `dist_coord_node_from`/`dist_coord_node_to` med 0,002. Man bør også gange selve avstanden først med et tall høyere enn 1 (f.eks. 1,5) for å kompensere for svinger i veien ettersom det sjelden er mulig å reise i luftlinje.
+I funksjonen `coords_to_node` legger man inn et sf-objekt (med CRS 25833) som inneholder koordinatene til ett eller flere punkter. Resultatet er et objekt der node-ID-en til den nærmeste noden til koordinatene målt i luftlinje har blitt lagt til (`from_node`/`to_node`). I tillegg viser kolonnen `dist_coord_node_from`/`dist_coord_node_to` hvor mange meter det er i luftlinje mellom koordinatene og det nærmeste punktet i vegnettet til hvert koordinatpunkt. Dette kan være nyttig for å avgjøre om det er enkelte koordinater som har blitt tildelt noder som er for langt unna den opprinnelige plasseringen (og som man dermed kan vurdere å utelate fra den videre analysen). Det kan også være lurt å legge til en ekstra kostnad for avstanden mellom koordinatene til en adresse og den nærmeste noden i vegnettet. F.eks. kan man regne ut hvor lang tid det tar å kjøre avstanden i 30 km/t i minutter ved å gange avstanden i `dist_coord_node_from`/`dist_coord_node_to` med 0,002. Man bør også gange selve avstanden først med et tall høyere enn 1 (f.eks. 1,5) for å kompensere for svinger i veien ettersom det sjelden er mulig å reise i luftlinje.
 
 For å benytte funksjonen `coords_to_node` må objektene `nodes` og `edges` (som lages med funksjonen `vegnett_to_R`) være lastet inn.
 
@@ -174,7 +174,7 @@ to_node <- GISSB::coords_to_node(coords = til, direction = "to")
 to_node
 ```
 
-Vegnettet består av flere mindre deler/vegnett der flere av disse ikke har noen tilknytning til hverandre. Dersom man har et startpunkt som tilhører en annen del av vegnettet enn stoppunktet vil det ikke være mulig å finne en gyldig rute mellom disse. Se mer om dette under "Ett eller flere separate vegnett?" [her](https://github.com/statisticsnorway/geostat-wp2/blob/master/analysis/Demo_databehandling.ipynb). Ved å legge til argumentet `membership = TRUE` begrenses listen over hvilke noder man leter etter til å kun gjelde noder som er tilknyttet samme del av vegnettet som enten start- eller stoppnoden. Dette kan bare gjøres for enten "from" eller "to" og koden som har angitt argumentet `membership = FALSE` må kjøres før koden som har `membership = TRUE`:
+Vegnettet består av flere mindre deler/vegnett der flere av disse ikke har noen tilknytning til hverandre. Dersom man har et startpunkt som tilhører en annen del av vegnettet enn stoppunktet vil det ikke være mulig å finne en gyldig rute mellom disse. Ved å legge til argumentet `membership = TRUE` begrenses listen over hvilke noder man leter etter til å kun gjelde noder som er tilknyttet samme del av vegnettet som enten start- eller stoppnoden. Dette kan bare gjøres for enten "from" eller "to" og koden som har angitt argumentet `membership = FALSE` må kjøres før koden som har `membership = TRUE`:
 
 ```{r, eval=FALSE}
 from_node <- GISSB::coords_to_node(coords = fra, direction = "from", membership = FALSE)

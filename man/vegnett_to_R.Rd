@@ -21,9 +21,9 @@ vegnett_to_R(
 \arguments{
 \item{vegnett}{The Norwegian road network as an \code{sf} object, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313}{Geonorge}.}
 
-\item{crs_out}{Numeric vector with the chosen coordinate reference system (CRS). The default value is set to CRS 25833.}
+\item{crs_out}{Numeric vector with the chosen coordinate reference system (CRS). The default value is set to \verb{CRS 25833}.}
 
-\item{year}{Numeric vector with the year the road network is from. Due to changes in the format of the files between 2021 and 2022, the most important thing is to choose between the "old" format (-2021) or the new format (2022-). The default value is set to 2022.}
+\item{year}{Numeric vector with the year the road network is from. Due to changes in the format of the files between 2021 and 2022, the most important thing is to choose between the "old" format (-2021) or the new format (2022-). The default value is set to 2022. Please see the example for the column names for 2021 and earlier.}
 
 \item{fromnodeID}{Character vector with the name of the column indicating the from node ID. Default value is set to \code{FROMNODE} (column name in 2022).}
 
@@ -37,23 +37,23 @@ vegnett_to_R(
 
 \item{turn_restrictions}{Logical. Default value is \code{FALSE}. If \code{TRUE} turn restrictions will be added to the road network. The turn restrictions layer from the road network file has to be loaded before this can be used (and the object has to be called \code{turnrestrictions_geom}). Due to errors in the turn restrictions file for 2022 it is not recommended to use this feature for now.}
 
-\item{ferry}{Logical/numeric vector. Default value is \code{TRUE} which means that all edges that involve ferries are given their original drive time (somewhere between 10 and 13 km/h). If numeric value is supplied, the cost for all edges involving ferries will be converted to the supplied value in km/h.}
+\item{ferry}{Logical/numeric vector. Default value is \code{TRUE} which means that all edges that involve ferries are given their original drive time (somewhere between 10 and 13 km/h). If a numeric value is supplied, the cost for all edges involving ferries will be converted to the supplied value in km/h.}
 }
 \value{
 List containing the following elements:
 
-\verb{[1] graph}: the road network structured as a tidy graph (\code{tbl_graph} object)
+\verb{[1] graph}: the road network structured as a tidy graph (\code{tbl_graph} object).
 
-\verb{[2] nodes}: the road network's nodes (\code{sf} object)
+\verb{[2] nodes}: the road network's nodes (\code{sf} object).
 
-\verb{[3] edges}: road network's edges/node links (data frame)
+\verb{[3] edges}: road network's edges/node links (\code{data.frame}).
 
-\verb{[4] graph_cppRouting_minutes}: the road network structured as a \code{cppRouting} graph with the cost of travel in minutes (\code{cppRouting} object)
+\verb{[4] graph_cppRouting_minutes}: the road network structured as a \code{cppRouting} graph with the cost of travel in minutes (\code{cppRouting} object).
 
-\verb{[5] graph_cppRouting_meters}: the road network structured as a \code{cppRouting} graph with the cost of travel in meters (\code{cppRouting} object)
+\verb{[5] graph_cppRouting_meters}: the road network structured as a \code{cppRouting} graph with the cost of travel in meters (\code{cppRouting} object).
 }
 \description{
-The function \code{vegnett_to_R} can be used to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313}{Geonorge}, to formats that allows for network analysis in R (\code{tbl_graph} and \code{cppRouting}).
+The function \code{vegnett_to_R} can be used to convert the Norwegian road network, downloaded from \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313}{Geonorge}, to formats that enable network analysis in R (\code{tbl_graph} and \code{cppRouting}).
 }
 \examples{
 vegnett_sampledata

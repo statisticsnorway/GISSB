@@ -8,7 +8,7 @@
 path_leaflet(path, graph_object = graph)
 }
 \arguments{
-\item{path}{Object (list) that has been created with the function \code{\link[=shortest_path_igraph]{shortest_path_igraph()}} (where \code{path = TRUE}).}
+\item{path}{Object (\code{list}) that has been created with the function \code{\link[=shortest_path_igraph]{shortest_path_igraph()}}, where \code{path = TRUE}.}
 
 \item{graph_object}{The road network structured as a tidy graph (\code{tbl_graph} object). This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.}
 }
@@ -21,6 +21,10 @@ Internet connection is required to load the background tiles.
 }
 \examples{
 \dontrun{
+path <- shortest_path_igraph(from_node_ID = 26956,
+                        to_node_ID = 210373,
+                        unit = "minutes",
+                        path = T)
 path_leaflet(path)
 }
 }

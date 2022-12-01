@@ -67,17 +67,12 @@ devtools::document()
 
 devtools::check()
 
-
+sessionInfo()
 # > checking R files for syntax errors ... WARNING
 # Warning in Sys.setlocale("LC_CTYPE", oLC_ct) :
 #   OS reports request to set locale to "Norwegian BokmC%l_Norway.utf8" cannot be honored
 
-
-# Lag pakke (?)
-devtools::build()
-
-# Installerer pakken lokalt #
-devtools::install()
+# Kommer denne fra vignetten? Test uten!
 
 
 # ?
@@ -104,5 +99,12 @@ pkgdown::build_site()
 
 # OBS: commit/push!
 # GISSB_vignette: ,knit til .md før build_site?
+
+# Lag pakke (?)
+devtools::build()
+
+# Installerer pakken lokalt #
+devtools::install()
+
 
 

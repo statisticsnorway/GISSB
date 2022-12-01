@@ -57,7 +57,7 @@ Internet connection is required to load the background tiles.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>path</dt>
-<dd><p>Object (list) that has been created with the function <code><a href="shortest_path_igraph.html">shortest_path_igraph()</a></code> (where <code>path = TRUE</code>).</p></dd>
+<dd><p>Object (<code>list</code>) that has been created with the function <code><a href="shortest_path_igraph.html">shortest_path_igraph()</a></code>, where <code>path = TRUE</code>.</p></dd>
 
 
 <dt>graph_object</dt>
@@ -74,6 +74,10 @@ Internet connection is required to load the background tiles.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="shortest_path_igraph.html">shortest_path_igraph</a></span><span class="op">(</span>from_node_ID <span class="op">=</span> <span class="fl">26956</span>,</span></span>
+<span class="r-in"><span>                        to_node_ID <span class="op">=</span> <span class="fl">210373</span>,</span></span>
+<span class="r-in"><span>                        unit <span class="op">=</span> <span class="st">"minutes"</span>,</span></span>
+<span class="r-in"><span>                        path <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">path_leaflet</span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>

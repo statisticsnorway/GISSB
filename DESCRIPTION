@@ -1,10 +1,10 @@
 Package: GISSB
 Type: Package
-Title: GISSB - Network analysis in R
+Title: GISSB - Network Analysis in R
 Version: 1.1
 Author: Sindre Mikael Haugen
 Maintainer: Sindre Mikael Haugen <sindre.haugen@ssb.no>
-Description: GISSB is a package that contains GIS functions in R.
+Description: A package containing GIS functions in R, created for use in Statistics Norway.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
