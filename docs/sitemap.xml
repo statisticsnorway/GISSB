@@ -43,10 +43,40 @@
     <loc>/reference/coords_to_node.html</loc>
   </url>
   <url>
+    <loc>/reference/edges.html</loc>
+  </url>
+  <url>
+    <loc>/reference/edges_sampledata.html</loc>
+  </url>
+  <url>
+    <loc>/reference/graph.html</loc>
+  </url>
+  <url>
+    <loc>/reference/graph_cppRouting_meters.html</loc>
+  </url>
+  <url>
+    <loc>/reference/graph_cppRouting_meters_sampledata.html</loc>
+  </url>
+  <url>
+    <loc>/reference/graph_cppRouting_minutes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/graph_cppRouting_minutes_sampledata.html</loc>
+  </url>
+  <url>
+    <loc>/reference/graph_sampledata.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/koords_to_google.html</loc>
+  </url>
+  <url>
+    <loc>/reference/nodes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/nodes_sampledata.html</loc>
   </url>
   <url>
     <loc>/reference/node_koord.html</loc>

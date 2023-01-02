@@ -62,6 +62,10 @@ devtools::load_all()
 # usethis::use_r("path_leaflet")
 # usethis::use_test("path_leaflet")
 
+# usethis::use_r("nodes_sampledata")
+
+# usethis::use_data(graph_sampledata, nodes_sampledata, edges_sampledata, graph_cppRouting_minutes_sampledata, graph_cppRouting_meters_sampledata)
+
 # rm(list = c("beregne_avstand_cpp"))
 devtools::document()
 
@@ -106,5 +110,6 @@ devtools::build()
 # Installerer pakken lokalt #
 devtools::install()
 
+# install.packages("htmltools")
 
 

@@ -2,9 +2,8 @@ Package: GISSB
 Type: Package
 Title: Network Analysis on the Norwegian Road Network
 Version: 1.1
-Author: Sindre Mikael Haugen
-Maintainer: Sindre Mikael Haugen <sindre.haugen@ssb.no>
-Description: This package contains GIS functions in R, created for use in Statistics Norway.
+Authors@R: person("Sindre Mikael", "Haugen", email = "sindre.haugen@ssb.no", role = c("aut", "cre"))
+Description: A collection of GIS (Geographic Information System) functions in R, created for use in Statistics Norway. The functions are primarily related to network analysis on the Norwegian road network. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

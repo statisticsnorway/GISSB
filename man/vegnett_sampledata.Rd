@@ -3,7 +3,7 @@
 \docType{data}
 \name{vegnett_sampledata}
 \alias{vegnett_sampledata}
-\title{Sample data}
+\title{Sample data (vegnett)}
 \format{
 An object of class \code{sf}.
 }

@@ -20,13 +20,13 @@
 #'
 #'
 address_to_coords <- function(zip_code,
-                             address,
-                             format = "sf",
-                             crs_out = 25833) {
+                              address,
+                              format = "sf",
+                              crs_out = 25833) {
 
-  if ((try(is.character(RCurl::getURL("https://ws.geonorge.no/adresser/v1/"))) == TRUE) == FALSE) {
-    print("No access to: https://ws.geonorge.no/adresser/v1/")
-    stop()
+  # Checking access to URL - stops if access is missing #
+  if ((try(is.character(RCurl::getURL("https://ws.geonorge.no/adresser/v1/")))==TRUE)==FALSE) {
+    stop("No access to: https://ws.geonorge.no/adresser/v1/")
   }
 
   # Function to get lat and lon til supplied address #

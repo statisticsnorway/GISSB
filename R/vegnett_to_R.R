@@ -74,7 +74,7 @@ vegnett_to_R <- function(vegnett,
 
   suppressWarnings(
     vegnett <- vegnett %>%
-      sf::st_zm(drop = T) %>%
+      sf::st_zm(drop = TRUE) %>%
       dplyr::rename_all(toupper) %>%
       sf::st_cast("LINESTRING") %>%
       dplyr::filter(ONEWAY == "TF" & !!rlang::sym(TF_minutes) > 0 |
@@ -239,10 +239,10 @@ vegnett_to_R <- function(vegnett,
     sf::st_set_crs(sf::st_crs(edges))
 
   # Creating tbl_graph object of the road network #
-  graph <- tidygraph::tbl_graph(nodes = nodes, edges = dplyr::as_tibble(edges), directed = T)
+  graph <- tidygraph::tbl_graph(nodes = nodes, edges = dplyr::as_tibble(edges), directed = TRUE)
 
   # Removing loops in the graph #
-  graph <- igraph::simplify(graph, remove.loops = T, remove.multiple = F)
+  graph <- igraph::simplify(graph, remove.loops = TRUE, remove.multiple = FALSE)
   graph <- tidygraph::as_tbl_graph(graph)
 
   # Extracting new edges (where loops are removed) #
@@ -286,8 +286,8 @@ vegnett_to_R <- function(vegnett,
     dplyr::select(nodeID, X, Y)
 
   ### Creating cppRouting graph ###
-  graph_cppRouting_minutes <- cppRouting::makegraph(edges_minutes, directed = T, coords = node_list_coord)
-  graph_cppRouting_meters <- cppRouting::makegraph(edges_meters, directed = T, coords = node_list_coord)
+  graph_cppRouting_minutes <- cppRouting::makegraph(edges_minutes, directed = TRUE, coords = node_list_coord)
+  graph_cppRouting_meters <- cppRouting::makegraph(edges_meters, directed = TRUE, coords = node_list_coord)
 
 
   return(list(graph,

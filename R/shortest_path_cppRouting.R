@@ -15,15 +15,28 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' distance_min <- shortest_path_cppRouting(26956,
-#'                                        210373,
+#' vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata,
+#'                              year = 2021,
+#'                              fromnodeID = "FROMNODEID",
+#'                              tonodeID = "TONODEID",
+#'                              FT_minutes = "FT_MINUTES",
+#'                              TF_minutes = "TF_MINUTES",
+#'                              meters = "SHAPE_LENGTH")
+#'
+#' graph <- vegnett_list[[1]]
+#' nodes <- vegnett_list[[2]]
+#' edges <- vegnett_list[[3]]
+#' graph_cppRouting_minutes <- vegnett_list[[4]]
+#' graph_cppRouting_meters <- vegnett_list[[5]]
+#'
+#' distance_min <- shortest_path_cppRouting(25,
+#'                                        33,
 #'                                        unit = "minutes")
 #'
-#' distance_meter <- shortest_path_cppRouting(26956,
-#'                                          210373,
+#' distance_meter <- shortest_path_cppRouting(25,
+#'                                          33,
 #'                                          unit = "meters")
-#'                                          }
+#'
 #' @encoding UTF-8
 #'
 #'

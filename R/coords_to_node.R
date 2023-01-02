@@ -20,7 +20,20 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata,
+#'                              year = 2021,
+#'                              fromnodeID = "FROMNODEID",
+#'                              tonodeID = "TONODEID",
+#'                              FT_minutes = "FT_MINUTES",
+#'                              TF_minutes = "TF_MINUTES",
+#'                              meters = "SHAPE_LENGTH")
+#'
+#' graph <- vegnett_list[[1]]
+#' nodes <- vegnett_list[[2]]
+#' edges <- vegnett_list[[3]]
+#' graph_cppRouting_minutes <- vegnett_list[[4]]
+#' graph_cppRouting_meters <- vegnett_list[[5]]
+#'
 #' from <- address_to_coords(zip_code = "0177",
 #'                          address = "Akersveien 26")
 #' from_node <- coords_to_node(coords = from, direction = "from")
@@ -28,7 +41,7 @@
 #' to <- address_to_coords(zip_code = "2211",
 #'                          address = "Otervegen 23")
 #' to_node <- coords_to_node(coords = to, direction = "to")
-#' }
+#'
 #' @encoding UTF-8
 #'
 #'
@@ -40,7 +53,7 @@ coords_to_node <- function(coords,
                            ID_col = "ID",
                            crs_out = 25833,
                            knn = 1,
-                           membership = F) {
+                           membership = FALSE) {
 
   nodes <- nodes_object
   edges <- edges_object
@@ -51,7 +64,7 @@ coords_to_node <- function(coords,
       dplyr::filter(nodeID %in% unique(edges$from))
 
     # # OBS
-    if (membership == T){
+    if (membership == TRUE){
       nodes_start <- nodes_start %>%
         dplyr::filter(membership %in% unique(to_node$membership_to_node))
     }
@@ -103,7 +116,7 @@ coords_to_node <- function(coords,
     nodes_end <- nodes %>%
       dplyr::filter(nodeID %in% unique(edges$to))
 
-    if (membership == T){
+    if (membership == TRUE){
       nodes_end <- nodes_end %>%
         dplyr::filter(membership %in% unique(from_node$membership_from_node))
     }

@@ -17,20 +17,35 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' distance_min <- shortest_path_igraph(from_node_ID = 26956,
-#'                                to_node_ID = 210373,
+#' vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata,
+#'                              year = 2021,
+#'                              fromnodeID = "FROMNODEID",
+#'                              tonodeID = "TONODEID",
+#'                              FT_minutes = "FT_MINUTES",
+#'                              TF_minutes = "TF_MINUTES",
+#'                              meters = "SHAPE_LENGTH")
+#'
+#' graph <- vegnett_list[[1]]
+#' nodes <- vegnett_list[[2]]
+#' edges <- vegnett_list[[3]]
+#' graph_cppRouting_minutes <- vegnett_list[[4]]
+#' graph_cppRouting_meters <- vegnett_list[[5]]
+#'
+#' distance_min <- shortest_path_igraph(from_node_ID = 25,
+#'                                to_node_ID = 33,
 #'                                unit = "minutes")
+#' distance_min
 #'
-#' distance_meter <- shortest_path_igraph(from_node_ID = 26956,
-#'                                  to_node_ID = 210373,
+#' distance_meter <- shortest_path_igraph(from_node_ID = 25,
+#'                                  to_node_ID = 33,
 #'                                  unit = "meters")
+#' distance_meter
 #'
-#' path <- shortest_path_igraph(from_node_ID = 26956,
-#'                         to_node_ID = 210373,
+#' path <- shortest_path_igraph(from_node_ID = 25,
+#'                         to_node_ID = 33,
 #'                         unit = "minutes",
-#'                         path = T)
-#'                         }
+#'                         path = TRUE)
+#'
 #' @encoding UTF-8
 #'
 #'
@@ -39,7 +54,7 @@ shortest_path_igraph <- function(from_node_ID,
                                  to_node_ID,
                                  graph_object = graph,
                                  unit = "minutes",
-                                 path = F) {
+                                 path = FALSE) {
 
   path_graph <- igraph::shortest_paths(
     graph = graph_object,
@@ -61,7 +76,7 @@ shortest_path_igraph <- function(from_node_ID,
     dplyr::summarise(length = sum(!!as.name(unit)))
 
 
-  if (path == T) {
+  if (path == TRUE) {
     return(path_graph)
   } else {
     return(distance)
