@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' address_to_coords(zip_code = "0177", address = "Akersveien 26") %>%
+#' address_to_coords(zip_code = "0185", address = "Schweigaards gate 10") %>%
 #'   coords_to_google()
 #'
 #' @encoding UTF-8

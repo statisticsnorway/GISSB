@@ -20,25 +20,12 @@ The function \code{path_leaflet} visualizes the shortest path (in minutes or met
 Internet connection is required to load the background tiles.
 }
 \examples{
-vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata,
-                             year = 2021,
-                             fromnodeID = "FROMNODEID",
-                             tonodeID = "TONODEID",
-                             FT_minutes = "FT_MINUTES",
-                             TF_minutes = "TF_MINUTES",
-                             meters = "SHAPE_LENGTH")
 
-graph <- vegnett_list[[1]]
-nodes <- vegnett_list[[2]]
-edges <- vegnett_list[[3]]
-graph_cppRouting_minutes <- vegnett_list[[4]]
-graph_cppRouting_meters <- vegnett_list[[5]]
-
-path <- shortest_path_igraph(from_node_ID = 25,
+shortest_path_igraph(from_node_ID = 25,
                              to_node_ID = 33,
                              unit = "minutes",
-                             path = TRUE)
-
-path_leaflet(path)
+                             path = TRUE,
+                             graph_object = graph_sampledata) \%>\%
+                             path_leaflet()
 
 }

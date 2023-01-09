@@ -107,28 +107,16 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">vegnett_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="vegnett_to_R.html">vegnett_to_R</a></span><span class="op">(</span>vegnett <span class="op">=</span> <span class="va">vegnett_sampledata</span>,</span></span>
-<span class="r-in"><span>                             year <span class="op">=</span> <span class="fl">2021</span>,</span></span>
-<span class="r-in"><span>                             fromnodeID <span class="op">=</span> <span class="st">"FROMNODEID"</span>,</span></span>
-<span class="r-in"><span>                             tonodeID <span class="op">=</span> <span class="st">"TONODEID"</span>,</span></span>
-<span class="r-in"><span>                             FT_minutes <span class="op">=</span> <span class="st">"FT_MINUTES"</span>,</span></span>
-<span class="r-in"><span>                             TF_minutes <span class="op">=</span> <span class="st">"TF_MINUTES"</span>,</span></span>
-<span class="r-in"><span>                             meters <span class="op">=</span> <span class="st">"SHAPE_LENGTH"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">nodes</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">graph_cppRouting_minutes</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">graph_cppRouting_meters</span> <span class="op">&lt;-</span> <span class="va">vegnett_list</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">from</span> <span class="op">&lt;-</span> <span class="fu"><a href="address_to_coords.html">address_to_coords</a></span><span class="op">(</span>zip_code <span class="op">=</span> <span class="st">"0177"</span>,</span></span>
-<span class="r-in"><span>                         address <span class="op">=</span> <span class="st">"Akersveien 26"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">from_node</span> <span class="op">&lt;-</span> <span class="fu">coords_to_node</span><span class="op">(</span>coords <span class="op">=</span> <span class="va">from</span>, direction <span class="op">=</span> <span class="st">"from"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="address_to_coords.html">address_to_coords</a></span><span class="op">(</span>zip_code <span class="op">=</span> <span class="st">"0185"</span>, address <span class="op">=</span> <span class="st">"Schweigaards gate 10"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">coords_to_node</span><span class="op">(</span>coords <span class="op">=</span> <span class="va">coords</span>,</span></span>
+<span class="r-in"><span>               direction <span class="op">=</span> <span class="st">"from"</span>,</span></span>
+<span class="r-in"><span>               nodes_object <span class="op">=</span> <span class="va">nodes_sampledata</span>,</span></span>
+<span class="r-in"><span>               edges_object <span class="op">=</span> <span class="va">edges_sampledata</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>strings not representable in native encoding will be translated to UTF-8</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">to</span> <span class="op">&lt;-</span> <span class="fu"><a href="address_to_coords.html">address_to_coords</a></span><span class="op">(</span>zip_code <span class="op">=</span> <span class="st">"2211"</span>,</span></span>
-<span class="r-in"><span>                         address <span class="op">=</span> <span class="st">"Otervegen 23"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">to_node</span> <span class="op">&lt;-</span> <span class="fu">coords_to_node</span><span class="op">(</span>coords <span class="op">=</span> <span class="va">to</span>, direction <span class="op">=</span> <span class="st">"to"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     from_nodeID membership_from_node            coords_google_from_node</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 973         983                  187 59.9115557969023, 10.7576325239472</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     knn_from_node ID dist_coord_node_from</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 973             1  1             32.15084</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

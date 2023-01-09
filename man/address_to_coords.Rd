@@ -26,6 +26,6 @@ The function \code{address_to_coords} can be used to find coordinates to supplie
 If there are no coordinates found for the supplied address it means that it does not exist in \href{https://www.kartverket.no/eiendom/eiendomsgrenser/matrikkelen-norgeseiendomsregister}{Matrikkelen} - Norway's official property register. See \href{https://www.rettikartet.no/app/veger}{www.rettikartet.no} to search for existing addresses.
 }
 \examples{
-address_to_coords(zip_code = "0177", address = "Akersveien 26")
+address_to_coords(zip_code = "0185", address = "Schweigaards gate 10")
 
 }

@@ -65,6 +65,7 @@ devtools::load_all()
 # usethis::use_r("nodes_sampledata")
 
 # usethis::use_data(graph_sampledata, nodes_sampledata, edges_sampledata, graph_cppRouting_minutes_sampledata, graph_cppRouting_meters_sampledata)
+# usethis::use_data(graph_sampledata, nodes_sampledata, edges_sampledata, graph_cppRouting_minutes_sampledata, graph_cppRouting_meters_sampledata, overwrite = TRUE)
 
 # rm(list = c("beregne_avstand_cpp"))
 devtools::document()

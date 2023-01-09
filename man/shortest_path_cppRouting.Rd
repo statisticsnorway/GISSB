@@ -32,26 +32,20 @@ The function \code{shortest_path_cppRouting} can be used to calculate the shorte
 Before the function can be used, the road network must be converted to a \code{cppRouting} object that is called \code{graph_cppRouting_minutes} or \code{graph_cppRouting_meters} (or other with other names supplied to the \code{graph_cppRouting_object} argument). This can be done with the function \code{\link[=vegnett_to_R]{vegnett_to_R()}}.
 }
 \examples{
-vegnett_list <- vegnett_to_R(vegnett = vegnett_sampledata,
-                             year = 2021,
-                             fromnodeID = "FROMNODEID",
-                             tonodeID = "TONODEID",
-                             FT_minutes = "FT_MINUTES",
-                             TF_minutes = "TF_MINUTES",
-                             meters = "SHAPE_LENGTH")
+shortest_path_cppRouting(from = 25,
+                         to = 33,
+                         unit = "minutes",
+                         graph_cppRouting_object = graph_cppRouting_minutes_sampledata)
 
-graph <- vegnett_list[[1]]
-nodes <- vegnett_list[[2]]
-edges <- vegnett_list[[3]]
-graph_cppRouting_minutes <- vegnett_list[[4]]
-graph_cppRouting_meters <- vegnett_list[[5]]
+shortest_path_cppRouting(from = 25,
+                         to = 33,
+                         unit = "meters",
+                         graph_cppRouting_object = graph_cppRouting_meters_sampledata)
 
-distance_min <- shortest_path_cppRouting(25,
-                                       33,
-                                       unit = "minutes")
-
-distance_meter <- shortest_path_cppRouting(25,
-                                         33,
-                                         unit = "meters")
+shortest_path_cppRouting(from = 25,
+                         to = c(32, 33),
+                         unit = "minutes",
+                         dist = "min",
+                         graph_cppRouting_object = graph_cppRouting_minutes_sampledata)
 
 }
