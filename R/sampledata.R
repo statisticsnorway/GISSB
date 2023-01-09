@@ -8,6 +8,8 @@
 #'
 #' @format An object of class `sf`.
 #'
+#' @name vegnett_sampledata
+#'
 #' @keywords datasets
 #'
 #' @source \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{National roads database - road network for routing}
@@ -16,7 +18,7 @@
 #' data(vegnett_sampledata)
 #' class(vegnett_sampledata)
 #' head(vegnett_sampledata)
-"vegnett_sampledata"
+NULL
 
 
 #' Sample data (nodes)
@@ -29,6 +31,8 @@
 #'
 #' @format An object of class `sf`.
 #'
+#' @name nodes_sampledata
+#'
 #' @keywords datasets
 #'
 #' @source \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{National roads database - road network for routing}
@@ -37,7 +41,7 @@
 #' data(nodes_sampledata)
 #' class(nodes_sampledata)
 #' head(nodes_sampledata)
-"nodes_sampledata"
+NULL
 
 #' Sample data (edges)
 #'
@@ -49,6 +53,8 @@
 #'
 #' @format A data frame
 #'
+#' @name edges_sampledata
+#'
 #' @keywords datasets
 #'
 #' @source \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{National roads database - road network for routing}
@@ -57,7 +63,7 @@
 #' data(edges_sampledata)
 #' class(edges_sampledata)
 #' head(edges_sampledata)
-"edges_sampledata"
+NULL
 
 #' Sample data (graph)
 #'
@@ -71,12 +77,14 @@
 #'
 #' @keywords datasets
 #'
+#' @name graph_sampledata
+#'
 #' @source \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{National roads database - road network for routing}
 #'
 #' @examples
 #' data(graph_sampledata)
 #' class(graph_sampledata)
-"graph_sampledata"
+NULL
 
 #' Sample data (graph_cppRouting_minutes)
 #'
@@ -88,6 +96,8 @@
 #'
 #' @format A `cppRouting` object
 #'
+#' @name graph_cppRouting_minutes_sampledata
+#'
 #' @keywords datasets
 #'
 #' @source \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{National roads database - road network for routing}
@@ -95,7 +105,7 @@
 #' @examples
 #' data(graph_cppRouting_minutes_sampledata)
 #' class(graph_cppRouting_minutes_sampledata)
-"graph_cppRouting_minutes_sampledata"
+NULL
 
 #' Sample data (graph_cppRouting_meters)
 #'
@@ -107,6 +117,8 @@
 #'
 #' @format A `cppRouting` object
 #'
+#' @name graph_cppRouting_meters_sampledata
+#'
 #' @keywords datasets
 #'
 #' @source \href{https://kartkatalog.geonorge.no/metadata/nvdb-ruteplan-nettverksdatasett/8d0f9066-34f9-4423-be12-8e8523089313/}{National roads database - road network for routing}
@@ -114,5 +126,5 @@
 #' @examples
 #' data(graph_cppRouting_meters_sampledata)
 #' class(graph_cppRouting_meters_sampledata)
-"graph_cppRouting_meters_sampledata"
+NULL
 

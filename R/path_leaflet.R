@@ -17,7 +17,7 @@
 #'                              unit = "minutes",
 #'                              path = TRUE,
 #'                              graph_object = graph_sampledata) %>%
-#'                              path_leaflet()
+#'                              path_leaflet(graph_object = graph_sampledata)
 #'
 #' @encoding UTF-8
 #'
