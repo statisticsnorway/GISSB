@@ -15,7 +15,14 @@ for network analysis in R:
 
 ## Installation
 
-You can install the development version of `GISSB` like so:
+You can install `GISSB` from CRAN like so:
+
+``` r
+install.packages("GISSB")
+```
+
+If you want to install the development version of `GISSB` from Github,
+use this code:
 
 ``` r
 devtools::install_github("statisticsnorway/GISSB")
