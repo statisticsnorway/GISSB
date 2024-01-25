@@ -33,6 +33,7 @@ Imports:
     tidygraph,
     tidyselect
 VignetteBuilder: knitr
-URL: https://statisticsnorway.github.io/GISSB/
+URL: https://statisticsnorway.github.io/GISSB/, https://github.com/statisticsnorway/GISSB
+BugReports: https://github.com/statisticsnorway/GISSB/issues
 Depends: 
     R (>= 2.10)
