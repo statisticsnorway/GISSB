@@ -31,10 +31,17 @@ address_to_coords <- function(zip_code,
 
   # Function to get lat and lon til supplied address #
   address_coord_func <- function(zip_code, address){
-    resp <- httr::GET(paste0("https://ws.geonorge.no/adresser/v1/sok?",
-                             "postnummer=", zip_code, "&",
-                             "adressetekst=", "'", gsub(" ", "+", address), "'"))
-    cont_raw <- httr::content(resp)
+  resp <- httr::GET(
+    paste0(
+      "https://ws.geonorge.no/adresser/v1/sok?",
+      "postnummer=", zip_code, "&",
+      "adressetekst=", "'", gsub(" ", "+", address), "'"
+    ),
+    httr::accept_json()
+  )
+
+  cont_raw <- httr::content(resp, as = "text", encoding = "UTF-8")
+  cont_raw <- jsonlite::fromJSON(cont_raw, simplifyVector = FALSE)
 
     if (cont_raw$metadata$totaltAntallTreff == 1) {
       lat <- cont_raw$adresser[[1]]$representasjonspunkt$lat

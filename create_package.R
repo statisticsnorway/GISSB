@@ -1,10 +1,15 @@
 
 
+# utils::install.packages("renv")
+# renv::init()
+
 library(devtools)
 library(usethis)
 library(roxygen2)
 library(testthat)
 library(tidyverse)
+
+# usethis::use_version("patch")
 
 # Oppstart #
 use_mit_license()
@@ -30,6 +35,8 @@ build_readme() # Kjøres etter .rmd-filen er ferdig utfylt
 # usethis::use_package("rlang", type = "imports")
 # usethis::use_package("here", type = "imports")
 # usethis::use_package("tidyselect", type = "imports")
+
+usethis::use_package("jsonlite", type = "imports")
 
 # usethis::use_package("here", type = "imports")
 
