@@ -23,7 +23,7 @@ Object with coordinates to the supplied addresses.
 The function \code{address_to_coords} can be used to find coordinates to supplied Norwegian addresses. Internet access is required as the function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
 }
 \details{
-If there are no coordinates found for the supplied address it means that it does not exist in \href{https://www.kartverket.no/eiendom/eiendomsgrenser/matrikkelen-norgeseiendomsregister}{Matrikkelen} - Norway's official property register. See \href{https://www.rettikartet.no/app/veger}{www.rettikartet.no} to search for existing addresses.
+If no coordinates are found for the supplied address, the address could not be matched to an address registered in \href{https://www.kartverket.no/eiendom/mine-eiendommer/om-matrikkelen}{Matrikkelen} -- Norway's official register of real property, buildings and addresses. You can search for registered addresses and properties in Kartverket's \href{https://eiendomsregisteret.kartverket.no/}{Eiendomsregisteret}.
 }
 \examples{
 address_to_coords(zip_code = "0185", address = "Schweigaards gate 10")
