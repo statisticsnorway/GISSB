@@ -3,7 +3,7 @@
 #'
 #' The function `address_to_coords` can be used to find coordinates to supplied Norwegian addresses. Internet access is required as the function utilizes \href{https://ws.geonorge.no/adresser/v1/}{the Norwegian Mapping Authority’s address API}.
 #'
-#' If there are no coordinates found for the supplied address it means that it does not exist in [Matrikkelen](https://www.kartverket.no/eiendom/eiendomsgrenser/matrikkelen-norgeseiendomsregister) - Norway's official property register. See \href{https://www.rettikartet.no/app/veger}{www.rettikartet.no} to search for existing addresses.
+#' If no coordinates are found for the supplied address, the address could not be matched to an address registered in \href{https://www.kartverket.no/eiendom/mine-eiendommer/om-matrikkelen}{Matrikkelen} -- Norway's official register of real property, buildings and addresses. You can search for registered addresses and properties in Kartverket's \href{https://eiendomsregisteret.kartverket.no/}{Eiendomsregisteret}.
 #'
 #' @param zip_code Character vector with zip codes.
 #' @param address Character vector with addresses (street name and house number).
@@ -31,10 +31,17 @@ address_to_coords <- function(zip_code,
 
   # Function to get lat and lon til supplied address #
   address_coord_func <- function(zip_code, address){
-    resp <- httr::GET(paste0("https://ws.geonorge.no/adresser/v1/sok?",
-                             "postnummer=", zip_code, "&",
-                             "adressetekst=", "'", gsub(" ", "+", address), "'"))
-    cont_raw <- httr::content(resp)
+  resp <- httr::GET(
+    paste0(
+      "https://ws.geonorge.no/adresser/v1/sok?",
+      "postnummer=", zip_code, "&",
+      "adressetekst=", "'", gsub(" ", "+", address), "'"
+    ),
+    httr::accept_json()
+  )
+
+  cont_raw <- httr::content(resp, as = "text", encoding = "UTF-8")
+  cont_raw <- jsonlite::fromJSON(cont_raw, simplifyVector = FALSE)
 
     if (cont_raw$metadata$totaltAntallTreff == 1) {
       lat <- cont_raw$adresser[[1]]$representasjonspunkt$lat
